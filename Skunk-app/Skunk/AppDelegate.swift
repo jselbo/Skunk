@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  Skunk
 //
-//  Created by Don Phan on 9/14/15.
-//  Copyright (c) 2015 CS408. All rights reserved.
+//  Created by Josh on 9/15/15.
+//  Copyright © 2015 CS408. All rights reserved.
 //
 
 import UIKit

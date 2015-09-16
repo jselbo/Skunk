@@ -1,6 +1,11 @@
 # Xcode
-.DS_Store
+# Derived from: https://github.com/github/gitignore/blob/master/Swift.gitignore
+
+## Build generated
 build/
+DerivedData
+
+## Various settings
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -9,10 +14,10 @@ build/
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
-*.xcworkspace
-!default.xcworkspace
 xcuserdata
-profile
+
+## Other
+*.xccheckout
 *.moved-aside
-DerivedData
-.idea/
+*.xcuserstate
+*.xcscmblueprint

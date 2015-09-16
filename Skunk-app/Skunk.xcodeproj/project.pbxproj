@@ -3,50 +3,66 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 47;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E554395B1BA7380D005D6661 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E554395A1BA7380D005D6661 /* AppDelegate.swift */; };
-		E554395D1BA7380D005D6661 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E554395C1BA7380D005D6661 /* ViewController.swift */; };
-		E55439601BA7380D005D6661 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E554395E1BA7380D005D6661 /* Main.storyboard */; };
-		E55439621BA7380D005D6661 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E55439611BA7380D005D6661 /* Images.xcassets */; };
-		E55439651BA7380D005D6661 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E55439631BA7380D005D6661 /* LaunchScreen.xib */; };
-		E55439711BA7380D005D6661 /* SkunkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55439701BA7380D005D6661 /* SkunkTests.swift */; };
+		038A40101BA908FF00E65E1D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A400F1BA908FF00E65E1D /* AppDelegate.swift */; };
+		038A40171BA908FF00E65E1D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 038A40151BA908FF00E65E1D /* Main.storyboard */; };
+		038A40191BA908FF00E65E1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 038A40181BA908FF00E65E1D /* Assets.xcassets */; };
+		038A401C1BA908FF00E65E1D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 038A401A1BA908FF00E65E1D /* LaunchScreen.storyboard */; };
+		038A40271BA908FF00E65E1D /* SkunkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40261BA908FF00E65E1D /* SkunkTests.swift */; };
+		038A40321BA908FF00E65E1D /* SkunkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40311BA908FF00E65E1D /* SkunkUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		E554396B1BA7380D005D6661 /* PBXContainerItemProxy */ = {
+		038A40231BA908FF00E65E1D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = E554394D1BA7380D005D6661 /* Project object */;
+			containerPortal = 038A40041BA908FF00E65E1D /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = E55439541BA7380D005D6661;
+			remoteGlobalIDString = 038A400B1BA908FF00E65E1D;
+			remoteInfo = Skunk;
+		};
+		038A402E1BA908FF00E65E1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 038A40041BA908FF00E65E1D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 038A400B1BA908FF00E65E1D;
 			remoteInfo = Skunk;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		E55439551BA7380D005D6661 /* Skunk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Skunk.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E55439591BA7380D005D6661 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E554395A1BA7380D005D6661 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E554395C1BA7380D005D6661 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		E554395F1BA7380D005D6661 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		E55439611BA7380D005D6661 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		E55439641BA7380D005D6661 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		E554396A1BA7380D005D6661 /* SkunkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkunkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E554396F1BA7380D005D6661 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E55439701BA7380D005D6661 /* SkunkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkunkTests.swift; sourceTree = "<group>"; };
+		038A400C1BA908FF00E65E1D /* Skunk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Skunk.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		038A400F1BA908FF00E65E1D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		038A40161BA908FF00E65E1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		038A40181BA908FF00E65E1D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		038A401B1BA908FF00E65E1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		038A401D1BA908FF00E65E1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		038A40221BA908FF00E65E1D /* SkunkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkunkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		038A40261BA908FF00E65E1D /* SkunkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkunkTests.swift; sourceTree = "<group>"; };
+		038A40281BA908FF00E65E1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		038A402D1BA908FF00E65E1D /* SkunkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkunkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		038A40311BA908FF00E65E1D /* SkunkUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkunkUITests.swift; sourceTree = "<group>"; };
+		038A40331BA908FF00E65E1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		E55439521BA7380D005D6661 /* Frameworks */ = {
+		038A40091BA908FF00E65E1D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E55439671BA7380D005D6661 /* Frameworks */ = {
+		038A401F1BA908FF00E65E1D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		038A402A1BA908FF00E65E1D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -56,72 +72,90 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E554394C1BA7380D005D6661 = {
+		038A40031BA908FF00E65E1D = {
 			isa = PBXGroup;
 			children = (
-				E55439571BA7380D005D6661 /* Skunk */,
-				E554396D1BA7380D005D6661 /* SkunkTests */,
-				E55439561BA7380D005D6661 /* Products */,
+				038A400E1BA908FF00E65E1D /* Skunk */,
+				038A40251BA908FF00E65E1D /* SkunkTests */,
+				038A40301BA908FF00E65E1D /* SkunkUITests */,
+				038A400D1BA908FF00E65E1D /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		E55439561BA7380D005D6661 /* Products */ = {
+		038A400D1BA908FF00E65E1D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E55439551BA7380D005D6661 /* Skunk.app */,
-				E554396A1BA7380D005D6661 /* SkunkTests.xctest */,
+				038A400C1BA908FF00E65E1D /* Skunk.app */,
+				038A40221BA908FF00E65E1D /* SkunkTests.xctest */,
+				038A402D1BA908FF00E65E1D /* SkunkUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E55439571BA7380D005D6661 /* Skunk */ = {
+		038A400E1BA908FF00E65E1D /* Skunk */ = {
 			isa = PBXGroup;
 			children = (
-				E554395A1BA7380D005D6661 /* AppDelegate.swift */,
-				E554395C1BA7380D005D6661 /* ViewController.swift */,
-				E554395E1BA7380D005D6661 /* Main.storyboard */,
-				E55439611BA7380D005D6661 /* Images.xcassets */,
-				E55439631BA7380D005D6661 /* LaunchScreen.xib */,
-				E55439581BA7380D005D6661 /* Supporting Files */,
+				038A400F1BA908FF00E65E1D /* AppDelegate.swift */,
+				038A401D1BA908FF00E65E1D /* Info.plist */,
+				038A40411BA9166700E65E1D /* Resources */,
+				038A403F1BA9165300E65E1D /* Storyboards */,
+				038A40401BA9166200E65E1D /* View Controllers */,
 			);
 			path = Skunk;
 			sourceTree = "<group>";
 		};
-		E55439581BA7380D005D6661 /* Supporting Files */ = {
+		038A40251BA908FF00E65E1D /* SkunkTests */ = {
 			isa = PBXGroup;
 			children = (
-				E55439591BA7380D005D6661 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		E554396D1BA7380D005D6661 /* SkunkTests */ = {
-			isa = PBXGroup;
-			children = (
-				E55439701BA7380D005D6661 /* SkunkTests.swift */,
-				E554396E1BA7380D005D6661 /* Supporting Files */,
+				038A40261BA908FF00E65E1D /* SkunkTests.swift */,
+				038A40281BA908FF00E65E1D /* Info.plist */,
 			);
 			path = SkunkTests;
 			sourceTree = "<group>";
 		};
-		E554396E1BA7380D005D6661 /* Supporting Files */ = {
+		038A40301BA908FF00E65E1D /* SkunkUITests */ = {
 			isa = PBXGroup;
 			children = (
-				E554396F1BA7380D005D6661 /* Info.plist */,
+				038A40311BA908FF00E65E1D /* SkunkUITests.swift */,
+				038A40331BA908FF00E65E1D /* Info.plist */,
 			);
-			name = "Supporting Files";
+			path = SkunkUITests;
+			sourceTree = "<group>";
+		};
+		038A403F1BA9165300E65E1D /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				038A40151BA908FF00E65E1D /* Main.storyboard */,
+				038A401A1BA908FF00E65E1D /* LaunchScreen.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		038A40401BA9166200E65E1D /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		038A40411BA9166700E65E1D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				038A40181BA908FF00E65E1D /* Assets.xcassets */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E55439541BA7380D005D6661 /* Skunk */ = {
+		038A400B1BA908FF00E65E1D /* Skunk */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E55439741BA7380D005D6661 /* Build configuration list for PBXNativeTarget "Skunk" */;
+			buildConfigurationList = 038A40361BA908FF00E65E1D /* Build configuration list for PBXNativeTarget "Skunk" */;
 			buildPhases = (
-				E55439511BA7380D005D6661 /* Sources */,
-				E55439521BA7380D005D6661 /* Frameworks */,
-				E55439531BA7380D005D6661 /* Resources */,
+				038A40081BA908FF00E65E1D /* Sources */,
+				038A40091BA908FF00E65E1D /* Frameworks */,
+				038A400A1BA908FF00E65E1D /* Resources */,
 			);
 			buildRules = (
 			);
@@ -129,76 +163,106 @@
 			);
 			name = Skunk;
 			productName = Skunk;
-			productReference = E55439551BA7380D005D6661 /* Skunk.app */;
+			productReference = 038A400C1BA908FF00E65E1D /* Skunk.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E55439691BA7380D005D6661 /* SkunkTests */ = {
+		038A40211BA908FF00E65E1D /* SkunkTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E55439771BA7380D005D6661 /* Build configuration list for PBXNativeTarget "SkunkTests" */;
+			buildConfigurationList = 038A40391BA908FF00E65E1D /* Build configuration list for PBXNativeTarget "SkunkTests" */;
 			buildPhases = (
-				E55439661BA7380D005D6661 /* Sources */,
-				E55439671BA7380D005D6661 /* Frameworks */,
-				E55439681BA7380D005D6661 /* Resources */,
+				038A401E1BA908FF00E65E1D /* Sources */,
+				038A401F1BA908FF00E65E1D /* Frameworks */,
+				038A40201BA908FF00E65E1D /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				E554396C1BA7380D005D6661 /* PBXTargetDependency */,
+				038A40241BA908FF00E65E1D /* PBXTargetDependency */,
 			);
 			name = SkunkTests;
 			productName = SkunkTests;
-			productReference = E554396A1BA7380D005D6661 /* SkunkTests.xctest */;
+			productReference = 038A40221BA908FF00E65E1D /* SkunkTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		038A402C1BA908FF00E65E1D /* SkunkUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 038A403C1BA908FF00E65E1D /* Build configuration list for PBXNativeTarget "SkunkUITests" */;
+			buildPhases = (
+				038A40291BA908FF00E65E1D /* Sources */,
+				038A402A1BA908FF00E65E1D /* Frameworks */,
+				038A402B1BA908FF00E65E1D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				038A402F1BA908FF00E65E1D /* PBXTargetDependency */,
+			);
+			name = SkunkUITests;
+			productName = SkunkUITests;
+			productReference = 038A402D1BA908FF00E65E1D /* SkunkUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		E554394D1BA7380D005D6661 /* Project object */ = {
+		038A40041BA908FF00E65E1D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = CS408;
 				TargetAttributes = {
-					E55439541BA7380D005D6661 = {
-						CreatedOnToolsVersion = 6.4;
+					038A400B1BA908FF00E65E1D = {
+						CreatedOnToolsVersion = 7.0;
 					};
-					E55439691BA7380D005D6661 = {
-						CreatedOnToolsVersion = 6.4;
-						TestTargetID = E55439541BA7380D005D6661;
+					038A40211BA908FF00E65E1D = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = 038A400B1BA908FF00E65E1D;
+					};
+					038A402C1BA908FF00E65E1D = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = 038A400B1BA908FF00E65E1D;
 					};
 				};
 			};
-			buildConfigurationList = E55439501BA7380D005D6661 /* Build configuration list for PBXProject "Skunk" */;
-			compatibilityVersion = "Xcode 3.2";
+			buildConfigurationList = 038A40071BA908FF00E65E1D /* Build configuration list for PBXProject "Skunk" */;
+			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = E554394C1BA7380D005D6661;
-			productRefGroup = E55439561BA7380D005D6661 /* Products */;
+			mainGroup = 038A40031BA908FF00E65E1D;
+			productRefGroup = 038A400D1BA908FF00E65E1D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E55439541BA7380D005D6661 /* Skunk */,
-				E55439691BA7380D005D6661 /* SkunkTests */,
+				038A400B1BA908FF00E65E1D /* Skunk */,
+				038A40211BA908FF00E65E1D /* SkunkTests */,
+				038A402C1BA908FF00E65E1D /* SkunkUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		E55439531BA7380D005D6661 /* Resources */ = {
+		038A400A1BA908FF00E65E1D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E55439601BA7380D005D6661 /* Main.storyboard in Resources */,
-				E55439651BA7380D005D6661 /* LaunchScreen.xib in Resources */,
-				E55439621BA7380D005D6661 /* Images.xcassets in Resources */,
+				038A401C1BA908FF00E65E1D /* LaunchScreen.storyboard in Resources */,
+				038A40191BA908FF00E65E1D /* Assets.xcassets in Resources */,
+				038A40171BA908FF00E65E1D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E55439681BA7380D005D6661 /* Resources */ = {
+		038A40201BA908FF00E65E1D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		038A402B1BA908FF00E65E1D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -208,54 +272,66 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		E55439511BA7380D005D6661 /* Sources */ = {
+		038A40081BA908FF00E65E1D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E554395D1BA7380D005D6661 /* ViewController.swift in Sources */,
-				E554395B1BA7380D005D6661 /* AppDelegate.swift in Sources */,
+				038A40101BA908FF00E65E1D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E55439661BA7380D005D6661 /* Sources */ = {
+		038A401E1BA908FF00E65E1D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E55439711BA7380D005D6661 /* SkunkTests.swift in Sources */,
+				038A40271BA908FF00E65E1D /* SkunkTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		038A40291BA908FF00E65E1D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				038A40321BA908FF00E65E1D /* SkunkUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		E554396C1BA7380D005D6661 /* PBXTargetDependency */ = {
+		038A40241BA908FF00E65E1D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E55439541BA7380D005D6661 /* Skunk */;
-			targetProxy = E554396B1BA7380D005D6661 /* PBXContainerItemProxy */;
+			target = 038A400B1BA908FF00E65E1D /* Skunk */;
+			targetProxy = 038A40231BA908FF00E65E1D /* PBXContainerItemProxy */;
+		};
+		038A402F1BA908FF00E65E1D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 038A400B1BA908FF00E65E1D /* Skunk */;
+			targetProxy = 038A402E1BA908FF00E65E1D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		E554395E1BA7380D005D6661 /* Main.storyboard */ = {
+		038A40151BA908FF00E65E1D /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E554395F1BA7380D005D6661 /* Base */,
+				038A40161BA908FF00E65E1D /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		E55439631BA7380D005D6661 /* LaunchScreen.xib */ = {
+		038A401A1BA908FF00E65E1D /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E55439641BA7380D005D6661 /* Base */,
+				038A401B1BA908FF00E65E1D /* Base */,
 			);
-			name = LaunchScreen.xib;
+			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		E55439721BA7380D005D6661 /* Debug */ = {
+		038A40341BA908FF00E65E1D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -274,8 +350,9 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -284,14 +361,13 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -299,7 +375,7 @@
 			};
 			name = Debug;
 		};
-		E55439731BA7380D005D6661 /* Release */ = {
+		038A40351BA908FF00E65E1D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -329,96 +405,123 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		E55439751BA7380D005D6661 /* Debug */ = {
+		038A40371BA908FF00E65E1D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Skunk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.purdue.jselbo.Skunk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		E55439761BA7380D005D6661 /* Release */ = {
+		038A40381BA908FF00E65E1D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Skunk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.purdue.jselbo.Skunk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
-		E55439781BA7380D005D6661 /* Debug */ = {
+		038A403A1BA908FF00E65E1D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
 				INFOPLIST_FILE = SkunkTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.purdue.jselbo.SkunkTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Skunk.app/Skunk";
 			};
 			name = Debug;
 		};
-		E55439791BA7380D005D6661 /* Release */ = {
+		038A403B1BA908FF00E65E1D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
 				INFOPLIST_FILE = SkunkTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.purdue.jselbo.SkunkTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Skunk.app/Skunk";
+			};
+			name = Release;
+		};
+		038A403D1BA908FF00E65E1D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = SkunkUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.purdue.jselbo.SkunkUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Skunk;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		038A403E1BA908FF00E65E1D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = SkunkUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.purdue.jselbo.SkunkUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Skunk;
+				USES_XCTRUNNER = YES;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E55439501BA7380D005D6661 /* Build configuration list for PBXProject "Skunk" */ = {
+		038A40071BA908FF00E65E1D /* Build configuration list for PBXProject "Skunk" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E55439721BA7380D005D6661 /* Debug */,
-				E55439731BA7380D005D6661 /* Release */,
+				038A40341BA908FF00E65E1D /* Debug */,
+				038A40351BA908FF00E65E1D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E55439741BA7380D005D6661 /* Build configuration list for PBXNativeTarget "Skunk" */ = {
+		038A40361BA908FF00E65E1D /* Build configuration list for PBXNativeTarget "Skunk" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E55439751BA7380D005D6661 /* Debug */,
-				E55439761BA7380D005D6661 /* Release */,
+				038A40371BA908FF00E65E1D /* Debug */,
+				038A40381BA908FF00E65E1D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
-		E55439771BA7380D005D6661 /* Build configuration list for PBXNativeTarget "SkunkTests" */ = {
+		038A40391BA908FF00E65E1D /* Build configuration list for PBXNativeTarget "SkunkTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E55439781BA7380D005D6661 /* Debug */,
-				E55439791BA7380D005D6661 /* Release */,
+				038A403A1BA908FF00E65E1D /* Debug */,
+				038A403B1BA908FF00E65E1D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		038A403C1BA908FF00E65E1D /* Build configuration list for PBXNativeTarget "SkunkUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				038A403D1BA908FF00E65E1D /* Debug */,
+				038A403E1BA908FF00E65E1D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = E554394D1BA7380D005D6661 /* Project object */;
+	rootObject = 038A40041BA908FF00E65E1D /* Project object */;
 }
