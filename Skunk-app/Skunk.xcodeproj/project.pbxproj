@@ -13,6 +13,8 @@
 		038A401C1BA908FF00E65E1D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 038A401A1BA908FF00E65E1D /* LaunchScreen.storyboard */; };
 		038A40271BA908FF00E65E1D /* SkunkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40261BA908FF00E65E1D /* SkunkTests.swift */; };
 		038A40321BA908FF00E65E1D /* SkunkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40311BA908FF00E65E1D /* SkunkUITests.swift */; };
+		038A40431BA9184600E65E1D /* ShareMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40421BA9184600E65E1D /* ShareMainViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		038A40451BA9185000E65E1D /* ReceiveMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +47,8 @@
 		038A402D1BA908FF00E65E1D /* SkunkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkunkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		038A40311BA908FF00E65E1D /* SkunkUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkunkUITests.swift; sourceTree = "<group>"; };
 		038A40331BA908FF00E65E1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		038A40421BA9184600E65E1D /* ShareMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareMainViewController.swift; sourceTree = "<group>"; };
+		038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiveMainViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +138,8 @@
 		038A40401BA9166200E65E1D /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */,
+				038A40421BA9184600E65E1D /* ShareMainViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -276,7 +282,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				038A40451BA9185000E65E1D /* ReceiveMainViewController.swift in Sources */,
 				038A40101BA908FF00E65E1D /* AppDelegate.swift in Sources */,
+				038A40431BA9184600E65E1D /* ShareMainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
