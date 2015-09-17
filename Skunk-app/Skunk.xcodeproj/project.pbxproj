@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		034D95FF1BA9E2C000F997C5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034D95FE1BA9E2C000F997C5 /* MapKit.framework */; };
 		038A40101BA908FF00E65E1D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A400F1BA908FF00E65E1D /* AppDelegate.swift */; };
 		038A40171BA908FF00E65E1D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 038A40151BA908FF00E65E1D /* Main.storyboard */; };
 		038A40191BA908FF00E65E1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 038A40181BA908FF00E65E1D /* Assets.xcassets */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		034D95FE1BA9E2C000F997C5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		038A400C1BA908FF00E65E1D /* Skunk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Skunk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		038A400F1BA908FF00E65E1D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		038A40161BA908FF00E65E1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				034D95FF1BA9E2C000F997C5 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,9 +79,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		034D96001BA9E2F400F997C5 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
 		038A40031BA908FF00E65E1D = {
 			isa = PBXGroup;
 			children = (
+				034D95FE1BA9E2C000F997C5 /* MapKit.framework */,
 				038A400E1BA908FF00E65E1D /* Skunk */,
 				038A40251BA908FF00E65E1D /* SkunkTests */,
 				038A40301BA908FF00E65E1D /* SkunkUITests */,
@@ -103,6 +114,7 @@
 				038A401D1BA908FF00E65E1D /* Info.plist */,
 				038A40411BA9166700E65E1D /* Resources */,
 				038A403F1BA9165300E65E1D /* Storyboards */,
+				034D96001BA9E2F400F997C5 /* Utilities */,
 				038A40401BA9166200E65E1D /* View Controllers */,
 			);
 			path = Skunk;
