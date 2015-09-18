@@ -4,7 +4,6 @@ require 'mysql2'
 
 
 
-
 # To reduce merge conflicts and such, separate all of the action logic into
 # different files. This may eventually need to be further separated depending
 # on how complex the interactions get.
