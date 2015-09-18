@@ -1,5 +1,8 @@
 require 'sinatra'
 require 'sinatra/activerecord'
+require 'mysql2'
+
+
 
 
 # To reduce merge conflicts and such, separate all of the action logic into

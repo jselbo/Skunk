@@ -9,4 +9,4 @@ gem 'sinatra-activerecord'
 # Events are what drive 'Merica.
 gem 'thin'
 # MariaDB runs off of the same adapter as MySQL.
-gem 'mysql2'
+gem 'mysql2', '~> 0.3.20'
