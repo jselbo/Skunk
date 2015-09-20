@@ -89,6 +89,39 @@
             </objects>
             <point key="canvasLocation" x="1002" y="-461"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="LZn-oa-sUW">
+            <objects>
+                <viewController id="umm-na-qDT" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Eib-Ia-4iV"/>
+                        <viewControllerLayoutGuide type="bottom" id="nRa-t7-v6J"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Sy4-WR-B1P">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LRc-lA-ypE">
+                                <rect key="frame" x="63" y="360" width="194" height="151"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="194" id="LKC-x3-S6a"/>
+                                    <constraint firstAttribute="height" constant="151" id="SaZ-qh-oZ4"/>
+                                </constraints>
+                                <state key="normal" title="Meow"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="nRa-t7-v6J" firstAttribute="top" secondItem="LRc-lA-ypE" secondAttribute="bottom" constant="8" id="GhR-tj-k6T"/>
+                            <constraint firstItem="LRc-lA-ypE" firstAttribute="centerX" secondItem="Sy4-WR-B1P" secondAttribute="centerX" id="Mkr-7K-0QK"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="iYb-YE-FIF"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xHS-JX-FcC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1524" y="-460"/>
+        </scene>
         <!--Monitor-->
         <scene sceneID="WAn-lc-43F">
             <objects>
