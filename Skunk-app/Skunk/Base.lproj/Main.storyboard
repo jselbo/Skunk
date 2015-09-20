@@ -64,7 +64,6 @@
                                 <state key="normal" title="Begin Sharing"/>
                                 <connections>
                                     <action selector="sharePressed:" destination="FPd-Ut-7fa" eventType="touchUpInside" id="gIm-qJ-R1F"/>
-                                    <segue destination="umm-na-qDT" kind="push" id="8dX-0e-LnC"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -84,6 +83,7 @@
                     <connections>
                         <outlet property="personalMapView" destination="4T0-Xt-sWt" id="EIg-rS-7vE"/>
                         <outlet property="shareButton" destination="eWn-zj-Jja" id="xEl-or-aTE"/>
+                        <segue destination="a3b-G1-MMr" kind="push" id="I6k-AK-FMS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qXm-Mz-BHd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -102,17 +102,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1dZ-dU-kMU">
+                                <rect key="frame" x="0.0" y="72" width="320" height="215"/>
+                            </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LRc-lA-ypE">
-                                <rect key="frame" x="0.0" y="353" width="320" height="158"/>
+                                <rect key="frame" x="0.0" y="295" width="320" height="216"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="194" id="LKC-x3-S6a"/>
                                     <constraint firstAttribute="height" constant="151" id="SaZ-qh-oZ4"/>
                                 </constraints>
-                                <state key="normal" title="Send Requests"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                <state key="normal" title="Send Request"/>
                             </button>
-                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1dZ-dU-kMU">
-                                <rect key="frame" x="0.0" y="72" width="320" height="273"/>
-                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -128,7 +129,82 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xHS-JX-FcC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1524" y="-460"/>
+            <point key="canvasLocation" x="2004" y="-461"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="ZjP-zE-oLE">
+            <objects>
+                <viewController id="PhS-iw-iKI" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nVx-dq-g0y"/>
+                        <viewControllerLayoutGuide type="bottom" id="W2o-Ja-DAu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Xea-Eu-AYc">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pqg-bG-Vnh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2462" y="-461"/>
+        </scene>
+        <!--Share-->
+        <scene sceneID="Qhl-Cf-FmL">
+            <objects>
+                <viewController id="a3b-G1-MMr" customClass="SharerOptionsViewController" customModule="Skunk" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Oa0-Oy-Hyd"/>
+                        <viewControllerLayoutGuide type="bottom" id="a35-hq-4KW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3vm-v7-Ik0">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ThV-Pb-1m8">
+                                <rect key="frame" x="251" y="342" width="51" height="31"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Request a Ride" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bep-fx-x6D">
+                                <rect key="frame" x="20" y="347" width="162" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="NHD-Zh-3A3">
+                                <rect key="frame" x="0.0" y="113" width="320" height="216"/>
+                                <date key="date" timeIntervalSinceReferenceDate="464472222.91563201">
+                                    <!--2015-09-20 20:03:42 +0000-->
+                                </date>
+                                <connections>
+                                    <segue destination="umm-na-qDT" kind="push" id="sck-Pb-73l"/>
+                                </connections>
+                            </datePicker>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="vFd-m1-HsD">
+                                <rect key="frame" x="100" y="72" width="121" height="29"/>
+                                <segments>
+                                    <segment title="Time"/>
+                                    <segment title="Night"/>
+                                </segments>
+                            </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nGJ-OJ-gdC">
+                                <rect key="frame" x="0.0" y="376" width="320" height="135"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                <state key="normal" title="Select Friends "/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Share" id="qai-c0-eFY"/>
+                    <connections>
+                        <outlet property="requestRideOption" destination="ThV-Pb-1m8" id="Ndc-9V-bWf"/>
+                        <outlet property="selectFriendsButton" destination="nGJ-OJ-gdC" id="RXi-Gf-NUt"/>
+                        <outlet property="timeNightOption" destination="vFd-m1-HsD" id="zwx-cl-zax"/>
+                        <outlet property="timeSelection" destination="NHD-Zh-3A3" id="UlM-03-4ML"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cOp-S1-xx0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1494" y="-461"/>
         </scene>
         <!--Monitor-->
         <scene sceneID="WAn-lc-43F">
