@@ -18,6 +18,7 @@
 		038A40451BA9185000E65E1D /* ReceiveMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		E56A14291BAF264700985CC7 /* SelectRecieverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A14281BAF264700985CC7 /* SelectRecieverViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		E56A142B1BAF4BA600985CC7 /* SharerOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A142A1BAF4BA600985CC7 /* SharerOptionsViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		E5E1A4DE1BB03DD1008EE8FC /* SharingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E1A4DD1BB03DD1008EE8FC /* SharingViewController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiveMainViewController.swift; sourceTree = "<group>"; };
 		E56A14281BAF264700985CC7 /* SelectRecieverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectRecieverViewController.swift; sourceTree = "<group>"; };
 		E56A142A1BAF4BA600985CC7 /* SharerOptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharerOptionsViewController.swift; sourceTree = "<group>"; };
+		E5E1A4DD1BB03DD1008EE8FC /* SharingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				E56A142A1BAF4BA600985CC7 /* SharerOptionsViewController.swift */,
+				E5E1A4DD1BB03DD1008EE8FC /* SharingViewController.swift */,
 				E56A14281BAF264700985CC7 /* SelectRecieverViewController.swift */,
 				038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */,
 				038A40421BA9184600E65E1D /* ShareMainViewController.swift */,
@@ -306,6 +309,7 @@
 				E56A142B1BAF4BA600985CC7 /* SharerOptionsViewController.swift in Sources */,
 				038A40101BA908FF00E65E1D /* AppDelegate.swift in Sources */,
 				038A40431BA9184600E65E1D /* ShareMainViewController.swift in Sources */,
+				E5E1A4DE1BB03DD1008EE8FC /* SharingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

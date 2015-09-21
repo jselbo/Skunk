@@ -1,19 +1,19 @@
 //
-//  SharerOptionsViewController.swift
+//  SharingViewController.swift
 //  Skunk
 //
-//  Created by Don Phan on 9/20/15.
+//  Created by Don Phan on 9/21/15.
 //  Copyright © 2015 CS408. All rights reserved.
 //
 
 import UIKit
+import MapKit
 
-class SharerOptionsViewController: UIViewController {
-
-    @IBOutlet weak var timeNightOption: UISegmentedControl!
-    @IBOutlet weak var timeSelection: UIDatePicker!
-    @IBOutlet weak var requestRideOption: UISwitch!
-    @IBOutlet weak var selectFriendsButton: UIButton!
+class SharingViewController: UIViewController {
+    
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var pickUpButton: UIButton!
+    @IBOutlet weak var stopSharingButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()

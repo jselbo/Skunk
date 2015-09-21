@@ -103,10 +103,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1dZ-dU-kMU">
-                                <rect key="frame" x="0.0" y="72" width="320" height="215"/>
+                                <rect key="frame" x="0.0" y="72" width="320" height="290"/>
                             </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LRc-lA-ypE">
-                                <rect key="frame" x="0.0" y="295" width="320" height="216"/>
+                                <rect key="frame" x="0.0" y="423" width="320" height="88"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="194" id="LKC-x3-S6a"/>
                                     <constraint firstAttribute="height" constant="151" id="SaZ-qh-oZ4"/>
@@ -125,16 +125,17 @@
                     <connections>
                         <outlet property="friendsList" destination="1dZ-dU-kMU" id="7jc-e9-hZf"/>
                         <outlet property="sendRequest" destination="LRc-lA-ypE" id="uIY-Db-29I"/>
+                        <segue destination="PhS-iw-iKI" kind="push" id="3hE-np-K7P"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xHS-JX-FcC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2004" y="-461"/>
         </scene>
-        <!--View Controller-->
+        <!--Share-->
         <scene sceneID="ZjP-zE-oLE">
             <objects>
-                <viewController id="PhS-iw-iKI" sceneMemberID="viewController">
+                <viewController id="PhS-iw-iKI" customClass="SharingViewController" customModule="Skunk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nVx-dq-g0y"/>
                         <viewControllerLayoutGuide type="bottom" id="W2o-Ja-DAu"/>
@@ -142,8 +143,31 @@
                     <view key="view" contentMode="scaleToFill" id="Xea-Eu-AYc">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="OzD-Ia-iLr">
+                                <rect key="frame" x="0.0" y="64" width="320" height="242"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljv-MD-Cfp">
+                                <rect key="frame" x="0.0" y="467" width="320" height="44"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                <state key="normal" title="Stop Sharing">
+                                    <color key="titleColor" red="1" green="0.16002692767563964" blue="0.19565217519909206" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ye8-hN-z6i">
+                                <rect key="frame" x="0.0" y="314" width="320" height="145"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                <state key="normal" title="Pick me up!"/>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Share" id="RDI-UE-dbM"/>
+                    <connections>
+                        <outlet property="mapView" destination="OzD-Ia-iLr" id="foN-BU-6Gc"/>
+                        <outlet property="pickUpButton" destination="ye8-hN-z6i" id="zbr-JD-bVV"/>
+                        <outlet property="stopSharingButton" destination="ljv-MD-Cfp" id="kRp-E0-Pun"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pqg-bG-Vnh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
