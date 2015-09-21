@@ -62,7 +62,7 @@ end
 # information that is being updated.
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
-post '/sessions/:id/pickup/request' do
+put '/sessions/:id/pickup/request' do
 end
 
 # POST /sessions/:id/pickup/response
