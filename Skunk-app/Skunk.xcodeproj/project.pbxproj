@@ -16,6 +16,11 @@
 		038A40321BA908FF00E65E1D /* SkunkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40311BA908FF00E65E1D /* SkunkUITests.swift */; };
 		038A40431BA9184600E65E1D /* ShareMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40421BA9184600E65E1D /* ShareMainViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		038A40451BA9185000E65E1D /* ReceiveMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		03AD417C1BAFB0B10053FF45 /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AD417B1BAFB0B10053FF45 /* UserAccount.swift */; settings = {ASSET_TAGS = (); }; };
+		03AD417E1BB033350053FF45 /* RegisteredUserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AD417D1BB033350053FF45 /* RegisteredUserAccount.swift */; settings = {ASSET_TAGS = (); }; };
+		03AD41821BB034BE0053FF45 /* ShareSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AD41811BB034BE0053FF45 /* ShareSession.swift */; settings = {ASSET_TAGS = (); }; };
+		03AD41841BB0363B0053FF45 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AD41831BB0363B0053FF45 /* Constants.swift */; settings = {ASSET_TAGS = (); }; };
+		03AD41861BB037D60053FF45 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03AD41851BB037D60053FF45 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +56,11 @@
 		038A40331BA908FF00E65E1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		038A40421BA9184600E65E1D /* ShareMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareMainViewController.swift; sourceTree = "<group>"; };
 		038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiveMainViewController.swift; sourceTree = "<group>"; };
+		03AD417B1BAFB0B10053FF45 /* UserAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
+		03AD417D1BB033350053FF45 /* RegisteredUserAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisteredUserAccount.swift; sourceTree = "<group>"; };
+		03AD41811BB034BE0053FF45 /* ShareSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareSession.swift; sourceTree = "<group>"; };
+		03AD41831BB0363B0053FF45 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		03AD41851BB037D60053FF45 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03AD41861BB037D60053FF45 /* CoreLocation.framework in Frameworks */,
 				034D95FF1BA9E2C000F997C5 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -82,6 +93,7 @@
 		034D96001BA9E2F400F997C5 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				03AD41831BB0363B0053FF45 /* Constants.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -89,6 +101,7 @@
 		038A40031BA908FF00E65E1D = {
 			isa = PBXGroup;
 			children = (
+				03AD41851BB037D60053FF45 /* CoreLocation.framework */,
 				034D95FE1BA9E2C000F997C5 /* MapKit.framework */,
 				038A400E1BA908FF00E65E1D /* Skunk */,
 				038A40251BA908FF00E65E1D /* SkunkTests */,
@@ -111,9 +124,10 @@
 			isa = PBXGroup;
 			children = (
 				038A400F1BA908FF00E65E1D /* AppDelegate.swift */,
-				038A401D1BA908FF00E65E1D /* Info.plist */,
+				03AD41791BAFB0490053FF45 /* Data */,
 				038A40411BA9166700E65E1D /* Resources */,
 				038A403F1BA9165300E65E1D /* Storyboards */,
+				03AD417A1BAFB0710053FF45 /* Supporting Files */,
 				034D96001BA9E2F400F997C5 /* Utilities */,
 				038A40401BA9166200E65E1D /* View Controllers */,
 			);
@@ -162,6 +176,24 @@
 				038A40181BA908FF00E65E1D /* Assets.xcassets */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		03AD41791BAFB0490053FF45 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				03AD417D1BB033350053FF45 /* RegisteredUserAccount.swift */,
+				03AD41811BB034BE0053FF45 /* ShareSession.swift */,
+				03AD417B1BAFB0B10053FF45 /* UserAccount.swift */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
+		03AD417A1BAFB0710053FF45 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				038A401D1BA908FF00E65E1D /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -294,9 +326,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03AD417C1BAFB0B10053FF45 /* UserAccount.swift in Sources */,
 				038A40451BA9185000E65E1D /* ReceiveMainViewController.swift in Sources */,
+				03AD41821BB034BE0053FF45 /* ShareSession.swift in Sources */,
 				038A40101BA908FF00E65E1D /* AppDelegate.swift in Sources */,
+				03AD41841BB0363B0053FF45 /* Constants.swift in Sources */,
 				038A40431BA9184600E65E1D /* ShareMainViewController.swift in Sources */,
+				03AD417E1BB033350053FF45 /* RegisteredUserAccount.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
