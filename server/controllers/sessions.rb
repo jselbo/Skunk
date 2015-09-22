@@ -78,9 +78,10 @@ end
 # POST /sessions/create
 # {
 #   "receivers": [ <user_id>, <user_id>, ... ],
-#   "condition": "time" | "location",
-#   "end_time": <timestamp>,
-#   "destination": <location_json>,
+#   "condition": {
+#     "type": "time" | "location",
+#     "data": <timestamp> | <location_json>
+#   },
 #   "needs_driver": true | false
 # }
 # -> 200 OK <session_id>
@@ -88,10 +89,12 @@ end
 #
 # This endpoint is used to initialize a new session when a user begins sharing
 # their location. The new session will be created, along with records joining
-# each of the listed receivers to the session. "end_time" and "destination"
-# are optional, depending on the value of "condition". "needs_driver" is a
-# boolean representing whether the sharer will be requesting a pick up for
-# this session.
+# each of the listed receivers to the session. The value of "data" in
+# "condition" is dependent on the "type". For 'time' conditions, it will be an
+# ISO 8601 timestamp representing the time at which the session should end,
+# while 'location' conditions will have an ISO 6709 location JSON object as its
+# data. "needs_driver" is a boolean representing whether the sharer will be
+# requesting a pick up for this session.
 #
 # On success, returns the ID of the newly-created session.
 # On error, returns a 500 Internal Server Error with details about what went
