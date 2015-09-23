@@ -18,9 +18,34 @@ enum RequestState {
     case Accepted(Uid)
 }
 
-enum ShareEndCondition {
+enum ShareEndCondition: Serializable {
     case Location(CLLocation)
     case Time(NSDate)
+    
+    func name() -> String {
+        switch (self) {
+        case .Location(_):
+            return "location"
+        case .Time(_):
+            return "time"
+        }
+    }
+    
+    func serialize() -> AnyObject {
+        return [
+            "type": name(),
+            "data": serializeData()
+        ]
+    }
+    
+    private func serializeData() -> AnyObject {
+        switch (self) {
+        case .Location(let location):
+            return location.serializeISO6709()
+        case .Time(let date):
+            return date.serializeISO8601()
+        }
+    }
 }
 
 class ReceiverInfo: NSObject {
@@ -37,6 +62,9 @@ class ReceiverInfo: NSObject {
 class ShareSession: NSObject {
     let endCondition: ShareEndCondition
     let needsDriver: Bool
+    
+    /// Unique identifier for this session, assigned by the server.
+    var identifier: Sid?
     
     /// Set of users with whom this user's location is being shared
     var receivers: Set<ReceiverInfo>
@@ -61,5 +89,27 @@ class ShareSession: NSObject {
         if needsDriver {
             currentDriverState = .Requested
         }
+    }
+    
+    // On create, we haven't been assigned an identifier yet.
+    func serializeForCreate() -> AnyObject {
+        let receiverIDs = receivers
+            // Uint64 are not directly castable to NSNumber, so we must
+            // initialize with NSNumber explicitly. This is necessary to cast to NSDictionary -> AnyObject
+            .map { r in NSNumber(unsignedLongLong: r.identifier) }
+            // Also sort for deterministic order during testing.
+            .sort { r1, r2 in r1.unsignedLongLongValue < r2.unsignedLongLongValue }
+        
+        return [
+            "receivers": receiverIDs,
+            "condition": endCondition.serialize(),
+            "needs_driver": needsDriver
+        ]
+    }
+    
+    func serializeForUpdate() -> AnyObject {
+        return [
+            "location": currentLocation!.serializeISO6709()
+        ]
     }
 }
