@@ -1,0 +1,6 @@
+# Don't pick up user's individual changes to their database setups.
+config/database.yml
+
+# Logs are useless, really.
+*.log
+*/*.log
