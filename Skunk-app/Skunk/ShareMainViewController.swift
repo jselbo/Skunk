@@ -6,14 +6,18 @@
 //  Copyright © 2015 CS408. All rights reserved.
 //
 
+import MapKit
 import UIKit
 
 class ShareMainViewController: UIViewController {
+    
+    @IBOutlet weak var personalMapView: MKMapView!
+    @IBOutlet weak var shareButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        personalMapView.userTrackingMode = .FollowWithHeading
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,5 +35,9 @@ class ShareMainViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    @IBAction func sharePressed(sender: AnyObject) {
+        
+    }
 
 }

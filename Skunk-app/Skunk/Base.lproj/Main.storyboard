@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Tab Bar Controller-->
@@ -51,9 +52,38 @@
                     <view key="view" contentMode="scaleToFill" id="ow1-nz-i0P">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="4T0-Xt-sWt">
+                                <rect key="frame" x="0.0" y="64" width="320" height="228"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eWn-zj-Jja">
+                                <rect key="frame" x="0.0" y="292" width="320" height="227"/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081399917603" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Begin Sharing"/>
+                                <connections>
+                                    <action selector="sharePressed:" destination="FPd-Ut-7fa" eventType="touchUpInside" id="gIm-qJ-R1F"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="eWn-zj-Jja" firstAttribute="leading" secondItem="ow1-nz-i0P" secondAttribute="leadingMargin" constant="-16" id="2Mu-aD-niS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="eWn-zj-Jja" secondAttribute="trailing" constant="-16" id="ImN-db-FUt"/>
+                            <constraint firstItem="4T0-Xt-sWt" firstAttribute="top" secondItem="Sti-XL-TOM" secondAttribute="bottom" id="KRh-v4-Gtp"/>
+                            <constraint firstItem="eWn-zj-Jja" firstAttribute="top" secondItem="4T0-Xt-sWt" secondAttribute="bottom" id="NPS-qx-chI"/>
+                            <constraint firstItem="Dtt-Kv-Ppl" firstAttribute="top" secondItem="eWn-zj-Jja" secondAttribute="bottom" id="clE-Iq-kzh"/>
+                            <constraint firstItem="eWn-zj-Jja" firstAttribute="height" secondItem="4T0-Xt-sWt" secondAttribute="height" id="kAe-IJ-PV8"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4T0-Xt-sWt" secondAttribute="trailing" constant="-16" id="l8V-se-5RE"/>
+                            <constraint firstItem="4T0-Xt-sWt" firstAttribute="leading" secondItem="ow1-nz-i0P" secondAttribute="leadingMargin" constant="-16" id="oGg-Sq-K3W"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Share" id="y4k-yO-SaD"/>
+                    <connections>
+                        <outlet property="personalMapView" destination="4T0-Xt-sWt" id="EIg-rS-7vE"/>
+                        <outlet property="shareButton" destination="eWn-zj-Jja" id="xEl-or-aTE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qXm-Mz-BHd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
