@@ -16,6 +16,7 @@
 		038A40321BA908FF00E65E1D /* SkunkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40311BA908FF00E65E1D /* SkunkUITests.swift */; };
 		038A40431BA9184600E65E1D /* ShareMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40421BA9184600E65E1D /* ShareMainViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		038A40451BA9185000E65E1D /* ReceiveMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		B23369DC1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23369DB1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		E56A14291BAF264700985CC7 /* SelectRecieverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A14281BAF264700985CC7 /* SelectRecieverViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		E56A142B1BAF4BA600985CC7 /* SharerOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A142A1BAF4BA600985CC7 /* SharerOptionsViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		E5E1A4DE1BB03DD1008EE8FC /* SharingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E1A4DD1BB03DD1008EE8FC /* SharingViewController.swift */; settings = {ASSET_TAGS = (); }; };
@@ -54,6 +55,7 @@
 		038A40331BA908FF00E65E1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		038A40421BA9184600E65E1D /* ShareMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareMainViewController.swift; sourceTree = "<group>"; };
 		038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiveMainViewController.swift; sourceTree = "<group>"; };
+		B23369DB1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiveFriendsListViewController.swift; sourceTree = "<group>"; };
 		E56A14281BAF264700985CC7 /* SelectRecieverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectRecieverViewController.swift; sourceTree = "<group>"; };
 		E56A142A1BAF4BA600985CC7 /* SharerOptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharerOptionsViewController.swift; sourceTree = "<group>"; };
 		E5E1A4DD1BB03DD1008EE8FC /* SharingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharingViewController.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 			children = (
 				E56A142A1BAF4BA600985CC7 /* SharerOptionsViewController.swift */,
 				E5E1A4DD1BB03DD1008EE8FC /* SharingViewController.swift */,
+				B23369DB1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift */,
 				E56A14281BAF264700985CC7 /* SelectRecieverViewController.swift */,
 				038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */,
 				038A40421BA9184600E65E1D /* ShareMainViewController.swift */,
@@ -310,6 +313,7 @@
 				038A40101BA908FF00E65E1D /* AppDelegate.swift in Sources */,
 				038A40431BA9184600E65E1D /* ShareMainViewController.swift in Sources */,
 				E5E1A4DE1BB03DD1008EE8FC /* SharingViewController.swift in Sources */,
+				B23369DC1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
