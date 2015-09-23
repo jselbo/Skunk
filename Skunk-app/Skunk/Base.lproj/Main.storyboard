@@ -44,7 +44,7 @@
         <!--Share-->
         <scene sceneID="3GF-hp-ZQI">
             <objects>
-                <viewController id="FPd-Ut-7fa" customClass="ShareMainViewController" customModule="Skunk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="beginSharingScreen" id="FPd-Ut-7fa" customClass="ShareMainViewController" customModule="Skunk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Sti-XL-TOM"/>
                         <viewControllerLayoutGuide type="bottom" id="Dtt-Kv-Ppl"/>
@@ -58,6 +58,7 @@
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eWn-zj-Jja">
                                 <rect key="frame" x="0.0" y="292" width="320" height="227"/>
+                                <accessibility key="accessibilityConfiguration" label="beginSharingButton"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Begin Sharing">
@@ -94,7 +95,7 @@
         <!--Select Friends-->
         <scene sceneID="8gc-T2-LvO">
             <objects>
-                <tableViewController id="g18-mT-2Je" customClass="SelectRecieverViewController" customModule="Skunk" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SelectFriends" id="g18-mT-2Je" customClass="SelectRecieverViewController" customModule="Skunk" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="88" sectionHeaderHeight="28" sectionFooterHeight="28" id="aTY-ZY-hxU">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -131,7 +132,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Select Friends" id="Nyi-qV-pNl">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="Ffw-cp-h4U">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="Ffw-cp-h4U" userLabel="done">
                             <connections>
                                 <segue destination="PhS-iw-iKI" kind="push" id="fQD-xU-s8o"/>
                             </connections>
@@ -145,7 +146,7 @@
         <!--Share-->
         <scene sceneID="ZjP-zE-oLE">
             <objects>
-                <viewController id="PhS-iw-iKI" customClass="SharingViewController" customModule="Skunk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PickMeUp" id="PhS-iw-iKI" customClass="SharingViewController" customModule="Skunk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nVx-dq-g0y"/>
                         <viewControllerLayoutGuide type="bottom" id="W2o-Ja-DAu"/>
@@ -159,6 +160,7 @@
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ye8-hN-z6i">
                                 <rect key="frame" x="-4" y="336" width="332" height="74"/>
+                                <accessibility key="accessibilityConfiguration" label="pickMeUpButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="74" id="DI2-dw-rb6"/>
                                 </constraints>
@@ -167,6 +169,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljv-MD-Cfp">
                                 <rect key="frame" x="-4" y="438" width="328" height="73"/>
+                                <accessibility key="accessibilityConfiguration" label="stopSharingButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="73" id="ZcW-om-vh0"/>
                                 </constraints>
@@ -203,7 +206,7 @@
         <!--Share-->
         <scene sceneID="Qhl-Cf-FmL">
             <objects>
-                <viewController id="a3b-G1-MMr" customClass="SharerOptionsViewController" customModule="Skunk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SharerOptions" id="a3b-G1-MMr" customClass="SharerOptionsViewController" customModule="Skunk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Oa0-Oy-Hyd"/>
                         <viewControllerLayoutGuide type="bottom" id="a35-hq-4KW"/>
@@ -224,17 +227,6 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nGJ-OJ-gdC">
-                                <rect key="frame" x="0.0" y="396" width="320" height="115"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="115" id="II2-xJ-LFO"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
-                                <state key="normal" title="Select Friends "/>
-                                <connections>
-                                    <segue destination="g18-mT-2Je" kind="push" id="33v-3N-Sfm"/>
-                                </connections>
-                            </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="u7p-nX-Oos">
                                 <rect key="frame" x="96" y="72" width="129" height="29"/>
                                 <segments>
@@ -244,7 +236,20 @@
                             </segmentedControl>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ThV-Pb-1m8">
                                 <rect key="frame" x="255" y="344" width="51" height="31"/>
+                                <accessibility key="accessibilityConfiguration" label="requestRide"/>
                             </switch>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nGJ-OJ-gdC">
+                                <rect key="frame" x="0.0" y="396" width="320" height="115"/>
+                                <accessibility key="accessibilityConfiguration" label="selectFriendsButton"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="115" id="II2-xJ-LFO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                <state key="normal" title="Select Friends "/>
+                                <connections>
+                                    <segue destination="g18-mT-2Je" kind="push" id="33v-3N-Sfm"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
