@@ -65,6 +65,7 @@
                                 </state>
                                 <connections>
                                     <action selector="sharePressed:" destination="FPd-Ut-7fa" eventType="touchUpInside" id="gIm-qJ-R1F"/>
+                                    <segue destination="a3b-G1-MMr" kind="push" id="au7-xF-Kz2"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -84,54 +85,62 @@
                     <connections>
                         <outlet property="personalMapView" destination="4T0-Xt-sWt" id="EIg-rS-7vE"/>
                         <outlet property="shareButton" destination="eWn-zj-Jja" id="xEl-or-aTE"/>
-                        <segue destination="a3b-G1-MMr" kind="push" id="I6k-AK-FMS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qXm-Mz-BHd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1002" y="-461"/>
         </scene>
-        <!--Request Friends-->
-        <scene sceneID="LZn-oa-sUW">
+        <!--Select Friends-->
+        <scene sceneID="8gc-T2-LvO">
             <objects>
-                <viewController id="umm-na-qDT" customClass="SelectRecieverViewController" customModule="Skunk" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Eib-Ia-4iV"/>
-                        <viewControllerLayoutGuide type="bottom" id="nRa-t7-v6J"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Sy4-WR-B1P">
+                <tableViewController id="g18-mT-2Je" customClass="SelectRecieverViewController" customModule="Skunk" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="88" sectionHeaderHeight="28" sectionFooterHeight="28" id="aTY-ZY-hxU">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1dZ-dU-kMU">
-                                <rect key="frame" x="0.0" y="72" width="320" height="290"/>
-                            </pickerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LRc-lA-ypE">
-                                <rect key="frame" x="0.0" y="364" width="320" height="147"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="320" id="Gcn-6y-wWL"/>
-                                    <constraint firstAttribute="height" constant="147" id="eoy-du-A2y"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
-                                <state key="normal" title="Send Request"/>
-                            </button>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="nRa-t7-v6J" firstAttribute="top" secondItem="LRc-lA-ypE" secondAttribute="bottom" constant="8" id="GhR-tj-k6T"/>
-                            <constraint firstItem="LRc-lA-ypE" firstAttribute="centerX" secondItem="Sy4-WR-B1P" secondAttribute="centerX" id="Mkr-7K-0QK"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Request Friends" id="NY4-JL-tLa"/>
-                    <connections>
-                        <outlet property="friendsList" destination="1dZ-dU-kMU" id="7jc-e9-hZf"/>
-                        <outlet property="sendRequest" destination="LRc-lA-ypE" id="uIY-Db-29I"/>
-                        <segue destination="PhS-iw-iKI" kind="push" id="3hE-np-K7P"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xHS-JX-FcC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="FriendCell" textLabel="Mwd-Lc-slY" detailTextLabel="3N2-gI-PhM" rowHeight="88" style="IBUITableViewCellStyleSubtitle" id="oFr-cD-Mpu">
+                                <rect key="frame" x="0.0" y="92" width="320" height="88"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oFr-cD-Mpu" id="HGL-g9-SQr">
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="87.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mwd-Lc-slY">
+                                            <rect key="frame" x="15" y="28" width="31.5" height="19.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3N2-gI-PhM">
+                                            <rect key="frame" x="15" y="47.5" width="40.5" height="13.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="g18-mT-2Je" id="YHV-5T-sPi"/>
+                            <outlet property="delegate" destination="g18-mT-2Je" id="Dh0-pV-1aC"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Select Friends" id="Nyi-qV-pNl">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="Ffw-cp-h4U">
+                            <connections>
+                                <segue destination="PhS-iw-iKI" kind="push" id="fQD-xU-s8o"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="faC-7g-z5E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2004" y="-461"/>
+            <point key="canvasLocation" x="1988" y="-461"/>
         </scene>
         <!--Share-->
         <scene sceneID="ZjP-zE-oLE">
@@ -145,45 +154,44 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="OzD-Ia-iLr">
-                                <rect key="frame" x="0.0" y="64" width="320" height="242"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="DeL-hV-lgj">
+                                <rect key="frame" x="-4" y="64" width="328" height="264"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljv-MD-Cfp">
-                                <rect key="frame" x="0.0" y="467" width="320" height="44"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ye8-hN-z6i">
+                                <rect key="frame" x="-4" y="336" width="332" height="74"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="320" id="DU2-fV-Nxv"/>
-                                    <constraint firstAttribute="height" constant="44" id="eJz-c3-ruw"/>
+                                    <constraint firstAttribute="height" constant="74" id="DI2-dw-rb6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                <state key="normal" title="Pick me up!"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljv-MD-Cfp">
+                                <rect key="frame" x="-4" y="438" width="328" height="73"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="73" id="ZcW-om-vh0"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                 <state key="normal" title="Stop Sharing">
                                     <color key="titleColor" red="1" green="0.16002692767563964" blue="0.19565217519909206" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ye8-hN-z6i">
-                                <rect key="frame" x="0.0" y="314" width="320" height="145"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="145" id="W9l-hq-1dG"/>
-                                    <constraint firstAttribute="width" constant="320" id="o9H-14-RoT"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
-                                <state key="normal" title="Pick me up!"/>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="OzD-Ia-iLr" firstAttribute="top" secondItem="nVx-dq-g0y" secondAttribute="bottom" id="5gX-HC-wPX"/>
-                            <constraint firstItem="ljv-MD-Cfp" firstAttribute="trailing" secondItem="OzD-Ia-iLr" secondAttribute="trailing" id="9oR-OV-aOJ"/>
-                            <constraint firstItem="ljv-MD-Cfp" firstAttribute="leading" secondItem="ye8-hN-z6i" secondAttribute="leading" id="NnR-qC-2y8"/>
-                            <constraint firstItem="ljv-MD-Cfp" firstAttribute="top" secondItem="ye8-hN-z6i" secondAttribute="bottom" constant="8" symbolic="YES" id="YAX-bZ-6WA"/>
-                            <constraint firstItem="W2o-Ja-DAu" firstAttribute="top" secondItem="ljv-MD-Cfp" secondAttribute="bottom" constant="8" symbolic="YES" id="afi-2B-S2R"/>
-                            <constraint firstItem="ljv-MD-Cfp" firstAttribute="leading" secondItem="Xea-Eu-AYc" secondAttribute="leading" id="eHn-UA-YNI"/>
-                            <constraint firstItem="ye8-hN-z6i" firstAttribute="top" secondItem="OzD-Ia-iLr" secondAttribute="bottom" constant="8" symbolic="YES" id="fuq-VR-gM6"/>
-                            <constraint firstItem="ljv-MD-Cfp" firstAttribute="leading" secondItem="OzD-Ia-iLr" secondAttribute="leading" id="inD-Hc-krB"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ye8-hN-z6i" secondAttribute="trailing" constant="-24" id="5Xg-na-7ug"/>
+                            <constraint firstItem="W2o-Ja-DAu" firstAttribute="top" secondItem="ljv-MD-Cfp" secondAttribute="bottom" constant="8" symbolic="YES" id="7NB-NC-UjG"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ljv-MD-Cfp" secondAttribute="trailing" constant="-20" id="BMy-L1-4te"/>
+                            <constraint firstItem="ye8-hN-z6i" firstAttribute="leading" secondItem="Xea-Eu-AYc" secondAttribute="leadingMargin" constant="-20" id="GeN-Fb-Cdh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="DeL-hV-lgj" secondAttribute="trailing" constant="-20" id="HnJ-yw-yPM"/>
+                            <constraint firstItem="ljv-MD-Cfp" firstAttribute="top" secondItem="ye8-hN-z6i" secondAttribute="bottom" constant="28" id="X9H-vx-hFA"/>
+                            <constraint firstItem="ljv-MD-Cfp" firstAttribute="leading" secondItem="Xea-Eu-AYc" secondAttribute="leadingMargin" constant="-20" id="g9o-Hy-Zzl"/>
+                            <constraint firstItem="DeL-hV-lgj" firstAttribute="leading" secondItem="Xea-Eu-AYc" secondAttribute="leadingMargin" constant="-20" id="plb-YX-QQP"/>
+                            <constraint firstItem="ye8-hN-z6i" firstAttribute="top" secondItem="DeL-hV-lgj" secondAttribute="bottom" constant="8" id="u4v-8E-iqP"/>
+                            <constraint firstItem="DeL-hV-lgj" firstAttribute="top" secondItem="nVx-dq-g0y" secondAttribute="bottom" id="uvX-aC-JFE"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Share" id="RDI-UE-dbM"/>
                     <connections>
-                        <outlet property="mapView" destination="OzD-Ia-iLr" id="foN-BU-6Gc"/>
                         <outlet property="pickUpButton" destination="ye8-hN-z6i" id="zbr-JD-bVV"/>
                         <outlet property="stopSharingButton" destination="ljv-MD-Cfp" id="kRp-E0-Pun"/>
                     </connections>
@@ -204,116 +212,64 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ThV-Pb-1m8">
-                                <rect key="frame" x="251" y="337" width="51" height="31"/>
-                            </switch>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="NHD-Zh-3A3">
-                                <rect key="frame" x="0.0" y="113" width="320" height="216"/>
+                                <rect key="frame" x="-2" y="108" width="324" height="216"/>
                                 <date key="date" timeIntervalSinceReferenceDate="464472222.91563201">
                                     <!--2015-09-20 20:03:42 +0000-->
                                 </date>
-                                <connections>
-                                    <segue destination="umm-na-qDT" kind="push" id="sck-Pb-73l"/>
-                                </connections>
                             </datePicker>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="vFd-m1-HsD">
-                                <rect key="frame" x="113" y="72" width="95" height="29"/>
-                                <segments>
-                                    <segment title="Time"/>
-                                    <segment title="Night"/>
-                                </segments>
-                            </segmentedControl>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Iio-OF-yzD">
-                                <rect key="frame" x="0.0" y="376" width="320" height="135"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="hXy-30-M0A">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="135"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nGJ-OJ-gdC">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="135"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="320" id="7h1-TL-5J7"/>
-                                                    <constraint firstAttribute="height" constant="135" id="bCy-yg-qeI"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
-                                                <state key="normal" title="Select Friends "/>
-                                            </button>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstItem="nGJ-OJ-gdC" firstAttribute="leading" secondItem="hXy-30-M0A" secondAttribute="leading" id="3TY-l6-Bhw"/>
-                                            <constraint firstItem="nGJ-OJ-gdC" firstAttribute="centerY" secondItem="hXy-30-M0A" secondAttribute="centerY" id="56L-Vf-j1Q"/>
-                                            <constraint firstItem="nGJ-OJ-gdC" firstAttribute="leading" secondItem="hXy-30-M0A" secondAttribute="leading" id="9B0-J7-ARg"/>
-                                            <constraint firstAttribute="bottom" secondItem="nGJ-OJ-gdC" secondAttribute="bottom" id="CPX-fQ-M9n"/>
-                                            <constraint firstItem="nGJ-OJ-gdC" firstAttribute="leading" secondItem="hXy-30-M0A" secondAttribute="leading" id="CdW-nZ-faS"/>
-                                            <constraint firstItem="nGJ-OJ-gdC" firstAttribute="bottom" secondItem="hXy-30-M0A" secondAttribute="bottomMargin" id="Dvv-59-4RE"/>
-                                            <constraint firstItem="nGJ-OJ-gdC" firstAttribute="top" secondItem="hXy-30-M0A" secondAttribute="top" id="FOI-0v-Fox"/>
-                                            <constraint firstAttribute="bottom" secondItem="nGJ-OJ-gdC" secondAttribute="bottom" id="Ok3-k0-Uni"/>
-                                            <constraint firstItem="nGJ-OJ-gdC" firstAttribute="top" secondItem="hXy-30-M0A" secondAttribute="top" id="aQL-Il-3IR"/>
-                                            <constraint firstItem="nGJ-OJ-gdC" firstAttribute="trailing" secondItem="hXy-30-M0A" secondAttribute="trailingMargin" id="brx-vA-Z9P"/>
-                                            <constraint firstItem="nGJ-OJ-gdC" firstAttribute="top" secondItem="hXy-30-M0A" secondAttribute="topMargin" id="ctu-IS-hG4"/>
-                                            <constraint firstItem="nGJ-OJ-gdC" firstAttribute="leading" secondItem="hXy-30-M0A" secondAttribute="leadingMargin" id="dkS-47-xVr"/>
-                                            <constraint firstItem="nGJ-OJ-gdC" firstAttribute="leading" secondItem="hXy-30-M0A" secondAttribute="leading" id="ehR-0x-X5r"/>
-                                            <constraint firstItem="nGJ-OJ-gdC" firstAttribute="top" secondItem="hXy-30-M0A" secondAttribute="top" id="g87-le-UtA"/>
-                                            <constraint firstItem="nGJ-OJ-gdC" firstAttribute="centerX" secondItem="hXy-30-M0A" secondAttribute="centerX" id="itc-E0-mcb"/>
-                                            <constraint firstItem="nGJ-OJ-gdC" firstAttribute="top" secondItem="hXy-30-M0A" secondAttribute="top" id="kTE-Cs-KST"/>
-                                            <constraint firstAttribute="trailing" secondItem="nGJ-OJ-gdC" secondAttribute="trailing" id="mTD-fa-WDd"/>
-                                            <constraint firstAttribute="trailing" secondItem="nGJ-OJ-gdC" secondAttribute="trailing" id="qWv-dg-8sw"/>
-                                        </constraints>
-                                    </stackView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="hXy-30-M0A" secondAttribute="trailing" id="034-ir-7s9"/>
-                                    <constraint firstItem="hXy-30-M0A" firstAttribute="leading" secondItem="Iio-OF-yzD" secondAttribute="leading" id="2nh-sX-OyO"/>
-                                    <constraint firstItem="hXy-30-M0A" firstAttribute="leading" secondItem="Iio-OF-yzD" secondAttribute="leadingMargin" id="4Bl-tQ-hbY"/>
-                                    <constraint firstItem="hXy-30-M0A" firstAttribute="top" secondItem="Iio-OF-yzD" secondAttribute="top" id="4nb-yI-f0T"/>
-                                    <constraint firstItem="hXy-30-M0A" firstAttribute="top" secondItem="Iio-OF-yzD" secondAttribute="top" id="6DN-99-tcE"/>
-                                    <constraint firstItem="hXy-30-M0A" firstAttribute="leading" secondItem="Iio-OF-yzD" secondAttribute="leading" id="8Ov-xb-OuQ"/>
-                                    <constraint firstItem="hXy-30-M0A" firstAttribute="top" secondItem="Iio-OF-yzD" secondAttribute="top" id="CvM-nP-oaz"/>
-                                    <constraint firstItem="hXy-30-M0A" firstAttribute="bottom" secondItem="Iio-OF-yzD" secondAttribute="bottomMargin" id="JKd-Bu-ab9"/>
-                                    <constraint firstItem="hXy-30-M0A" firstAttribute="top" secondItem="Iio-OF-yzD" secondAttribute="top" id="Oj4-r1-3iL"/>
-                                    <constraint firstAttribute="bottom" secondItem="hXy-30-M0A" secondAttribute="bottom" id="PUP-AZ-uBp"/>
-                                    <constraint firstItem="hXy-30-M0A" firstAttribute="top" secondItem="Iio-OF-yzD" secondAttribute="topMargin" id="WQ8-lV-ZXn"/>
-                                    <constraint firstAttribute="trailing" secondItem="hXy-30-M0A" secondAttribute="trailing" id="cM5-Hb-C4A"/>
-                                    <constraint firstAttribute="bottom" secondItem="hXy-30-M0A" secondAttribute="bottom" id="fL0-Fj-TIJ"/>
-                                    <constraint firstItem="hXy-30-M0A" firstAttribute="centerX" secondItem="Iio-OF-yzD" secondAttribute="centerX" id="fXU-HC-j6K"/>
-                                    <constraint firstItem="hXy-30-M0A" firstAttribute="trailing" secondItem="Iio-OF-yzD" secondAttribute="trailingMargin" id="mYU-Be-rHp"/>
-                                    <constraint firstAttribute="bottom" secondItem="hXy-30-M0A" secondAttribute="bottom" id="w1o-Ca-yfG"/>
-                                    <constraint firstItem="hXy-30-M0A" firstAttribute="centerY" secondItem="Iio-OF-yzD" secondAttribute="centerY" id="wcS-oO-Jvi"/>
-                                    <constraint firstItem="hXy-30-M0A" firstAttribute="leading" secondItem="Iio-OF-yzD" secondAttribute="leading" id="xvo-lo-AnR"/>
-                                    <constraint firstItem="hXy-30-M0A" firstAttribute="leading" secondItem="Iio-OF-yzD" secondAttribute="leading" id="zQc-Mw-3gH"/>
-                                    <constraint firstAttribute="trailing" secondItem="hXy-30-M0A" secondAttribute="trailing" id="zsl-9z-7NG"/>
-                                </constraints>
-                            </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Request a Ride" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bep-fx-x6D">
-                                <rect key="frame" x="0.0" y="342" width="162" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="162" id="6Md-li-6Fw"/>
-                                </constraints>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Request a Ride" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bep-fx-x6D">
+                                <rect key="frame" x="16" y="332" width="141" height="56"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nGJ-OJ-gdC">
+                                <rect key="frame" x="0.0" y="396" width="320" height="115"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="115" id="II2-xJ-LFO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                <state key="normal" title="Select Friends "/>
+                                <connections>
+                                    <segue destination="g18-mT-2Je" kind="push" id="33v-3N-Sfm"/>
+                                </connections>
+                            </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="u7p-nX-Oos">
+                                <rect key="frame" x="96" y="72" width="129" height="29"/>
+                                <segments>
+                                    <segment title="Time"/>
+                                    <segment title="Location"/>
+                                </segments>
+                            </segmentedControl>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ThV-Pb-1m8">
+                                <rect key="frame" x="255" y="344" width="51" height="31"/>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="NHD-Zh-3A3" firstAttribute="top" secondItem="vFd-m1-HsD" secondAttribute="bottom" constant="13" id="2kH-gE-8fk"/>
-                            <constraint firstItem="Bep-fx-x6D" firstAttribute="centerY" secondItem="ThV-Pb-1m8" secondAttribute="centerY" id="D2a-Rt-LyQ"/>
-                            <constraint firstItem="Iio-OF-yzD" firstAttribute="leading" secondItem="NHD-Zh-3A3" secondAttribute="leading" id="H5k-UR-EFg"/>
-                            <constraint firstItem="a35-hq-4KW" firstAttribute="top" secondItem="Iio-OF-yzD" secondAttribute="bottom" constant="8" symbolic="YES" id="IyO-P5-HN8"/>
-                            <constraint firstItem="ThV-Pb-1m8" firstAttribute="top" secondItem="NHD-Zh-3A3" secondAttribute="bottom" constant="8" symbolic="YES" id="TTb-Yt-san"/>
-                            <constraint firstItem="Iio-OF-yzD" firstAttribute="centerX" secondItem="vFd-m1-HsD" secondAttribute="centerX" id="Teh-LS-spA"/>
-                            <constraint firstItem="ThV-Pb-1m8" firstAttribute="leading" secondItem="Bep-fx-x6D" secondAttribute="trailing" constant="89" id="XJt-Dx-eWX"/>
-                            <constraint firstItem="Iio-OF-yzD" firstAttribute="leading" secondItem="3vm-v7-Ik0" secondAttribute="leading" id="d7O-aS-WJ0"/>
-                            <constraint firstItem="Bep-fx-x6D" firstAttribute="top" secondItem="NHD-Zh-3A3" secondAttribute="bottom" constant="13" id="gvg-Ku-Vce"/>
-                            <constraint firstItem="Iio-OF-yzD" firstAttribute="leading" secondItem="Bep-fx-x6D" secondAttribute="leading" id="klB-uE-Qfh"/>
-                            <constraint firstItem="Iio-OF-yzD" firstAttribute="top" secondItem="ThV-Pb-1m8" secondAttribute="bottom" constant="8" symbolic="YES" id="mFU-0K-vrs"/>
+                            <constraint firstItem="nGJ-OJ-gdC" firstAttribute="top" secondItem="ThV-Pb-1m8" secondAttribute="bottom" constant="21" id="0d3-Sf-ady"/>
+                            <constraint firstItem="nGJ-OJ-gdC" firstAttribute="leading" secondItem="3vm-v7-Ik0" secondAttribute="leadingMargin" constant="-16" id="3Sn-pZ-v7e"/>
+                            <constraint firstItem="NHD-Zh-3A3" firstAttribute="top" secondItem="3vm-v7-Ik0" secondAttribute="top" constant="108" id="63U-zk-uqf"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="u7p-nX-Oos" secondAttribute="trailing" constant="79" id="BGB-eQ-JQR"/>
+                            <constraint firstItem="u7p-nX-Oos" firstAttribute="top" secondItem="Oa0-Oy-Hyd" secondAttribute="bottom" constant="8" id="DWf-If-S8r"/>
+                            <constraint firstItem="nGJ-OJ-gdC" firstAttribute="top" secondItem="Bep-fx-x6D" secondAttribute="bottom" constant="8" id="Deb-O1-up2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="nGJ-OJ-gdC" secondAttribute="trailing" constant="-16" id="FwO-P4-0j3"/>
+                            <constraint firstItem="Bep-fx-x6D" firstAttribute="top" secondItem="NHD-Zh-3A3" secondAttribute="bottom" constant="8" id="KkH-zF-inw"/>
+                            <constraint firstItem="a35-hq-4KW" firstAttribute="top" secondItem="nGJ-OJ-gdC" secondAttribute="bottom" constant="8" id="MNB-od-qe0"/>
+                            <constraint firstItem="ThV-Pb-1m8" firstAttribute="leading" secondItem="Bep-fx-x6D" secondAttribute="trailing" constant="98" id="SHT-mt-2Uu"/>
+                            <constraint firstItem="ThV-Pb-1m8" firstAttribute="trailing" secondItem="3vm-v7-Ik0" secondAttribute="trailingMargin" id="TKW-B5-Oii"/>
+                            <constraint firstItem="ThV-Pb-1m8" firstAttribute="top" secondItem="NHD-Zh-3A3" secondAttribute="bottom" constant="20" id="Y21-VS-sij"/>
+                            <constraint firstItem="NHD-Zh-3A3" firstAttribute="leading" secondItem="3vm-v7-Ik0" secondAttribute="leadingMargin" constant="-18" id="ZPA-Cc-MkQ"/>
+                            <constraint firstItem="Bep-fx-x6D" firstAttribute="leading" secondItem="3vm-v7-Ik0" secondAttribute="leadingMargin" id="aR9-xF-8F1"/>
+                            <constraint firstItem="u7p-nX-Oos" firstAttribute="leading" secondItem="3vm-v7-Ik0" secondAttribute="leadingMargin" constant="80" id="bus-3f-GUZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="NHD-Zh-3A3" secondAttribute="trailing" constant="-18" id="otY-NR-po7"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Share" id="qai-c0-eFY"/>
                     <connections>
                         <outlet property="requestRideOption" destination="ThV-Pb-1m8" id="Ndc-9V-bWf"/>
                         <outlet property="selectFriendsButton" destination="nGJ-OJ-gdC" id="RXi-Gf-NUt"/>
-                        <outlet property="timeNightOption" destination="vFd-m1-HsD" id="zwx-cl-zax"/>
                         <outlet property="timeSelection" destination="NHD-Zh-3A3" id="UlM-03-4ML"/>
                     </connections>
                 </viewController>
