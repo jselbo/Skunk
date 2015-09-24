@@ -20,7 +20,7 @@ class UserAccount: NSObject, CustomDebugStringConvertible {
     
     override var debugDescription: String {
         get {
-            return "UserAccount {name: '\(firstName) \(lastName)', phone: '\(phoneNumber)', pass: \(password)}"
+            return "UserAccount {name: '\(firstName) \(lastName)', phone: '\(phoneNumber.debugDescription)', pass: \(password)}"
         }
     }
     

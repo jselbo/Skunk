@@ -16,7 +16,7 @@ class RegisteredUserAccount: NSObject, CustomDebugStringConvertible {
     
     override var debugDescription: String {
         get {
-            return "RegisteredUserAccount {id: \(identifier), account: \(userAccount)}"
+            return "RegisteredUserAccount {id: \(identifier), account: \(userAccount.debugDescription)}"
         }
     }
     
