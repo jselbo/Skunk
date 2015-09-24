@@ -48,7 +48,8 @@ class RegisterViewController: UITableViewController {
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         if let registeredAccount = registeredAccount {
                             // Registration succeeded
-                            self.saveRegisteredAccount(registeredAccount)
+                            self.saveRegisteredAccountAndPresentMainController(registeredAccount,
+                                accountManager: self.accountManager)
                         } else {
                             // Registration failed
                             hud.hide(true)
@@ -90,37 +91,4 @@ class RegisterViewController: UITableViewController {
         return UserAccount(firstName: firstName!, lastName: lastName!, phoneNumber: phone, password: password!)
     }
     
-    private func saveRegisteredAccount(account: RegisteredUserAccount) {
-        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
-        dispatch_async(queue) { () -> Void in
-            var success = false
-            
-            do {
-                try self.accountManager.saveRegisteredAccount(account)
-                success = true
-            } catch UserAccountManagerError.DefaultsSynchronize {
-                print("Error synchronizing NSDefaults")
-            } catch UserAccountManagerError.KeychainSave(let saveError, let data) {
-                print("Error \(saveError) saving data '\(data)' to keychain")
-            } catch {
-                print("Unknown save error")
-            }
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                MBProgressHUD(forView: self.view).hide(true)
-                
-                if success {
-                    // Jump to Main storyboard
-                    let mainStoryboard = UIStoryboard(name: Constants.Storyboards.main, bundle: nil)
-                    let mainController = mainStoryboard.instantiateInitialViewController() as! MainTabBarController
-                    mainController.accountManager = self.accountManager
-                    
-                    let window = UIApplication.sharedApplication().delegate!.window!!
-                    window.rootViewController = mainController
-                } else {
-                    self.presentErrorAlert("Failed to save registration information")
-                }
-            })
-        }
-    }
 }

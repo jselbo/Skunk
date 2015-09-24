@@ -28,8 +28,17 @@ class UserAccountManager: NSObject {
         }
     }
     
+    func logInWithCredentials(phone: PhoneNumber, password: String, completion: (registeredAccount: RegisteredUserAccount) -> ()) {
+        // TODO make actual POST request to log in (receive name, ID from server)
+        
+        let account = UserAccount(firstName: "Placeholder", lastName: "Name", phoneNumber: phone, password: password)
+        let registered = RegisteredUserAccount(userAccount: account, identifier: 12345)
+        completion(registeredAccount: registered)
+    }
+    
     func registerAccount(account: UserAccount, completion: (registeredAccount: RegisteredUserAccount?) -> ()) {
-        // TODO make actual POST request
+        // TODO make actual POST request to register (receive ID from server)
+        
         let registered = RegisteredUserAccount(userAccount: account, identifier: 12345)
         completion(registeredAccount: registered)
     }
