@@ -24,6 +24,8 @@ struct Constants {
     static let userIdentifierService = "SkunkUserIdentifier"
     static let userPasswordService = "SkunkUserPassword"
     
+    static let HUDProgressText = "Working"
+    
     struct Storyboards {
         static let launchScreen = "LaunchScreen"
         static let login = "Login"

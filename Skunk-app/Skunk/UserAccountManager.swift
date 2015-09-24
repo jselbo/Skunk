@@ -28,6 +28,12 @@ class UserAccountManager: NSObject {
         }
     }
     
+    func registerAccount(account: UserAccount, completion: (registeredAccount: RegisteredUserAccount?) -> ()) {
+        // TODO make actual POST request
+        let registered = RegisteredUserAccount(userAccount: account, identifier: 12345)
+        completion(registeredAccount: registered)
+    }
+    
     func saveRegisteredAccount(account: RegisteredUserAccount) throws {
         let defaults = NSUserDefaults()
         defaults.setObject(account.userAccount.firstName, forKey: Constants.keyFirstName)
@@ -39,6 +45,8 @@ class UserAccountManager: NSObject {
         
         try savePassword(account.userAccount.password)
         try saveUserIdentifier(account.identifier)
+        
+        registeredAccount = account
     }
     
     private func loadAccount() -> UserAccount? {
@@ -46,7 +54,7 @@ class UserAccountManager: NSObject {
         if let
             firstName = defaults.objectForKey(Constants.keyFirstName) as? String,
             lastName = defaults.objectForKey(Constants.keyLastName) as? String,
-            phone = defaults.objectForKey(Constants.keyPhoneNumber) as? String,
+            phone = PhoneNumber(text: defaults.objectForKey(Constants.keyPhoneNumber) as? String),
             pass = loadPassword() {
                 
             return UserAccount(firstName: firstName, lastName: lastName, phoneNumber: phone, password: pass)

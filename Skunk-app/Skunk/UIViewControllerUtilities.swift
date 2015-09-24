@@ -13,23 +13,10 @@ extension UIViewController {
     /// Convenience method to present a `UIAlertController` with the given message.
     func presentErrorAlert(message: String) -> UIAlertController {
         let alert = UIAlertController(title: Constants.alertTitle, message: message, preferredStyle: .Alert)
+        let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alert.addAction(action)
+        
         self.presentViewController(alert, animated: true, completion: nil)
-        return alert
-    }
-    
-    func presentActivityIndicatorAlert(message: String) -> UIAlertController {
-        let alert = UIAlertController(title: Constants.alertTitle, message: message, preferredStyle: .Alert)
-        
-        let indicatorView = UIActivityIndicatorView(frame: alert.view.bounds)
-        indicatorView.tintColor = UIColor.orangeColor()
-        indicatorView.activityIndicatorViewStyle = .WhiteLarge
-        indicatorView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        indicatorView.userInteractionEnabled = false
-        indicatorView.startAnimating()
-        
-        alert.view.addSubview(indicatorView)
-        self.presentViewController(alert, animated: true, completion: nil)
-        
         return alert
     }
     

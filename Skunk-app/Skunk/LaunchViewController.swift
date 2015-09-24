@@ -23,6 +23,7 @@ class LaunchViewController: UIViewController {
         if accountManager.registeredAccount != nil {
             let mainStoryboard = UIStoryboard(name: Constants.Storyboards.main, bundle: nil)
             let mainController = mainStoryboard.instantiateInitialViewController() as! MainTabBarController
+            mainController.accountManager = accountManager
             
             let window = UIApplication.sharedApplication().delegate!.window!!
             window.rootViewController = mainController

@@ -8,6 +8,8 @@
 
 import UIKit
 
+import MBProgressHUD
+
 class RegisterViewController: UITableViewController {
     var accountManager: UserAccountManager!
     
@@ -28,42 +30,97 @@ class RegisterViewController: UITableViewController {
     }
 
     @IBAction func registerPressed(sender: AnyObject) {
-        self.presentActivityIndicatorAlert("Loading stuff from server")
+        guard let account = validateUserAccountFieldsOrAlert() else {
+            return
+        }
+        
+        let hud = MBProgressHUD(view: self.view)
+        hud.dimBackground = true
+        hud.labelText = Constants.HUDProgressText
+        
+        self.view.addSubview(hud)
+        hud.show(true)
         
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
         dispatch_async(queue) { () -> Void in
-            NSThread.sleepForTimeInterval(5)
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.dismissViewControllerAnimated(true, completion: nil)
-            })
+            self.accountManager.registerAccount(account,
+                completion: { (registeredAccount: RegisteredUserAccount?) -> () in
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        if let registeredAccount = registeredAccount {
+                            // Registration succeeded
+                            self.saveRegisteredAccount(registeredAccount)
+                        } else {
+                            // Registration failed
+                            hud.hide(true)
+                            
+                            self.presentErrorAlert("Server registration failed")
+                        }
+                    })
+                }
+            )
         }
     }
-
-    private func registerAccountWithInput(account: UserAccount) throws {
-        /*var success = false
-        
-        do {
-            try registerAccountWithInput()
-            success = true
-        } catch UserAccountManagerError.DefaultsSynchronize {
-            print("Error synchronizing NSDefaults")
-        } catch UserAccountManagerError.KeychainSave(let saveError, let data) {
-            print("Error \(saveError) saving data '\(data)' to keychain")
-        } catch {
-            print("Unknown save error")
+    
+    /// Validate and return UserAccount, otherwise present alert indicating error.
+    private func validateUserAccountFieldsOrAlert() -> UserAccount? {
+        let firstName = firstNameField.text
+        guard firstName?.characters.count > 0 else {
+            presentErrorAlert("Please enter a first name")
+            return nil
         }
         
-        if success {
-            // proceed
-        } else {
-            presentAlert("Failed to save account information")
+        let lastName = lastNameField.text
+        guard lastName?.characters.count > 0 else {
+            presentErrorAlert("Please enter a last name")
+            return nil
         }
         
-        let account = UserAccount(firstName: "Josh", lastName: "Selbo", phoneNumber: "6361237777", password: "abc123")
-        let registeredAccount = RegisteredUserAccount(userAccount: account, identifier: 9990)
+        guard let phone = PhoneNumber(text: phoneField.text) else {
+            presentErrorAlert("Please enter a valid US phone number")
+            return nil
+        }
         
-        try accountManager.saveRegisteredAccount(registeredAccount)
-*/
+        let password = passwordField.text
+        guard password?.characters.count > 0 else {
+            presentErrorAlert("Please enter a password")
+            return nil
+        }
+        
+        // Safe to force unwrap optionals at this point
+        return UserAccount(firstName: firstName!, lastName: lastName!, phoneNumber: phone, password: password!)
+    }
+    
+    private func saveRegisteredAccount(account: RegisteredUserAccount) {
+        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
+        dispatch_async(queue) { () -> Void in
+            var success = false
+            
+            do {
+                try self.accountManager.saveRegisteredAccount(account)
+                success = true
+            } catch UserAccountManagerError.DefaultsSynchronize {
+                print("Error synchronizing NSDefaults")
+            } catch UserAccountManagerError.KeychainSave(let saveError, let data) {
+                print("Error \(saveError) saving data '\(data)' to keychain")
+            } catch {
+                print("Unknown save error")
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                MBProgressHUD(forView: self.view).hide(true)
+                
+                if success {
+                    // Jump to Main storyboard
+                    let mainStoryboard = UIStoryboard(name: Constants.Storyboards.main, bundle: nil)
+                    let mainController = mainStoryboard.instantiateInitialViewController() as! MainTabBarController
+                    mainController.accountManager = self.accountManager
+                    
+                    let window = UIApplication.sharedApplication().delegate!.window!!
+                    window.rootViewController = mainController
+                } else {
+                    self.presentErrorAlert("Failed to save registration information")
+                }
+            })
+        }
     }
 }

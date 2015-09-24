@@ -14,7 +14,7 @@ class UserAccount: NSObject, CustomDebugStringConvertible {
     let lastName: String
     
     /// The unique identifier for a user.
-    let phoneNumber: String
+    let phoneNumber: PhoneNumber
     /// Used to authenticate user.
     let password: String
     
@@ -24,7 +24,7 @@ class UserAccount: NSObject, CustomDebugStringConvertible {
         }
     }
     
-    init(firstName: String, lastName: String, phoneNumber: String, password: String) {
+    init(firstName: String, lastName: String, phoneNumber: PhoneNumber, password: String) {
         self.firstName = firstName
         self.lastName = lastName
         self.phoneNumber = phoneNumber
