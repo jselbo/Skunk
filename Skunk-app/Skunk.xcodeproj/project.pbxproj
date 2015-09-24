@@ -17,6 +17,7 @@
 		033B16071BB432B100A945FD /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B16061BB432B100A945FD /* MainTabBarController.swift */; settings = {ASSET_TAGS = (); }; };
 		033B16091BB437D800A945FD /* UIViewControllerUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B16081BB437D800A945FD /* UIViewControllerUtilities.swift */; settings = {ASSET_TAGS = (); }; };
 		033B160B1BB44AA700A945FD /* PhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B160A1BB44AA700A945FD /* PhoneNumber.swift */; settings = {ASSET_TAGS = (); }; };
+		033B160D1BB4628500A945FD /* PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B160C1BB4628500A945FD /* PhoneNumberTests.swift */; settings = {ASSET_TAGS = (); }; };
 		034D95FF1BA9E2C000F997C5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034D95FE1BA9E2C000F997C5 /* MapKit.framework */; };
 		038A40101BA908FF00E65E1D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A400F1BA908FF00E65E1D /* AppDelegate.swift */; };
 		038A40171BA908FF00E65E1D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 038A40151BA908FF00E65E1D /* Main.storyboard */; };
@@ -66,6 +67,7 @@
 		033B16061BB432B100A945FD /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		033B16081BB437D800A945FD /* UIViewControllerUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerUtilities.swift; sourceTree = "<group>"; };
 		033B160A1BB44AA700A945FD /* PhoneNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumber.swift; sourceTree = "<group>"; };
+		033B160C1BB4628500A945FD /* PhoneNumberTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumberTests.swift; sourceTree = "<group>"; };
 		034D95FE1BA9E2C000F997C5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		038A400C1BA908FF00E65E1D /* Skunk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Skunk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		038A400F1BA908FF00E65E1D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				038A40281BA908FF00E65E1D /* Info.plist */,
+				033B160C1BB4628500A945FD /* PhoneNumberTests.swift */,
 				03AB65FE1BB1A3470094B9CC /* ShareSessionTests.swift */,
 				033B16041BB35EDF00A945FD /* UserAccountManagerTests.swift */,
 			);
@@ -486,6 +489,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				033B160D1BB4628500A945FD /* PhoneNumberTests.swift in Sources */,
 				033B16051BB35EDF00A945FD /* UserAccountManagerTests.swift in Sources */,
 				03AB65FF1BB1A3470094B9CC /* ShareSessionTests.swift in Sources */,
 			);

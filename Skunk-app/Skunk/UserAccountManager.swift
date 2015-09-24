@@ -38,7 +38,7 @@ class UserAccountManager: NSObject {
         let defaults = NSUserDefaults()
         defaults.setObject(account.userAccount.firstName, forKey: Constants.keyFirstName)
         defaults.setObject(account.userAccount.lastName, forKey: Constants.keyLastName)
-        defaults.setObject(account.userAccount.phoneNumber, forKey: Constants.keyPhoneNumber)
+        defaults.setObject(account.userAccount.phoneNumber.sanitizedText, forKey: Constants.keyPhoneNumber)
         guard defaults.synchronize() else {
             throw UserAccountManagerError.DefaultsSynchronize
         }

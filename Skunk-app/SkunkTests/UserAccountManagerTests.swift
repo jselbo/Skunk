@@ -31,7 +31,8 @@ class UserAccountManagerTests: XCTestCase {
     
     func testInit_AfterSave() {
         // Simulate save account credentials
-        let account = UserAccount(firstName: "John", lastName: "Smith", phoneNumber: "5551112222", password: "pass")
+        let phone = PhoneNumber(text: "5551112222")!
+        let account = UserAccount(firstName: "John", lastName: "Smith", phoneNumber: phone, password: "pass")
         let registeredAccount = RegisteredUserAccount(userAccount: account, identifier: 12345)
         
         let firstManager = UserAccountManager()
@@ -42,7 +43,7 @@ class UserAccountManagerTests: XCTestCase {
         XCTAssertNotNil(loadedAccount)
         XCTAssertEqual("John", loadedAccount?.userAccount.firstName)
         XCTAssertEqual("Smith", loadedAccount?.userAccount.lastName)
-        XCTAssertEqual("5551112222", loadedAccount?.userAccount.phoneNumber)
+        XCTAssertEqual("5551112222", loadedAccount?.userAccount.phoneNumber.sanitizedText)
         XCTAssertEqual("pass", loadedAccount?.userAccount.password)
         XCTAssertEqual(12345, loadedAccount?.identifier)
     }

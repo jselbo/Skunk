@@ -25,21 +25,15 @@ class PhoneNumber: NSObject, CustomDebugStringConvertible {
         }
         
         // Extract only number characters
-        let mutableText = NSMutableString()
-        let numberCharacterSet = NSCharacterSet(charactersInString: "0123456789")
-        for c in text.utf16 {
-            if numberCharacterSet.characterIsMember(c) {
-                mutableText.appendString(String(c))
-            }
-        }
+        let nonDigitCharacters = NSCharacterSet.decimalDigitCharacterSet().invertedSet
+        let digitsOnly = text.componentsSeparatedByCharactersInSet(nonDigitCharacters).joinWithSeparator("")
         
         // Ensure number of digits is what we expect
-        let parsed = mutableText as String
-        guard parsed.characters.count == expectedDigits else {
+        guard digitsOnly.characters.count == expectedDigits else {
             return nil
         }
         
-        sanitizedText = parsed
+        sanitizedText = digitsOnly
     }
     
 }
