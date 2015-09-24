@@ -14,6 +14,8 @@
 		033B16011BB34F8C00A945FD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B16001BB34F8C00A945FD /* LoginViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		033B16031BB34F9A00A945FD /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B16021BB34F9900A945FD /* RegisterViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		033B16051BB35EDF00A945FD /* UserAccountManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B16041BB35EDF00A945FD /* UserAccountManagerTests.swift */; settings = {ASSET_TAGS = (); }; };
+		033B16071BB432B100A945FD /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B16061BB432B100A945FD /* MainTabBarController.swift */; settings = {ASSET_TAGS = (); }; };
+		033B16091BB437D800A945FD /* UIViewControllerUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B16081BB437D800A945FD /* UIViewControllerUtilities.swift */; settings = {ASSET_TAGS = (); }; };
 		034D95FF1BA9E2C000F997C5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034D95FE1BA9E2C000F997C5 /* MapKit.framework */; };
 		038A40101BA908FF00E65E1D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A400F1BA908FF00E65E1D /* AppDelegate.swift */; };
 		038A40171BA908FF00E65E1D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 038A40151BA908FF00E65E1D /* Main.storyboard */; };
@@ -59,6 +61,8 @@
 		033B16001BB34F8C00A945FD /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		033B16021BB34F9900A945FD /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		033B16041BB35EDF00A945FD /* UserAccountManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAccountManagerTests.swift; sourceTree = "<group>"; };
+		033B16061BB432B100A945FD /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		033B16081BB437D800A945FD /* UIViewControllerUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerUtilities.swift; sourceTree = "<group>"; };
 		034D95FE1BA9E2C000F997C5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		038A400C1BA908FF00E65E1D /* Skunk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Skunk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		038A400F1BA908FF00E65E1D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -129,6 +133,7 @@
 				03AB65FC1BB195D30094B9CC /* CLLocationUtilities.swift */,
 				03AD41831BB0363B0053FF45 /* Constants.swift */,
 				03AB65FA1BB193E20094B9CC /* NSDateUtilities.swift */,
+				033B16081BB437D800A945FD /* UIViewControllerUtilities.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -204,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				033B15FD1BB34B6E00A945FD /* Login */,
+				033B16061BB432B100A945FD /* MainTabBarController.swift */,
 				038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */,
 				038A40421BA9184600E65E1D /* ShareMainViewController.swift */,
 			);
@@ -378,6 +384,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				033B16011BB34F8C00A945FD /* LoginViewController.swift in Sources */,
+				033B16071BB432B100A945FD /* MainTabBarController.swift in Sources */,
 				03AD417C1BAFB0B10053FF45 /* UserAccount.swift in Sources */,
 				038A40451BA9185000E65E1D /* ReceiveMainViewController.swift in Sources */,
 				033B15F81BB31A4A00A945FD /* UserAccountManager.swift in Sources */,
@@ -389,6 +396,7 @@
 				03AD41841BB0363B0053FF45 /* Constants.swift in Sources */,
 				03AB65FD1BB195D30094B9CC /* CLLocationUtilities.swift in Sources */,
 				038A40431BA9184600E65E1D /* ShareMainViewController.swift in Sources */,
+				033B16091BB437D800A945FD /* UIViewControllerUtilities.swift in Sources */,
 				03AD41891BB09B0C0053FF45 /* ShareSessionManager.swift in Sources */,
 				033B15FF1BB34B8000A945FD /* LaunchViewController.swift in Sources */,
 				03AD417E1BB033350053FF45 /* RegisteredUserAccount.swift in Sources */,

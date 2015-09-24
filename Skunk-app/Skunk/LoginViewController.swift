@@ -9,6 +9,7 @@
 import UIKit
 
 class LoginViewController: UITableViewController {
+    var accountManager: UserAccountManager!
 
     @IBOutlet weak var phoneField: UITextField!
     @IBOutlet weak var passwordField: UITextField!

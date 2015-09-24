@@ -23,4 +23,10 @@ struct Constants {
     // For Keychain access
     static let userIdentifierService = "SkunkUserIdentifier"
     static let userPasswordService = "SkunkUserPassword"
+    
+    struct Storyboards {
+        static let launchScreen = "LaunchScreen"
+        static let login = "Login"
+        static let main = "Main"
+    }
 }

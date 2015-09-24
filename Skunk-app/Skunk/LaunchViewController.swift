@@ -9,16 +9,23 @@
 import UIKit
 
 class LaunchViewController: UIViewController {
+    let loginSegue = "Login"
+    let registerSegue = "Register"
+    
     var accountManager: UserAccountManager!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Check if account information already stored. If so - skip login flow and
+        // load initial controller directly from Main storyboard.
         accountManager = UserAccountManager()
-        if let account = accountManager.registeredAccount {
-            print("got saved account: \(account)")
-        } else {
+        if accountManager.registeredAccount != nil {
+            let mainStoryboard = UIStoryboard(name: Constants.Storyboards.main, bundle: nil)
+            let mainController = mainStoryboard.instantiateInitialViewController() as! MainTabBarController
             
+            let window = UIApplication.sharedApplication().delegate!.window!!
+            window.rootViewController = mainController
         }
     }
 
@@ -27,28 +34,16 @@ class LaunchViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    // TODO remove this later
-    private func testSaveAccount() {
-        let account = UserAccount(firstName: "Josh", lastName: "Selbo", phoneNumber: "6361237777", password: "abc123")
-        let registeredAccount = RegisteredUserAccount(userAccount: account, identifier: 9990)
-        
-        var success = false
-        do {
-            try accountManager.saveRegisteredAccount(registeredAccount)
-            success = true
-        } catch UserAccountManagerError.DefaultsSynchronize {
-            print("Error synchronizing NSDefaults")
-        } catch UserAccountManagerError.KeychainSave(let saveError, let data) {
-            print("Error \(saveError) saving data '\(data)' to keychain")
-        } catch {
-            print("Unknown save error")
-        }
-        
-        if success {
-            // proceed
-        } else {
-            let alert = UIAlertController(title: Constants.alertTitle, message: "Failed to save account information", preferredStyle: .Alert)
-            self.presentViewController(alert, animated: true, completion: nil)
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        switch (segue.identifier!) {
+        case loginSegue:
+            let loginController = segue.destinationViewController as! LoginViewController
+            loginController.accountManager = accountManager
+        case registerSegue:
+            let registerController = segue.destinationViewController as! RegisterViewController
+            registerController.accountManager = accountManager
+        default:
+            break
         }
     }
 }
