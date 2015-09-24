@@ -1,0 +1,5 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+use_frameworks!
+
+pod 'MBProgressHUD', '~> 0.9.1'
