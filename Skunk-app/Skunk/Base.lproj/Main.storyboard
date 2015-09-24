@@ -242,11 +242,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="QeM-ze-Lvt">
-                                <rect key="frame" x="-4" y="64" width="328" height="228"/>
-                            </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Toq-ay-FMR">
-                                <rect key="frame" x="-4" y="296" width="328" height="227.5"/>
+                                <rect key="frame" x="-4" y="296" width="328" height="228"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2u6-vG-j9S">
                                         <rect key="frame" x="0.0" y="127" width="320" height="100"/>
@@ -263,9 +260,6 @@
                                         <state key="normal" title="I Can Pick You Up">
                                             <color key="titleColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
-                                        <connections>
-                                            <segue destination="csl-s9-DcN" kind="push" id="D6K-aU-ETD"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -281,6 +275,9 @@
                                     <constraint firstItem="2u6-vG-j9S" firstAttribute="top" secondItem="7YS-sy-hf8" secondAttribute="bottom" constant="19" id="yew-Qc-z5h"/>
                                 </constraints>
                             </view>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="QeM-ze-Lvt">
+                                <rect key="frame" x="-4" y="64" width="328" height="228"/>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -297,10 +294,15 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Receiver" id="p0c-P7-T21"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="canPickUp" destination="7YS-sy-hf8" id="HGO-72-yJZ"/>
+                        <outlet property="optionsViewPanel" destination="Toq-ay-FMR" id="kHn-tR-eD7"/>
+                        <outlet property="stopReceivingUpdates" destination="2u6-vG-j9S" id="LTB-ZV-HJj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iKL-fm-uZE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1002" y="235"/>
+            <point key="canvasLocation" x="1494" y="235"/>
         </scene>
         <!--Receiver-->
         <scene sceneID="vJO-SH-Mq6">
@@ -314,7 +316,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="56" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZSz-cV-uKR">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="56" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZSz-cV-uKR">
                                 <rect key="frame" x="0.0" y="64" width="320" height="460"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -341,11 +343,24 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="HNq-TB-zG9" kind="push" id="76q-rh-Zjf"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="csl-s9-DcN" id="eSI-21-8hS"/>
+                                    <outlet property="delegate" destination="csl-s9-DcN" id="kjX-HD-CL0"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="ZSz-cV-uKR" secondAttribute="bottom" constant="44" id="1zJ-wd-vSR"/>
+                            <constraint firstAttribute="trailing" secondItem="ZSz-cV-uKR" secondAttribute="trailing" id="Ssb-rg-XvY"/>
+                            <constraint firstItem="ZSz-cV-uKR" firstAttribute="leading" secondItem="7Lk-jF-Lnl" secondAttribute="leading" id="mCb-9o-Up1"/>
+                            <constraint firstItem="ZSz-cV-uKR" firstAttribute="top" secondItem="dkh-UN-yWf" secondAttribute="bottom" id="zHe-G4-YPY"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Receiver" id="V83-up-2sZ"/>
                     <connections>
@@ -354,7 +369,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xyb-vD-eev" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1494" y="235"/>
+            <point key="canvasLocation" x="1002" y="235"/>
         </scene>
         <!--Receiver-->
         <scene sceneID="T78-pk-EFl">
@@ -366,7 +381,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="HNq-TB-zG9" kind="relationship" relationship="rootViewController" id="lH4-lK-5OE"/>
+                        <segue destination="csl-s9-DcN" kind="relationship" relationship="rootViewController" id="Iho-Pf-jX1"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7TT-xI-Eu5" userLabel="First Responder" sceneMemberID="firstResponder"/>

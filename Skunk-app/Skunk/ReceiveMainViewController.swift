@@ -12,6 +12,9 @@ import MapKit
 class ReceiveMainViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var canPickUp: UIButton!
+    @IBOutlet weak var stopReceivingUpdates: UIButton!
+    @IBOutlet weak var optionsViewPanel: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()

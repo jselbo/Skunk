@@ -22,5 +22,18 @@ class ReceiveFriendsListViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    func numberOfSectionsInTableView(friendsTableView: UITableView) -> Int {
+        return 1;
+    }
+    
+    func tableView(friendsTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1;
+    }
+    
+    func tableView(friendsTableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = friendsTableView.dequeueReusableCellWithIdentifier("Friends Cell", forIndexPath: indexPath)
+        cell.textLabel?.text = "John Smith"
+        return cell
+    }
 }
