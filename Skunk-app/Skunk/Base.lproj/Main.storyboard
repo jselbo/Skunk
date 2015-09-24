@@ -44,7 +44,7 @@
         <!--Share-->
         <scene sceneID="3GF-hp-ZQI">
             <objects>
-                <viewController id="FPd-Ut-7fa" customClass="ShareMainViewController" customModule="Skunk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="beginSharingScreen" id="FPd-Ut-7fa" customClass="ShareMainViewController" customModule="Skunk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Sti-XL-TOM"/>
                         <viewControllerLayoutGuide type="bottom" id="Dtt-Kv-Ppl"/>
@@ -58,12 +58,15 @@
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eWn-zj-Jja">
                                 <rect key="frame" x="0.0" y="292" width="320" height="227"/>
-                                <color key="backgroundColor" red="0.0" green="0.50196081399917603" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <accessibility key="accessibilityConfiguration" label="beginSharingButton"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Begin Sharing"/>
+                                <state key="normal" title="Begin Sharing">
+                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="sharePressed:" destination="FPd-Ut-7fa" eventType="touchUpInside" id="gIm-qJ-R1F"/>
+                                    <segue destination="a3b-G1-MMr" kind="push" id="au7-xF-Kz2"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -88,6 +91,196 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qXm-Mz-BHd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1002" y="-461"/>
+        </scene>
+        <!--Select Friends-->
+        <scene sceneID="8gc-T2-LvO">
+            <objects>
+                <tableViewController storyboardIdentifier="SelectFriends" id="g18-mT-2Je" customClass="SelectRecieverViewController" customModule="Skunk" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="88" sectionHeaderHeight="28" sectionFooterHeight="28" id="aTY-ZY-hxU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="FriendCell" textLabel="Mwd-Lc-slY" detailTextLabel="3N2-gI-PhM" rowHeight="88" style="IBUITableViewCellStyleSubtitle" id="oFr-cD-Mpu">
+                                <rect key="frame" x="0.0" y="92" width="320" height="88"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oFr-cD-Mpu" id="HGL-g9-SQr">
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="87"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mwd-Lc-slY">
+                                            <rect key="frame" x="15" y="27" width="32" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3N2-gI-PhM">
+                                            <rect key="frame" x="15" y="47" width="41" height="14"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="g18-mT-2Je" id="YHV-5T-sPi"/>
+                            <outlet property="delegate" destination="g18-mT-2Je" id="Dh0-pV-1aC"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Select Friends" id="Nyi-qV-pNl">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="Ffw-cp-h4U" userLabel="done">
+                            <connections>
+                                <segue destination="PhS-iw-iKI" kind="push" id="fQD-xU-s8o"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="faC-7g-z5E" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1988" y="-461"/>
+        </scene>
+        <!--Share-->
+        <scene sceneID="ZjP-zE-oLE">
+            <objects>
+                <viewController storyboardIdentifier="PickMeUp" id="PhS-iw-iKI" customClass="SharingViewController" customModule="Skunk" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nVx-dq-g0y"/>
+                        <viewControllerLayoutGuide type="bottom" id="W2o-Ja-DAu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Xea-Eu-AYc">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="DeL-hV-lgj">
+                                <rect key="frame" x="-4" y="64" width="328" height="264"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ye8-hN-z6i">
+                                <rect key="frame" x="-4" y="336" width="332" height="74"/>
+                                <accessibility key="accessibilityConfiguration" label="pickMeUpButton"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="74" id="DI2-dw-rb6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                <state key="normal" title="Pick me up!"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljv-MD-Cfp">
+                                <rect key="frame" x="-4" y="438" width="328" height="73"/>
+                                <accessibility key="accessibilityConfiguration" label="stopSharingButton"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="73" id="ZcW-om-vh0"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                <state key="normal" title="Stop Sharing">
+                                    <color key="titleColor" red="1" green="0.16002692767563964" blue="0.19565217519909206" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="ye8-hN-z6i" secondAttribute="trailing" constant="-24" id="5Xg-na-7ug"/>
+                            <constraint firstItem="W2o-Ja-DAu" firstAttribute="top" secondItem="ljv-MD-Cfp" secondAttribute="bottom" constant="8" symbolic="YES" id="7NB-NC-UjG"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ljv-MD-Cfp" secondAttribute="trailing" constant="-20" id="BMy-L1-4te"/>
+                            <constraint firstItem="ye8-hN-z6i" firstAttribute="leading" secondItem="Xea-Eu-AYc" secondAttribute="leadingMargin" constant="-20" id="GeN-Fb-Cdh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="DeL-hV-lgj" secondAttribute="trailing" constant="-20" id="HnJ-yw-yPM"/>
+                            <constraint firstItem="ljv-MD-Cfp" firstAttribute="top" secondItem="ye8-hN-z6i" secondAttribute="bottom" constant="28" id="X9H-vx-hFA"/>
+                            <constraint firstItem="ljv-MD-Cfp" firstAttribute="leading" secondItem="Xea-Eu-AYc" secondAttribute="leadingMargin" constant="-20" id="g9o-Hy-Zzl"/>
+                            <constraint firstItem="DeL-hV-lgj" firstAttribute="leading" secondItem="Xea-Eu-AYc" secondAttribute="leadingMargin" constant="-20" id="plb-YX-QQP"/>
+                            <constraint firstItem="ye8-hN-z6i" firstAttribute="top" secondItem="DeL-hV-lgj" secondAttribute="bottom" constant="8" id="u4v-8E-iqP"/>
+                            <constraint firstItem="DeL-hV-lgj" firstAttribute="top" secondItem="nVx-dq-g0y" secondAttribute="bottom" id="uvX-aC-JFE"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Share" id="RDI-UE-dbM"/>
+                    <connections>
+                        <outlet property="pickUpButton" destination="ye8-hN-z6i" id="zbr-JD-bVV"/>
+                        <outlet property="stopSharingButton" destination="ljv-MD-Cfp" id="kRp-E0-Pun"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pqg-bG-Vnh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2462" y="-461"/>
+        </scene>
+        <!--Share-->
+        <scene sceneID="Qhl-Cf-FmL">
+            <objects>
+                <viewController storyboardIdentifier="SharerOptions" id="a3b-G1-MMr" customClass="SharerOptionsViewController" customModule="Skunk" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Oa0-Oy-Hyd"/>
+                        <viewControllerLayoutGuide type="bottom" id="a35-hq-4KW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3vm-v7-Ik0">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="NHD-Zh-3A3">
+                                <rect key="frame" x="-2" y="108" width="324" height="216"/>
+                                <date key="date" timeIntervalSinceReferenceDate="464472222.91563201">
+                                    <!--2015-09-20 20:03:42 +0000-->
+                                </date>
+                            </datePicker>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Request a Ride" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bep-fx-x6D">
+                                <rect key="frame" x="16" y="332" width="141" height="56"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="u7p-nX-Oos">
+                                <rect key="frame" x="96" y="72" width="129" height="29"/>
+                                <segments>
+                                    <segment title="Time"/>
+                                    <segment title="Location"/>
+                                </segments>
+                            </segmentedControl>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ThV-Pb-1m8">
+                                <rect key="frame" x="255" y="344" width="51" height="31"/>
+                                <accessibility key="accessibilityConfiguration" label="requestRide"/>
+                            </switch>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nGJ-OJ-gdC">
+                                <rect key="frame" x="0.0" y="396" width="320" height="115"/>
+                                <accessibility key="accessibilityConfiguration" label="selectFriendsButton"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="115" id="II2-xJ-LFO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                <state key="normal" title="Select Friends "/>
+                                <connections>
+                                    <segue destination="g18-mT-2Je" kind="push" id="33v-3N-Sfm"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="nGJ-OJ-gdC" firstAttribute="top" secondItem="ThV-Pb-1m8" secondAttribute="bottom" constant="21" id="0d3-Sf-ady"/>
+                            <constraint firstItem="nGJ-OJ-gdC" firstAttribute="leading" secondItem="3vm-v7-Ik0" secondAttribute="leadingMargin" constant="-16" id="3Sn-pZ-v7e"/>
+                            <constraint firstItem="NHD-Zh-3A3" firstAttribute="top" secondItem="3vm-v7-Ik0" secondAttribute="top" constant="108" id="63U-zk-uqf"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="u7p-nX-Oos" secondAttribute="trailing" constant="79" id="BGB-eQ-JQR"/>
+                            <constraint firstItem="u7p-nX-Oos" firstAttribute="top" secondItem="Oa0-Oy-Hyd" secondAttribute="bottom" constant="8" id="DWf-If-S8r"/>
+                            <constraint firstItem="nGJ-OJ-gdC" firstAttribute="top" secondItem="Bep-fx-x6D" secondAttribute="bottom" constant="8" id="Deb-O1-up2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="nGJ-OJ-gdC" secondAttribute="trailing" constant="-16" id="FwO-P4-0j3"/>
+                            <constraint firstItem="Bep-fx-x6D" firstAttribute="top" secondItem="NHD-Zh-3A3" secondAttribute="bottom" constant="8" id="KkH-zF-inw"/>
+                            <constraint firstItem="a35-hq-4KW" firstAttribute="top" secondItem="nGJ-OJ-gdC" secondAttribute="bottom" constant="8" id="MNB-od-qe0"/>
+                            <constraint firstItem="ThV-Pb-1m8" firstAttribute="leading" secondItem="Bep-fx-x6D" secondAttribute="trailing" constant="98" id="SHT-mt-2Uu"/>
+                            <constraint firstItem="ThV-Pb-1m8" firstAttribute="trailing" secondItem="3vm-v7-Ik0" secondAttribute="trailingMargin" id="TKW-B5-Oii"/>
+                            <constraint firstItem="ThV-Pb-1m8" firstAttribute="top" secondItem="NHD-Zh-3A3" secondAttribute="bottom" constant="20" id="Y21-VS-sij"/>
+                            <constraint firstItem="NHD-Zh-3A3" firstAttribute="leading" secondItem="3vm-v7-Ik0" secondAttribute="leadingMargin" constant="-18" id="ZPA-Cc-MkQ"/>
+                            <constraint firstItem="Bep-fx-x6D" firstAttribute="leading" secondItem="3vm-v7-Ik0" secondAttribute="leadingMargin" id="aR9-xF-8F1"/>
+                            <constraint firstItem="u7p-nX-Oos" firstAttribute="leading" secondItem="3vm-v7-Ik0" secondAttribute="leadingMargin" constant="80" id="bus-3f-GUZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="NHD-Zh-3A3" secondAttribute="trailing" constant="-18" id="otY-NR-po7"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Share" id="qai-c0-eFY"/>
+                    <connections>
+                        <outlet property="requestRideOption" destination="ThV-Pb-1m8" id="Ndc-9V-bWf"/>
+                        <outlet property="selectFriendsButton" destination="nGJ-OJ-gdC" id="RXi-Gf-NUt"/>
+                        <outlet property="timeSelection" destination="NHD-Zh-3A3" id="UlM-03-4ML"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cOp-S1-xx0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1494" y="-461"/>
         </scene>
         <!--Monitor-->
         <scene sceneID="WAn-lc-43F">
