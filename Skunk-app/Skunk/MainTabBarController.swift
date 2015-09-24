@@ -23,7 +23,7 @@ class MainTabBarController: UITabBarController {
         shareController.accountManager = accountManager
         
         let receiveNavController = viewControllers![1] as! UINavigationController
-        let receiveController = receiveNavController.viewControllers.first! as! ReceiveMainViewController
+        let receiveController = receiveNavController.viewControllers.first! as! ReceiveFriendsListViewController
         receiveController.accountManager = accountManager
     }
 }

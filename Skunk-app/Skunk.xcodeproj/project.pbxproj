@@ -26,6 +26,7 @@
 		038A40321BA908FF00E65E1D /* SkunkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40311BA908FF00E65E1D /* SkunkUITests.swift */; };
 		038A40431BA9184600E65E1D /* ShareMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40421BA9184600E65E1D /* ShareMainViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		038A40451BA9185000E65E1D /* ReceiveMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		B23369DC1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23369DB1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		03AB65F91BB18C770094B9CC /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB65F81BB18C770094B9CC /* Serializable.swift */; settings = {ASSET_TAGS = (); }; };
 		03AB65FB1BB193E20094B9CC /* NSDateUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB65FA1BB193E20094B9CC /* NSDateUtilities.swift */; settings = {ASSET_TAGS = (); }; };
 		03AB65FD1BB195D30094B9CC /* CLLocationUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB65FC1BB195D30094B9CC /* CLLocationUtilities.swift */; settings = {ASSET_TAGS = (); }; };
@@ -85,6 +86,7 @@
 		038A40331BA908FF00E65E1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		038A40421BA9184600E65E1D /* ShareMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareMainViewController.swift; sourceTree = "<group>"; };
 		038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiveMainViewController.swift; sourceTree = "<group>"; };
+		B23369DB1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiveFriendsListViewController.swift; sourceTree = "<group>"; };
 		03AB65F81BB18C770094B9CC /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		03AB65FA1BB193E20094B9CC /* NSDateUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateUtilities.swift; sourceTree = "<group>"; };
 		03AB65FC1BB195D30094B9CC /* CLLocationUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLLocationUtilities.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 				E5E1A4DD1BB03DD1008EE8FC /* SharingViewController.swift */,
 				033B15FD1BB34B6E00A945FD /* Login */,
 				033B16061BB432B100A945FD /* MainTabBarController.swift */,
+				B23369DB1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift */,
 				038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */,
 				038A40421BA9184600E65E1D /* ShareMainViewController.swift */,
 			);
@@ -495,6 +498,7 @@
 				033B15FF1BB34B8000A945FD /* LaunchViewController.swift in Sources */,
 				03AD417E1BB033350053FF45 /* RegisteredUserAccount.swift in Sources */,
 				E5E1A4DE1BB03DD1008EE8FC /* SharingViewController.swift in Sources */,
+				B23369DC1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
