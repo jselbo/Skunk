@@ -28,9 +28,14 @@ class SkunkUITests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testAppFlow() {
+        let app = XCUIApplication()
+        XCTAssert(app.buttons["beginSharingButton"].exists)
+        app.buttons["beginSharingButton"].tap()
+        XCTAssert(app.buttons["selectFriendsButton"].exists)
+        app.buttons["selectFriendsButton"].tap()
+        XCTAssert(app.navigationBars["Select Friends"].buttons["Done"].exists)
+        app.navigationBars["Select Friends"].buttons["Done"].tap()
+        XCTAssert( app.buttons["stopSharingButton"].exists )
     }
-    
 }
