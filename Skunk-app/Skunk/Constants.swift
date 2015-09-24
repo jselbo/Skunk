@@ -8,7 +8,8 @@
 
 import Foundation
 
-// Use a typealias for user identifiers so we can easily change the type later if needed
+// Use a typealias for identifiers so we can easily change the type later if needed
+typealias Sid = UInt64
 typealias Uid = UInt64
 
 struct Constants {
