@@ -13,6 +13,7 @@
 		033B15FF1BB34B8000A945FD /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B15FE1BB34B8000A945FD /* LaunchViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		033B16011BB34F8C00A945FD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B16001BB34F8C00A945FD /* LoginViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		033B16031BB34F9A00A945FD /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B16021BB34F9900A945FD /* RegisterViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		033B16051BB35EDF00A945FD /* UserAccountManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B16041BB35EDF00A945FD /* UserAccountManagerTests.swift */; settings = {ASSET_TAGS = (); }; };
 		034D95FF1BA9E2C000F997C5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034D95FE1BA9E2C000F997C5 /* MapKit.framework */; };
 		038A40101BA908FF00E65E1D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A400F1BA908FF00E65E1D /* AppDelegate.swift */; };
 		038A40171BA908FF00E65E1D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 038A40151BA908FF00E65E1D /* Main.storyboard */; };
@@ -57,6 +58,7 @@
 		033B15FE1BB34B8000A945FD /* LaunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		033B16001BB34F8C00A945FD /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		033B16021BB34F9900A945FD /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		033B16041BB35EDF00A945FD /* UserAccountManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAccountManagerTests.swift; sourceTree = "<group>"; };
 		034D95FE1BA9E2C000F997C5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		038A400C1BA908FF00E65E1D /* Skunk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Skunk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		038A400F1BA908FF00E65E1D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -172,8 +174,9 @@
 		038A40251BA908FF00E65E1D /* SkunkTests */ = {
 			isa = PBXGroup;
 			children = (
-				03AB65FE1BB1A3470094B9CC /* ShareSessionTests.swift */,
 				038A40281BA908FF00E65E1D /* Info.plist */,
+				03AB65FE1BB1A3470094B9CC /* ShareSessionTests.swift */,
+				033B16041BB35EDF00A945FD /* UserAccountManagerTests.swift */,
 			);
 			path = SkunkTests;
 			sourceTree = "<group>";
@@ -396,6 +399,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				033B16051BB35EDF00A945FD /* UserAccountManagerTests.swift in Sources */,
 				03AB65FF1BB1A3470094B9CC /* ShareSessionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
