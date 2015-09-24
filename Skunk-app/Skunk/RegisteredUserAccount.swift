@@ -10,9 +10,15 @@ import UIKit
 
 /// A UserAccount which has been verified and registered by the server.
 /// When registered, it is assigned
-class RegisteredUserAccount: NSObject {
+class RegisteredUserAccount: NSObject, CustomDebugStringConvertible {
     let userAccount: UserAccount
     let identifier: Uid
+    
+    override var debugDescription: String {
+        get {
+            return "RegisteredUserAccount {id: \(identifier), account: \(userAccount.debugDescription)}"
+        }
+    }
     
     init(userAccount: UserAccount, identifier: Uid) {
         self.userAccount = userAccount

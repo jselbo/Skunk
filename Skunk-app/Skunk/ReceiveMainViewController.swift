@@ -9,6 +9,8 @@
 import UIKit
 
 class ReceiveMainViewController: UIViewController {
+    
+    var accountManager: UserAccountManager!
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -11,6 +11,8 @@ import UIKit
 
 class ShareMainViewController: UIViewController {
     
+    var accountManager: UserAccountManager!
+    
     @IBOutlet weak var personalMapView: MKMapView!
     @IBOutlet weak var shareButton: UIButton!
 

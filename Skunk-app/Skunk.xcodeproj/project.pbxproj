@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		033B15F81BB31A4A00A945FD /* UserAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B15F71BB31A4A00A945FD /* UserAccountManager.swift */; settings = {ASSET_TAGS = (); }; };
+		033B15FA1BB31B3700A945FD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 033B15F91BB31B3700A945FD /* Security.framework */; };
+		033B15FC1BB34B3700A945FD /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 033B15FB1BB34B3700A945FD /* Login.storyboard */; settings = {ASSET_TAGS = (); }; };
+		033B15FF1BB34B8000A945FD /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B15FE1BB34B8000A945FD /* LaunchViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		033B16011BB34F8C00A945FD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B16001BB34F8C00A945FD /* LoginViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		033B16031BB34F9A00A945FD /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B16021BB34F9900A945FD /* RegisterViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		033B16051BB35EDF00A945FD /* UserAccountManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B16041BB35EDF00A945FD /* UserAccountManagerTests.swift */; settings = {ASSET_TAGS = (); }; };
+		033B16071BB432B100A945FD /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B16061BB432B100A945FD /* MainTabBarController.swift */; settings = {ASSET_TAGS = (); }; };
+		033B16091BB437D800A945FD /* UIViewControllerUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B16081BB437D800A945FD /* UIViewControllerUtilities.swift */; settings = {ASSET_TAGS = (); }; };
+		033B160B1BB44AA700A945FD /* PhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B160A1BB44AA700A945FD /* PhoneNumber.swift */; settings = {ASSET_TAGS = (); }; };
+		033B160D1BB4628500A945FD /* PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B160C1BB4628500A945FD /* PhoneNumberTests.swift */; settings = {ASSET_TAGS = (); }; };
 		034D95FF1BA9E2C000F997C5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034D95FE1BA9E2C000F997C5 /* MapKit.framework */; };
 		038A40101BA908FF00E65E1D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A400F1BA908FF00E65E1D /* AppDelegate.swift */; };
 		038A40171BA908FF00E65E1D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 038A40151BA908FF00E65E1D /* Main.storyboard */; };
@@ -28,6 +39,7 @@
 		E56A142B1BAF4BA600985CC7 /* SharerOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A142A1BAF4BA600985CC7 /* SharerOptionsViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		E5E1A4DE1BB03DD1008EE8FC /* SharingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E1A4DD1BB03DD1008EE8FC /* SharingViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		E5F2F9F91BB311000082CF84 /* SharerSelectRecieverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F2F9F81BB311000082CF84 /* SharerSelectRecieverViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		4B18D352DA71E7918A3597E2 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 415C7F2891D02584B84E1204 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +60,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		033B15F71BB31A4A00A945FD /* UserAccountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAccountManager.swift; sourceTree = "<group>"; };
+		033B15F91BB31B3700A945FD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		033B15FB1BB34B3700A945FD /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		033B15FE1BB34B8000A945FD /* LaunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
+		033B16001BB34F8C00A945FD /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		033B16021BB34F9900A945FD /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		033B16041BB35EDF00A945FD /* UserAccountManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAccountManagerTests.swift; sourceTree = "<group>"; };
+		033B16061BB432B100A945FD /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		033B16081BB437D800A945FD /* UIViewControllerUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerUtilities.swift; sourceTree = "<group>"; };
+		033B160A1BB44AA700A945FD /* PhoneNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumber.swift; sourceTree = "<group>"; };
+		033B160C1BB4628500A945FD /* PhoneNumberTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumberTests.swift; sourceTree = "<group>"; };
 		034D95FE1BA9E2C000F997C5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		038A400C1BA908FF00E65E1D /* Skunk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Skunk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		038A400F1BA908FF00E65E1D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +98,9 @@
 		E56A142A1BAF4BA600985CC7 /* SharerOptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharerOptionsViewController.swift; sourceTree = "<group>"; };
 		E5E1A4DD1BB03DD1008EE8FC /* SharingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharingViewController.swift; sourceTree = "<group>"; };
 		E5F2F9F81BB311000082CF84 /* SharerSelectRecieverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharerSelectRecieverViewController.swift; sourceTree = "<group>"; };
+		1D83405E1F23E1A90E99FE58 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		415C7F2891D02584B84E1204 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B0AE1F0ED9F4AD39FAE7CC7 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +110,8 @@
 			files = (
 				03AD41861BB037D60053FF45 /* CoreLocation.framework in Frameworks */,
 				034D95FF1BA9E2C000F997C5 /* MapKit.framework in Frameworks */,
+				033B15FA1BB31B3700A945FD /* Security.framework in Frameworks */,
+				4B18D352DA71E7918A3597E2 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,12 +132,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		00D42555B9109B6937B7FC8C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1D83405E1F23E1A90E99FE58 /* Pods.debug.xcconfig */,
+				4B0AE1F0ED9F4AD39FAE7CC7 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		033B15FD1BB34B6E00A945FD /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				033B15FE1BB34B8000A945FD /* LaunchViewController.swift */,
+				033B16001BB34F8C00A945FD /* LoginViewController.swift */,
+				033B16021BB34F9900A945FD /* RegisterViewController.swift */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
 		034D96001BA9E2F400F997C5 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
 				03AB65FC1BB195D30094B9CC /* CLLocationUtilities.swift */,
 				03AD41831BB0363B0053FF45 /* Constants.swift */,
 				03AB65FA1BB193E20094B9CC /* NSDateUtilities.swift */,
+				033B16081BB437D800A945FD /* UIViewControllerUtilities.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -119,10 +167,13 @@
 			children = (
 				03AD41851BB037D60053FF45 /* CoreLocation.framework */,
 				034D95FE1BA9E2C000F997C5 /* MapKit.framework */,
+				033B15F91BB31B3700A945FD /* Security.framework */,
 				038A400E1BA908FF00E65E1D /* Skunk */,
 				038A40251BA908FF00E65E1D /* SkunkTests */,
 				038A40301BA908FF00E65E1D /* SkunkUITests */,
 				038A400D1BA908FF00E65E1D /* Products */,
+				00D42555B9109B6937B7FC8C /* Pods */,
+				214C5D609CC93CD720F7BF0B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -154,8 +205,10 @@
 		038A40251BA908FF00E65E1D /* SkunkTests */ = {
 			isa = PBXGroup;
 			children = (
-				03AB65FE1BB1A3470094B9CC /* ShareSessionTests.swift */,
 				038A40281BA908FF00E65E1D /* Info.plist */,
+				033B160C1BB4628500A945FD /* PhoneNumberTests.swift */,
+				03AB65FE1BB1A3470094B9CC /* ShareSessionTests.swift */,
+				033B16041BB35EDF00A945FD /* UserAccountManagerTests.swift */,
 			);
 			path = SkunkTests;
 			sourceTree = "<group>";
@@ -172,8 +225,9 @@
 		038A403F1BA9165300E65E1D /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				038A40151BA908FF00E65E1D /* Main.storyboard */,
 				038A401A1BA908FF00E65E1D /* LaunchScreen.storyboard */,
+				033B15FB1BB34B3700A945FD /* Login.storyboard */,
+				038A40151BA908FF00E65E1D /* Main.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -184,6 +238,8 @@
 				E5F2F9F81BB311000082CF84 /* SharerSelectRecieverViewController.swift */,
 				E56A142A1BAF4BA600985CC7 /* SharerOptionsViewController.swift */,
 				E5E1A4DD1BB03DD1008EE8FC /* SharingViewController.swift */,
+				033B15FD1BB34B6E00A945FD /* Login */,
+				033B16061BB432B100A945FD /* MainTabBarController.swift */,
 				038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */,
 				038A40421BA9184600E65E1D /* ShareMainViewController.swift */,
 			);
@@ -201,6 +257,7 @@
 		03AD41791BAFB0490053FF45 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				033B160A1BB44AA700A945FD /* PhoneNumber.swift */,
 				03AD417D1BB033350053FF45 /* RegisteredUserAccount.swift */,
 				03AB65F81BB18C770094B9CC /* Serializable.swift */,
 				03AD41811BB034BE0053FF45 /* ShareSession.swift */,
@@ -221,8 +278,17 @@
 			isa = PBXGroup;
 			children = (
 				03AD41881BB09B0C0053FF45 /* ShareSessionManager.swift */,
+				033B15F71BB31A4A00A945FD /* UserAccountManager.swift */,
 			);
 			name = Networking;
+			sourceTree = "<group>";
+		};
+		214C5D609CC93CD720F7BF0B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				415C7F2891D02584B84E1204 /* Pods.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,9 +298,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 038A40361BA908FF00E65E1D /* Build configuration list for PBXNativeTarget "Skunk" */;
 			buildPhases = (
+				54B9FAD044A9D46C9C3A2CB0 /* Check Pods Manifest.lock */,
 				038A40081BA908FF00E65E1D /* Sources */,
 				038A40091BA908FF00E65E1D /* Frameworks */,
 				038A400A1BA908FF00E65E1D /* Resources */,
+				915EA7DDAFC0D2CE2AD86C47 /* Embed Pods Frameworks */,
+				E9A78FBBE27B0E2B50E5768B /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -329,6 +398,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				033B15FC1BB34B3700A945FD /* Login.storyboard in Resources */,
 				038A401C1BA908FF00E65E1D /* LaunchScreen.storyboard in Resources */,
 				038A40191BA908FF00E65E1D /* Assets.xcassets in Resources */,
 				038A40171BA908FF00E65E1D /* Main.storyboard in Resources */,
@@ -351,23 +421,78 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		54B9FAD044A9D46C9C3A2CB0 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		915EA7DDAFC0D2CE2AD86C47 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E9A78FBBE27B0E2B50E5768B /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		038A40081BA908FF00E65E1D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				033B16011BB34F8C00A945FD /* LoginViewController.swift in Sources */,
+				033B16071BB432B100A945FD /* MainTabBarController.swift in Sources */,
 				03AD417C1BAFB0B10053FF45 /* UserAccount.swift in Sources */,
 				038A40451BA9185000E65E1D /* ReceiveMainViewController.swift in Sources */,
+				033B15F81BB31A4A00A945FD /* UserAccountManager.swift in Sources */,
 				03AD41821BB034BE0053FF45 /* ShareSession.swift in Sources */,
 				03AB65F91BB18C770094B9CC /* Serializable.swift in Sources */,
 				E56A142B1BAF4BA600985CC7 /* SharerOptionsViewController.swift in Sources */,
 				E5F2F9F91BB311000082CF84 /* SharerSelectRecieverViewController.swift in Sources */,
+				033B16031BB34F9A00A945FD /* RegisterViewController.swift in Sources */,
 				038A40101BA908FF00E65E1D /* AppDelegate.swift in Sources */,
 				03AB65FB1BB193E20094B9CC /* NSDateUtilities.swift in Sources */,
 				03AD41841BB0363B0053FF45 /* Constants.swift in Sources */,
+				033B160B1BB44AA700A945FD /* PhoneNumber.swift in Sources */,
 				03AB65FD1BB195D30094B9CC /* CLLocationUtilities.swift in Sources */,
 				038A40431BA9184600E65E1D /* ShareMainViewController.swift in Sources */,
+				033B16091BB437D800A945FD /* UIViewControllerUtilities.swift in Sources */,
 				03AD41891BB09B0C0053FF45 /* ShareSessionManager.swift in Sources */,
+				033B15FF1BB34B8000A945FD /* LaunchViewController.swift in Sources */,
 				03AD417E1BB033350053FF45 /* RegisteredUserAccount.swift in Sources */,
 				E5E1A4DE1BB03DD1008EE8FC /* SharingViewController.swift in Sources */,
 			);
@@ -377,6 +502,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				033B160D1BB4628500A945FD /* PhoneNumberTests.swift in Sources */,
+				033B16051BB35EDF00A945FD /* UserAccountManagerTests.swift in Sources */,
 				03AB65FF1BB1A3470094B9CC /* ShareSessionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -507,6 +634,7 @@
 		};
 		038A40371BA908FF00E65E1D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1D83405E1F23E1A90E99FE58 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Skunk/Info.plist;
@@ -518,6 +646,7 @@
 		};
 		038A40381BA908FF00E65E1D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B0AE1F0ED9F4AD39FAE7CC7 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Skunk/Info.plist;
