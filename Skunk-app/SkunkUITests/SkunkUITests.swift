@@ -28,9 +28,21 @@ class SkunkUITests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
+    func testReceiverScreen() {
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+        let app = XCUIApplication()
+        
+        app.tabBars.buttons["Receiver"].tap()
+        
+        app.tables.staticTexts["John Smith"].tap()
+        
+        app.buttons["I Can Pick You Up"].tap()
+        
+        app.buttons["Stop Receiving Updates"].tap()
+
+        
     }
     
 }
