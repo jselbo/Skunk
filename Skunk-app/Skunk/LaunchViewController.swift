@@ -12,6 +12,8 @@ class LaunchViewController: UIViewController {
     let loginSegue = "Login"
     let registerSegue = "Register"
     
+    @IBOutlet weak var debugLoginButton: UIButton!
+    
     var accountManager: UserAccountManager!
 
     override func viewDidLoad() {
@@ -28,6 +30,11 @@ class LaunchViewController: UIViewController {
             let window = UIApplication.sharedApplication().delegate!.window!!
             window.rootViewController = mainController
         }
+        
+        // Only show debug login if running in debug mode
+        #if DEBUG
+            debugLoginButton.hidden = false
+        #endif
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,5 +53,12 @@ class LaunchViewController: UIViewController {
         default:
             break
         }
+    }
+    
+    @IBAction func debugLoginPressed(sender: AnyObject) {
+        let phone = PhoneNumber(text: "9995551234")!
+        let account = UserAccount(firstName: "John", lastName: "Smith", phoneNumber: phone, password: "pass")
+        let debugAccount = RegisteredUserAccount(userAccount: account, identifier: Constants.debugUserIdentifier)
+        saveRegisteredAccountAndPresentMainController(debugAccount, accountManager: accountManager)
     }
 }
