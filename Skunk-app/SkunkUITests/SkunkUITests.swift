@@ -28,7 +28,7 @@ class SkunkUITests: XCTestCase {
         super.tearDown()
     }
     
-    func AppFlow() {
+    func testAppFlow() {
         let app = XCUIApplication()
         XCTAssert(app.buttons["beginSharingButton"].exists)
         app.buttons["beginSharingButton"].tap()
@@ -68,9 +68,6 @@ class SkunkUITests: XCTestCase {
         secureTextField.typeText("password")
         tablesQuery.buttons["Log In"].tap()
         XCTAssert(app.buttons["beginSharingButton"].exists)
-        AppFlow()
     }
-    func testSignUp() {
-        //TODO
-    }
+
 }

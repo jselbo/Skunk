@@ -20,6 +20,11 @@ class SelectRecieverViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
     
+
+    @IBAction func donePressed(sender: AnyObject) {
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let dest = sb.instantiateViewControllerWithIdentifier( "PickMeUp" )
+        self.navigationController!.viewControllers = [dest]
+    }
 }
