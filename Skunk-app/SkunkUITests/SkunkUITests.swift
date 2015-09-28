@@ -54,4 +54,20 @@ class SkunkUITests: XCTestCase {
         
         app.buttons["Stop Receiving Updates"].tap()
     }
+    func testLogInAppFlow() {
+        let app = XCUIApplication()
+        app.buttons["Log In"].tap()
+        
+        let tablesQuery = app.tables
+        let textField = tablesQuery.cells.containingType(.StaticText, identifier:"Phone").childrenMatchingType(.TextField).element
+        textField.tap()
+        textField.typeText("2035128322")
+        
+        let secureTextField = tablesQuery.cells.containingType(.StaticText, identifier:"Password").childrenMatchingType(.SecureTextField).element
+        secureTextField.tap()
+        secureTextField.typeText("password")
+        tablesQuery.buttons["Log In"].tap()
+        XCTAssert(app.buttons["beginSharingButton"].exists)
+    }
+
 }
