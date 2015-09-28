@@ -134,7 +134,7 @@
                     <navigationItem key="navigationItem" title="Select Friends" id="Nyi-qV-pNl">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="Ffw-cp-h4U" userLabel="done">
                             <connections>
-                                <action selector="donePressed:" destination="g18-mT-2Je" id="bmW-BT-87q"/>
+                                <segue destination="PhS-iw-iKI" kind="push" id="fQD-xU-s8o"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
