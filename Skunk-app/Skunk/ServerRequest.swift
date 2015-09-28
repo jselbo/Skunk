@@ -63,8 +63,15 @@ class ServerRequest: NSObject {
     }
     
     func execute(JSONParams: AnyObject, completion: (response: ServerResponse) -> Void) -> NSURLSessionTask {
-        // JSON serialization should not fail
-        let data = try! NSJSONSerialization.dataWithJSONObject(JSONParams, options: NSJSONWritingOptions())
+        let data: NSData
+        do {
+            data = try NSJSONSerialization.dataWithJSONObject(JSONParams, options: NSJSONWritingOptions())
+        } catch {
+            // JSON serialization should not fail
+            NSException(name: "Serialization Exception",
+                reason: "Failed to serialize parameters: \(JSONParams)", userInfo: nil).raise()
+            return NSURLSessionTask()
+        }
         
         self.JSONParams = JSONParams
         contentType = .JSON
