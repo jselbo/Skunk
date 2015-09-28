@@ -36,4 +36,8 @@ class PhoneNumber: NSObject, CustomDebugStringConvertible {
         sanitizedText = digitsOnly
     }
     
+    func serialize() -> AnyObject {
+        return sanitizedText
+    }
+    
 }

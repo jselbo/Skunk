@@ -26,6 +26,7 @@
 		038A40321BA908FF00E65E1D /* SkunkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40311BA908FF00E65E1D /* SkunkUITests.swift */; };
 		038A40431BA9184600E65E1D /* ShareMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40421BA9184600E65E1D /* ShareMainViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		038A40451BA9185000E65E1D /* ReceiveMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		039D7F4F1BB9B5CF00955ACC /* ServerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039D7F4E1BB9B5CF00955ACC /* ServerRequest.swift */; settings = {ASSET_TAGS = (); }; };
 		03AB65F91BB18C770094B9CC /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB65F81BB18C770094B9CC /* Serializable.swift */; settings = {ASSET_TAGS = (); }; };
 		03AB65FB1BB193E20094B9CC /* NSDateUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB65FA1BB193E20094B9CC /* NSDateUtilities.swift */; settings = {ASSET_TAGS = (); }; };
 		03AB65FD1BB195D30094B9CC /* CLLocationUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB65FC1BB195D30094B9CC /* CLLocationUtilities.swift */; settings = {ASSET_TAGS = (); }; };
@@ -86,6 +87,7 @@
 		038A40331BA908FF00E65E1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		038A40421BA9184600E65E1D /* ShareMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareMainViewController.swift; sourceTree = "<group>"; };
 		038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiveMainViewController.swift; sourceTree = "<group>"; };
+		039D7F4E1BB9B5CF00955ACC /* ServerRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerRequest.swift; sourceTree = "<group>"; };
 		03AB65F81BB18C770094B9CC /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		03AB65FA1BB193E20094B9CC /* NSDateUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateUtilities.swift; sourceTree = "<group>"; };
 		03AB65FC1BB195D30094B9CC /* CLLocationUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLLocationUtilities.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 		03AD41871BB09ADF0053FF45 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				039D7F4E1BB9B5CF00955ACC /* ServerRequest.swift */,
 				03AD41881BB09B0C0053FF45 /* ShareSessionManager.swift */,
 				033B15F71BB31A4A00A945FD /* UserAccountManager.swift */,
 			);
@@ -483,6 +486,7 @@
 				038A40451BA9185000E65E1D /* ReceiveMainViewController.swift in Sources */,
 				033B15F81BB31A4A00A945FD /* UserAccountManager.swift in Sources */,
 				03AD41821BB034BE0053FF45 /* ShareSession.swift in Sources */,
+				039D7F4F1BB9B5CF00955ACC /* ServerRequest.swift in Sources */,
 				03AB65F91BB18C770094B9CC /* Serializable.swift in Sources */,
 				E56A142B1BAF4BA600985CC7 /* SharerOptionsViewController.swift in Sources */,
 				E5F2F9F91BB311000082CF84 /* SharerSelectRecieverViewController.swift in Sources */,
