@@ -26,6 +26,24 @@ struct Constants {
     
     static let HUDProgressText = "Working"
     
+    // Server endpoints
+    struct Endpoints {
+        static let baseURLHost = "68.234.146.84"
+        static let baseURLPort = "3800"
+        static let baseURL = NSURL(string: "http://\(baseURLHost):\(baseURLPort)")!
+        
+        static let usersCreateURL = baseURL.URLByAppendingPathComponent("/users/create")
+        static let usersLoginURL = baseURL.URLByAppendingPathComponent("/users/login/")
+        
+        static let sessionsURL = baseURL.URLByAppendingPathComponent("/sessions/")
+    }
+    
+    // In seconds
+    static let serverTimeout = NSTimeInterval(30.0)
+    
+    // HTTP Response Codes
+    static let statusOK = 200
+    
     struct Storyboards {
         static let launchScreen = "LaunchScreen"
         static let login = "Login"
