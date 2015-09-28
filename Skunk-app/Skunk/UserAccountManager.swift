@@ -12,6 +12,7 @@ import Security
 enum UserAccountManagerError: ErrorType {
     case DefaultsSynchronize
     case KeychainSave(OSStatus, NSData)
+    case KeychainDelete(OSStatus)
 }
 
 class UserAccountManager: NSObject {
@@ -105,7 +106,7 @@ class UserAccountManager: NSObject {
     }
     
     func saveRegisteredAccount(account: RegisteredUserAccount) throws {
-        let defaults = NSUserDefaults()
+        let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(account.userAccount.firstName, forKey: Constants.keyFirstName)
         defaults.setObject(account.userAccount.lastName, forKey: Constants.keyLastName)
         defaults.setObject(account.userAccount.phoneNumber.sanitizedText, forKey: Constants.keyPhoneNumber)
@@ -117,6 +118,22 @@ class UserAccountManager: NSObject {
         try saveUserIdentifier(account.identifier)
         
         registeredAccount = account
+    }
+    
+    /// Deletes all stored account credentials on this device.
+    func clearCredentials() throws {
+        // Clear user defaults
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.removeObjectForKey(Constants.keyFirstName)
+        defaults.removeObjectForKey(Constants.keyLastName)
+        defaults.removeObjectForKey(Constants.keyPhoneNumber)
+        guard defaults.synchronize() else {
+            throw UserAccountManagerError.DefaultsSynchronize
+        }
+        
+        // Clear keychain data
+        try deleteFromKeychain(Constants.userIdentifierService)
+        try deleteFromKeychain(Constants.userPasswordService)
     }
     
     private func loadAccount() -> UserAccount? {
@@ -189,5 +206,17 @@ class UserAccountManager: NSObject {
         }
         
         return nil
+    }
+    
+    private func deleteFromKeychain(service: String) throws {
+        let deleteQuery = [
+            kSecClass as NSString: kSecClassGenericPassword,
+            kSecAttrService as NSString: service,
+        ]
+        
+        let deleteStatus = SecItemDelete(deleteQuery)
+        guard deleteStatus == errSecSuccess else {
+            throw UserAccountManagerError.KeychainDelete(deleteStatus)
+        }
     }
 }

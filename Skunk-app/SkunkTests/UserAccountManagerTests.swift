@@ -14,14 +14,14 @@ import Security
 class UserAccountManagerTests: XCTestCase {
     
     override func tearDown() {
-        // Clear user defaults
-        NSUserDefaults.resetStandardUserDefaults()
-        
-        // Clear keychain
-        let query = [
-            kSecClass as NSString: kSecClassGenericPassword,
-        ]
-        SecItemDelete(query)
+        // Clear credentials between test instances
+        let manager = UserAccountManager()
+        do {
+            try manager.clearCredentials()
+        } catch {
+            // Deletion fails if we don't save credentials in a test case -
+            // we don't really care if that happens
+        }
     }
     
     func testInit_FirstLaunch() {
