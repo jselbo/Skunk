@@ -24,7 +24,11 @@ struct Constants {
     static let userIdentifierService = "SkunkUserIdentifier"
     static let userPasswordService = "SkunkUserPassword"
     
+    // UI strings
     static let HUDProgressText = "Working"
+    
+    // Debug settings
+    static let debugUserIdentifier = Uid(12345)
     
     // Server endpoints
     struct Endpoints {

@@ -18,6 +18,7 @@
                     <connections>
                         <segue destination="fYK-1z-4ke" kind="relationship" relationship="viewControllers" id="EjP-5n-wlR"/>
                         <segue destination="T2P-1P-jDS" kind="relationship" relationship="viewControllers" id="7DG-7n-0nI"/>
+                        <segue destination="n3m-js-2gD" kind="relationship" relationship="viewControllers" id="aZ0-e0-Bla"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
@@ -422,6 +423,68 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xyb-vD-eev" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1002" y="235"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="gNB-uq-jQr">
+            <objects>
+                <tableViewController id="xBC-UJ-4f2" customClass="SettingsViewController" customModule="Skunk" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="vBO-Ti-ekd">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection headerTitle="Debug" id="ZS3-9h-PW3">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="LiY-zG-y9a" style="IBUITableViewCellStyleDefault" id="lHS-Kw-fAI">
+                                        <rect key="frame" x="0.0" y="114" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lHS-Kw-fAI" id="Mem-Hb-Osf">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Log Out" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LiY-zG-y9a">
+                                                    <rect key="frame" x="15" y="0.0" width="290" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="xBC-UJ-4f2" id="yKw-ob-0S9"/>
+                            <outlet property="delegate" destination="xBC-UJ-4f2" id="kSb-HT-AIJ"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Settings" id="krq-2v-gVg"/>
+                    <connections>
+                        <outlet property="logOutCell" destination="lHS-Kw-fAI" id="R0D-8v-JpZ"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RGu-rQ-KO4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1002" y="913"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="fjR-y0-3Sc">
+            <objects>
+                <navigationController id="n3m-js-2gD" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Settings" id="ae8-X6-ZVi"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="J33-Sp-S95">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="xBC-UJ-4f2" kind="relationship" relationship="rootViewController" id="fab-z6-qCa"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="m0l-J1-cKH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="510" y="913"/>
         </scene>
         <!--Receiver-->
         <scene sceneID="T78-pk-EFl">

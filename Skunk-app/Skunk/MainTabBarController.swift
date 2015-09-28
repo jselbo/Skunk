@@ -25,5 +25,9 @@ class MainTabBarController: UITabBarController {
         let receiveNavController = viewControllers![1] as! UINavigationController
         let receiveController = receiveNavController.viewControllers.first! as! ReceiveFriendsListViewController
         receiveController.accountManager = accountManager
+        
+        let settingsNavController = viewControllers![2] as! UINavigationController
+        let settingsController = settingsNavController.viewControllers.first! as! SettingsViewController
+        settingsController.accountManager = accountManager
     }
 }

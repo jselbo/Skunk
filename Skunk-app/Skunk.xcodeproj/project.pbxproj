@@ -27,6 +27,7 @@
 		038A40431BA9184600E65E1D /* ShareMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40421BA9184600E65E1D /* ShareMainViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		038A40451BA9185000E65E1D /* ReceiveMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		039D7F4F1BB9B5CF00955ACC /* ServerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039D7F4E1BB9B5CF00955ACC /* ServerRequest.swift */; settings = {ASSET_TAGS = (); }; };
+		039D7F511BB9E0BE00955ACC /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039D7F501BB9E0BE00955ACC /* SettingsViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		03AB65F91BB18C770094B9CC /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB65F81BB18C770094B9CC /* Serializable.swift */; settings = {ASSET_TAGS = (); }; };
 		03AB65FB1BB193E20094B9CC /* NSDateUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB65FA1BB193E20094B9CC /* NSDateUtilities.swift */; settings = {ASSET_TAGS = (); }; };
 		03AB65FD1BB195D30094B9CC /* CLLocationUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB65FC1BB195D30094B9CC /* CLLocationUtilities.swift */; settings = {ASSET_TAGS = (); }; };
@@ -88,6 +89,7 @@
 		038A40421BA9184600E65E1D /* ShareMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareMainViewController.swift; sourceTree = "<group>"; };
 		038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiveMainViewController.swift; sourceTree = "<group>"; };
 		039D7F4E1BB9B5CF00955ACC /* ServerRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerRequest.swift; sourceTree = "<group>"; };
+		039D7F501BB9E0BE00955ACC /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		03AB65F81BB18C770094B9CC /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		03AB65FA1BB193E20094B9CC /* NSDateUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateUtilities.swift; sourceTree = "<group>"; };
 		03AB65FC1BB195D30094B9CC /* CLLocationUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLLocationUtilities.swift; sourceTree = "<group>"; };
@@ -239,14 +241,15 @@
 		038A40401BA9166200E65E1D /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				E5F2F9F81BB311000082CF84 /* SharerSelectRecieverViewController.swift */,
-				E56A142A1BAF4BA600985CC7 /* SharerOptionsViewController.swift */,
-				E5E1A4DD1BB03DD1008EE8FC /* SharingViewController.swift */,
 				033B15FD1BB34B6E00A945FD /* Login */,
 				033B16061BB432B100A945FD /* MainTabBarController.swift */,
 				B23369DB1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift */,
 				038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */,
+				039D7F501BB9E0BE00955ACC /* SettingsViewController.swift */,
 				038A40421BA9184600E65E1D /* ShareMainViewController.swift */,
+				E56A142A1BAF4BA600985CC7 /* SharerOptionsViewController.swift */,
+				E5F2F9F81BB311000082CF84 /* SharerSelectRecieverViewController.swift */,
+				E5E1A4DD1BB03DD1008EE8FC /* SharingViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -503,6 +506,7 @@
 				03AD417E1BB033350053FF45 /* RegisteredUserAccount.swift in Sources */,
 				E5E1A4DE1BB03DD1008EE8FC /* SharingViewController.swift in Sources */,
 				B23369DC1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift in Sources */,
+				039D7F511BB9E0BE00955ACC /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -648,6 +652,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = Skunk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.purdue.jselbo.Skunk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
