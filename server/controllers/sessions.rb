@@ -22,6 +22,8 @@
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
 get  '/sessions/' do
+	@user = User.find(request.env["HTTP_SKUNK_USERID"])
+	return @user.sessions.to_json
 end
 
 
@@ -45,6 +47,22 @@ end
 # 401 Not Authorized.
 # If the session does not exist, returns a 404 Not Found.
 get  '/sessions/:id' do
+	@session = Session.find(params[:id])
+	@user = User.find(headers[:"Skunk-UserID"])
+	@user.password
+	@session_user = SessionUser.find_by(receiver: @user, session: @session)
+	
+	if not @session
+		halt 404
+	end
+
+	if @session_user && SessionUser.active?
+		return @session.to_json(:except => [sharer: [:password]])
+	else
+		halt 401
+	end
+	
+		
 end
 
 
