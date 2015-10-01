@@ -57,8 +57,6 @@ end
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
 post '/users/login' do
-  # Encrypt the user's password to match what's in the database
-  params[:password] = encrypt(params[:password])
   # Try to find the user by their credentials
   @user = User.find_by_credentials params
   # If the user does not exist, return a 404

@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
 	scope :expired_sessions, -> { joins(:session).where('active = ?', false)}
 
   def encrypt_password
-    self.password = encrypt(self.password)
+    self.password = User.encrypt(self.password)
   end
 
 
@@ -25,9 +25,13 @@ class User < ActiveRecord::Base
       User.find_by name: user_params[:name], email: user_params[:email]
     end
 
-    # Find a User by their name and (encrypted) password
+    # Find a User by their name and (raw) password
     def find_by_credentials user_params
-      User.find_by name: user_params[:name], password: user_params[:password]
+      User.find_by name: user_params[:name], password: User.encrypt(user_params[:password])
+    end
+
+    def encrypt needle
+      Digest::SHA2.hexdigest(needle)
     end
   end
 end
