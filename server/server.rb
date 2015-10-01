@@ -16,13 +16,6 @@ before do
   content_type 'application/json'
 end
 
-helpers do
-  # A singular point for encrypting different values across the server
-  def encrypt needle
-    Digest::SHA2.hexdigest(needle)
-  end
-end
-
 # To reduce merge conflicts and such, separate all of the action logic into
 # different files. This may eventually need to be further separated depending
 # on how complex the interactions get.
