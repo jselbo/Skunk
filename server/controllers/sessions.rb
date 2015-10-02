@@ -90,6 +90,24 @@ end
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
 put  '/sessions/:id' do
+@TIME_BREAK #TODO: what should this value be?
+@session = Session.find(params[:id])
+#TODO:validate location
+
+#check last_updated against server time
+@now  = DateTime.now
+if @now > @session.last_updated + @TIME_BREAK.seconds
+	#TODO:send emergency alerts to receivers
+end
+
+if @session.destination == params[:location]
+	halt 204 'No new location.'
+else
+	@session.destination = params[:location]
+
+	#send session object back with new location
+	return @session.to_json(:except => [sharer: [:password]])
+end
 end
 
 
@@ -118,4 +136,40 @@ end
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
 post '/sessions/create' do
+@session = Session.new
+
+#TODO:add sharer_id once we get it
+
+@session.needs_driver = params[:needs_driver] #will ruby realize this is a boolean?
+
+#initialize session with current server time
+@session.last_updated = DateTime.now
+
+@type = params[:condition][:type]
+
+#Session is timestamped.
+if @type == 'time'
+	@timestamp = DateTime.iso8601(params[:condition][:data])
+	##TODO: catch exception
+
+	@session.end_time = @timestamp
+	@session.is_time_based = true
+
+#Session is location-based
+elsif @type == 'location'
+	@session.is_time_based = false
+	@session.destination = params[:condition][:data] #should validate type
+	#TODO: catch invalid location
+else
+	halt 500 'Invalid condition type.'
+end
+
+#TODO:find out how to get user_id
+#TODO:populate the sessions_users join table with all the receivers
+
+#add session to db
+@session.save
+
+#return new session id
+return @session.id
 end
