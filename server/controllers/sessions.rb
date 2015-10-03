@@ -90,23 +90,27 @@ end
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
 put  '/sessions/:id' do
-@TIME_BREAK #TODO: what should this value be?
-@session = Session.find(params[:id])
-#TODO:validate location
+TIME_BREAK = 15 #TODO: what should this value be?
 
-#check last_updated against server time
-@now  = DateTime.now
-if @now > @session.last_updated + @TIME_BREAK.seconds
-	#TODO:send emergency alerts to receivers
+session = Session.find(params[:id])
+
+now  = DateTime.now
+
+#If more than 15 minutes have passed since the last update
+if now > session.last_updated + TIME_BREAK.minutes
+	#TODO:Send emergency alerts to receivers
 end
 
-if @session.destination == params[:location]
+#If the location hasn't changed, return an error
+if session.destination == params[:location]
 	halt 204 'No new location.'
+
+#Else, return the session object.
 else
-	@session.destination = params[:location]
+	session.destination = params[:location]
 
 	#send session object back with new location
-	return @session.to_json(:except => [sharer: [:password]])
+	return session.to_json(:except => [sharer: [:password]])
 end
 end
 
@@ -136,40 +140,59 @@ end
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
 post '/sessions/create' do
-@session = Session.new
+#Initialize a new Session object
+session = Session.new
+session.sharer_id = request.env[:HTTP_SKUNK_USERID]
+session.needs_driver = params[:needs_driver] #will ruby realize this is a boolean?
+session.start_time = DatTime.now
+session.last_updated = DateTime.now
 
-#TODO:add sharer_id once we get it
 
-@session.needs_driver = params[:needs_driver] #will ruby realize this is a boolean?
+type = params[:condition][:type]
 
-#initialize session with current server time
-@session.last_updated = DateTime.now
+#If session is timestamped, set is_time_based to true and store in database
+if type == 'time'
+	#Check that timestamp is in iso8601 format
+	begin
+		timestamp = DateTime.iso8601(params[:condition][:data])
+	rescue	
+		halt 500 'Improperly formatted timestamp.'
+	end
+	
+	session.end_time = timestamp
+	session.is_time_based = true
 
-@type = params[:condition][:type]
+#If session is location-based set _is_timebased to false and store location
+elsif type == 'location'
+	session.is_time_based = false
+	session.destination = params[:condition][:data] #should validate type
 
-#Session is timestamped.
-if @type == 'time'
-	@timestamp = DateTime.iso8601(params[:condition][:data])
-	##TODO: catch exception
-
-	@session.end_time = @timestamp
-	@session.is_time_based = true
-
-#Session is location-based
-elsif @type == 'location'
-	@session.is_time_based = false
-	@session.destination = params[:condition][:data] #should validate type
-	#TODO: catch invalid location
+#Else return an error
 else
 	halt 500 'Invalid condition type.'
 end
 
-#TODO:find out how to get user_id
-#TODO:populate the sessions_users join table with all the receivers
+#Parse the receivers JSON
+begin
+	receivers = JSON.parse(params[:receivers])
+rescue
+	halt 500 'Improperly formatted JSON for receivers'
+end
+
+#Populate the sessions_users join table with all the receivers
+receivers.each do |rid|	
+	su = SessionUser.new
+	su.session_id = session.id
+	su.receiver_id = rid.to_i
+	su.sharer_ended = false
+	su.receiver_ended = false
+	su.save
+end
+
 
 #add session to db
-@session.save
+session.save
 
 #return new session id
-return @session.id
+return session.id
 end
