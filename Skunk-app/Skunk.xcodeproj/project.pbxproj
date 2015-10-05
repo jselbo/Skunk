@@ -18,7 +18,11 @@
 		033B16091BB437D800A945FD /* UIViewControllerUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B16081BB437D800A945FD /* UIViewControllerUtilities.swift */; settings = {ASSET_TAGS = (); }; };
 		033B160B1BB44AA700A945FD /* PhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B160A1BB44AA700A945FD /* PhoneNumber.swift */; settings = {ASSET_TAGS = (); }; };
 		033B160D1BB4628500A945FD /* PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B160C1BB4628500A945FD /* PhoneNumberTests.swift */; settings = {ASSET_TAGS = (); }; };
+		034BD0091BBEB94A00FCFA75 /* empty.json in Resources */ = {isa = PBXBuildFile; fileRef = 034BD0081BBEB94A00FCFA75 /* empty.json */; settings = {ASSET_TAGS = (); }; };
 		034D95FF1BA9E2C000F997C5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034D95FE1BA9E2C000F997C5 /* MapKit.framework */; };
+		037283F41BC316C30097BF5D /* invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 037283F31BC316C30097BF5D /* invalid.json */; settings = {ASSET_TAGS = (); }; };
+		037283F71BC3188A0097BF5D /* array.json in Resources */ = {isa = PBXBuildFile; fileRef = 037283F51BC3188A0097BF5D /* array.json */; settings = {ASSET_TAGS = (); }; };
+		037283F81BC3188A0097BF5D /* object.json in Resources */ = {isa = PBXBuildFile; fileRef = 037283F61BC3188A0097BF5D /* object.json */; settings = {ASSET_TAGS = (); }; };
 		038A40101BA908FF00E65E1D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A400F1BA908FF00E65E1D /* AppDelegate.swift */; };
 		038A40171BA908FF00E65E1D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 038A40151BA908FF00E65E1D /* Main.storyboard */; };
 		038A40191BA908FF00E65E1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 038A40181BA908FF00E65E1D /* Assets.xcassets */; };
@@ -26,6 +30,7 @@
 		038A40321BA908FF00E65E1D /* SkunkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40311BA908FF00E65E1D /* SkunkUITests.swift */; };
 		038A40431BA9184600E65E1D /* ShareMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40421BA9184600E65E1D /* ShareMainViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		038A40451BA9185000E65E1D /* ReceiveMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		038AAF1A1BBD75D400ECAA39 /* ServerRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038AAF191BBD75D400ECAA39 /* ServerRequestTests.swift */; settings = {ASSET_TAGS = (); }; };
 		039D7F4F1BB9B5CF00955ACC /* ServerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039D7F4E1BB9B5CF00955ACC /* ServerRequest.swift */; settings = {ASSET_TAGS = (); }; };
 		039D7F511BB9E0BE00955ACC /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039D7F501BB9E0BE00955ACC /* SettingsViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		03AB65F91BB18C770094B9CC /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AB65F81BB18C770094B9CC /* Serializable.swift */; settings = {ASSET_TAGS = (); }; };
@@ -74,7 +79,11 @@
 		033B16081BB437D800A945FD /* UIViewControllerUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerUtilities.swift; sourceTree = "<group>"; };
 		033B160A1BB44AA700A945FD /* PhoneNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumber.swift; sourceTree = "<group>"; };
 		033B160C1BB4628500A945FD /* PhoneNumberTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumberTests.swift; sourceTree = "<group>"; };
+		034BD0081BBEB94A00FCFA75 /* empty.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = empty.json; sourceTree = "<group>"; };
 		034D95FE1BA9E2C000F997C5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		037283F31BC316C30097BF5D /* invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = invalid.json; sourceTree = "<group>"; };
+		037283F51BC3188A0097BF5D /* array.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = array.json; sourceTree = "<group>"; };
+		037283F61BC3188A0097BF5D /* object.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = object.json; sourceTree = "<group>"; };
 		038A400C1BA908FF00E65E1D /* Skunk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Skunk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		038A400F1BA908FF00E65E1D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		038A40161BA908FF00E65E1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -88,6 +97,7 @@
 		038A40331BA908FF00E65E1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		038A40421BA9184600E65E1D /* ShareMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareMainViewController.swift; sourceTree = "<group>"; };
 		038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiveMainViewController.swift; sourceTree = "<group>"; };
+		038AAF191BBD75D400ECAA39 /* ServerRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerRequestTests.swift; sourceTree = "<group>"; };
 		039D7F4E1BB9B5CF00955ACC /* ServerRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerRequest.swift; sourceTree = "<group>"; };
 		039D7F501BB9E0BE00955ACC /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		03AB65F81BB18C770094B9CC /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
@@ -157,6 +167,17 @@
 			name = Login;
 			sourceTree = "<group>";
 		};
+		034BD0071BBEB90700FCFA75 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				037283F51BC3188A0097BF5D /* array.json */,
+				034BD0081BBEB94A00FCFA75 /* empty.json */,
+				037283F31BC316C30097BF5D /* invalid.json */,
+				037283F61BC3188A0097BF5D /* object.json */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		034D96001BA9E2F400F997C5 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,8 +232,10 @@
 		038A40251BA908FF00E65E1D /* SkunkTests */ = {
 			isa = PBXGroup;
 			children = (
+				034BD0071BBEB90700FCFA75 /* Resources */,
 				038A40281BA908FF00E65E1D /* Info.plist */,
 				033B160C1BB4628500A945FD /* PhoneNumberTests.swift */,
+				038AAF191BBD75D400ECAA39 /* ServerRequestTests.swift */,
 				03AB65FE1BB1A3470094B9CC /* ShareSessionTests.swift */,
 				033B16041BB35EDF00A945FD /* UserAccountManagerTests.swift */,
 			);
@@ -418,6 +441,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				034BD0091BBEB94A00FCFA75 /* empty.json in Resources */,
+				037283F71BC3188A0097BF5D /* array.json in Resources */,
+				037283F81BC3188A0097BF5D /* object.json in Resources */,
+				037283F41BC316C30097BF5D /* invalid.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,6 +543,7 @@
 			files = (
 				033B160D1BB4628500A945FD /* PhoneNumberTests.swift in Sources */,
 				033B16051BB35EDF00A945FD /* UserAccountManagerTests.swift in Sources */,
+				038AAF1A1BBD75D400ECAA39 /* ServerRequestTests.swift in Sources */,
 				03AB65FF1BB1A3470094B9CC /* ShareSessionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
