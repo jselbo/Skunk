@@ -2,9 +2,9 @@ require 'digest'
 
 # POST /users/create
 # {
-#   "name": "username",
-#   "email": "user email",
-#   "password": "userpassword",
+#   "name": "name",
+#   "phone": "phone number",
+#   "password": "user password",
 #   ...
 # }
 # -> 200 OK <user_id>
@@ -42,7 +42,7 @@ end
 
 # POST /users/login
 # {
-#   "name": "username",
+#   "phone": "phonenumber",
 #   "password": "userpassword"
 # }
 # -> 200 OK <user_id>
