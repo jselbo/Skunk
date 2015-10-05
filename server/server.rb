@@ -14,6 +14,11 @@ end
 # Everything we do here is JSON, so default to returning it.
 before do
   content_type 'application/json'
+
+  if request.request_method == "POST"
+    body_parameters = request.body.read
+    params.merge!(JSON.parse(body_parameters))
+  end
 end
 
 # To reduce merge conflicts and such, separate all of the action logic into
