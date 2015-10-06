@@ -63,6 +63,27 @@ end
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
 put '/sessions/:id/pickup/request' do
+session = Session.find(params[:id])
+
+#If the driver_id has been specified for this session, send notification to the driver
+if session.driver_id != 0 	#TODO: will this be the default value?
+	#TODO: will drivers be stored as users like this?
+	#Ensure that driver actually exists in the database
+	begin
+		driver = Users.find(session.driver_id)
+	rescue
+		halt 500, 'Invalid driver_id for this session.'
+	end
+	
+	#TODO: Send notification to receiver.
+
+#No driver was specified for this session
+else
+	halt 500, 'No driver exists for this session.'
+end
+
+session.requested_pickup = true
+return 204
 end
 
 # POST /sessions/:id/pickup/response
@@ -85,6 +106,28 @@ end
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
 post '/sessions/:id/pickup/response' do
+session = Session.find(params[:id])
+
+#If an eta is provided, update session with the eta
+if params[:response]   #TODO: how will ruby handle invalid input
+	#Ensure eta is in correct format
+	begin
+		#Try parsing eta parameter
+		duration = DateTime.iso8601(params[:eta])		
+		
+		#Convert from duration to concrete time
+		eta = DateTime.now + duration
+
+		#Update eta on session object
+		session.driver_eta = eta
+
+	#Eta is not in proper format.
+	rescue 
+		#Do nothing.
+		#TODO: Should we send a message that eta failed?
+	end
+end
+return 204
 end
 
 # POST /sessions/:id/driver/response
