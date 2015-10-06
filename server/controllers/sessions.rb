@@ -97,13 +97,14 @@ session = Session.find(params[:id])
 now  = DateTime.now
 
 #If more than 15 minutes have passed since the last update
-if now > session.last_updated + TIME_BREAK.minutes
+#TODO: .minutes not supported
+#if now > session.last_updated + TIME_BREAK.minutes
 	#TODO:Send emergency alerts to receivers
-end
+#end
 
 #If the location hasn't changed, return an error
 if session.destination == params[:location]
-	halt 204 'No new location.'
+	halt 204, 'No new location.'
 
 #Else, return the session object.
 else
@@ -141,11 +142,9 @@ end
 # wrong.
 post '/sessions/create' do
 #Initialize a new Session object
-session = Session.new
-session.sharer_id = request.env[:HTTP_SKUNK_USERID]
-session.needs_driver = params[:needs_driver] #will ruby realize this is a boolean?
-session.start_time = DatTime.now
-session.last_updated = DateTime.now
+session = Session(sharer_id: request.env["HTTP_SKUNK_USERID"], 
+			needs_driver: params[:need_driver], start_time: DateTime.now,
+			last_updated: DateTime.now)
 
 
 type = params[:condition][:type]
@@ -156,7 +155,7 @@ if type == 'time'
 	begin
 		timestamp = DateTime.iso8601(params[:condition][:data])
 	rescue	
-		halt 500 'Improperly formatted timestamp.'
+		halt 500, 'Improperly formatted timestamp.'
 	end
 	
 	session.end_time = timestamp
@@ -169,14 +168,14 @@ elsif type == 'location'
 
 #Else return an error
 else
-	halt 500 'Invalid condition type.'
+	halt 500, 'Invalid condition type.'
 end
 
 #Parse the receivers JSON
 begin
 	receivers = JSON.parse(params[:receivers])
 rescue
-	halt 500 'Improperly formatted JSON for receivers'
+	halt 500, 'Improperly formatted JSON for receivers'
 end
 
 #Populate the sessions_users join table with all the receivers
