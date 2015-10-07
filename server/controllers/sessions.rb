@@ -93,15 +93,18 @@ put  '/sessions/:id' do
 TIME_BREAK = 15 #TODO: what should this value be?
 
 session = Session.find(params[:id])
-
-now  = DateTime.now
-
 #If more than 15 minutes have passed since the last update
 #TODO: .minutes not supported
-#if now > session.last_updated + TIME_BREAK.minutes
+#if DateTime.now > session.last_updated + TIME_BREAK.minutes
 	#TODO:Send emergency alerts to receivers
 #end
 
+#If location string is incorrectly formatted, return error
+if !Session.check_location(params[:location])
+	halt 500, 'Invalid location string.'
+end
+
+#TODO: store in as current_location in database
 #If the location hasn't changed, return an error
 if session.destination == params[:location]
 	halt 204, 'No new location.'
@@ -151,7 +154,7 @@ type = params[:condition][:type]
 
 #If session is timestamped, set is_time_based to true and store in database
 if type == 'time'
-	#Check that timestamp is in iso8601 format
+	#Check that timestamp is in iso 8601 format
 	begin
 		timestamp = DateTime.iso8601(params[:condition][:data])
 	rescue	
@@ -163,6 +166,10 @@ if type == 'time'
 
 #If session is location-based set _is_timebased to false and store location
 elsif type == 'location'
+	#Check if location string is in iso 6709 format
+	if !Session.check_location(params[:condition][:data])
+		halt 500, 'Improperly formatted location string.'	
+	end
 	session.is_time_based = false
 	session.destination = params[:condition][:data] #should validate type
 
