@@ -1,0 +1,14 @@
+I've created a rackup file that lets you simply run
+
+  rackup -p <some_port_between_3000_and_4000>
+
+instead of
+
+  ruby server.rb -p <some_port_between_3000_and_4000>
+
+Such savings, I know...but it means we'll be able to make complex changes more
+easily later on. So, just use something like
+
+  rackup -p 3010
+
+to run the server for testing.

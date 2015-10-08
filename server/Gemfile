@@ -1,0 +1,17 @@
+source 'https://rubygems.org'
+
+ruby '2.2.1'
+
+# I wish Rails 5 was out.
+gem 'sinatra'
+# ActiveRecord is just too good.
+gem 'sinatra-activerecord'
+# Events are what drive 'Merica.
+gem 'thin'
+# MariaDB runs off of the same adapter as MySQL.
+gem 'mysql2', '~> 0.3.20'
+# JSON responses all the way
+gem 'json'
+
+# Rake is break?
+gem 'rake'
