@@ -12,3 +12,6 @@ gem 'thin'
 gem 'mysql2', '~> 0.3.20'
 # JSON responses all the way
 gem 'json'
+
+# Rake is break?
+gem 'rake'
