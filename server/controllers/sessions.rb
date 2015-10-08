@@ -48,7 +48,7 @@ end
 # If the session does not exist, returns a 404 Not Found.
 get  '/sessions/:id' do
 	@session = Session.find(params[:id])
-	@user = User.find(headers[:"Skunk-UserID"])
+	@user = User.find(headers["HTTP_SKUNK_USERID"])
 	@user.password
 	@session_user = SessionUser.find_by(receiver: @user, session: @session)
 	
