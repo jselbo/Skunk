@@ -65,6 +65,7 @@ class SelectRecieverViewController: UITableViewController {
         self.requestAuthContacts { (accessGranted) -> Void in
             if accessGranted {
                 print("Granted Premissions to play with contacts")
+                
                 let store = CNContactStore()
                 store.requestAccessForEntityType(.Contacts) {(access,accessError) -> Void in
                     let keys = [CNContactGivenNameKey, CNContactPhoneNumbersKey]
@@ -72,6 +73,7 @@ class SelectRecieverViewController: UITableViewController {
                     do {
                         try store.enumerateContactsWithFetchRequest(fetchRequest) { (contact, stop) -> Void in
                             print(contact.givenName)
+                            print(contact.phoneNumbers)
                         }
                         
                     } catch {
