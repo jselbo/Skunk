@@ -8,8 +8,10 @@
 
 import UIKit
 
-class SharerOptionsViewController: UIViewController {
+class SharerOptionsViewController: UIViewController, LocationUser {
 
+    var locationManager: LocationManager!
+    
     @IBOutlet weak var timeNightOption: UISegmentedControl!
     @IBOutlet weak var timeSelection: UIDatePicker!
     @IBOutlet weak var requestRideOption: UISwitch!
@@ -24,6 +26,12 @@ class SharerOptionsViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if var destinationController = segue.destinationViewController as? LocationUser {
+            destinationController.locationManager = locationManager
+        }
     }
     
     

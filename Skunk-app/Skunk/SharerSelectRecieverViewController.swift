@@ -8,7 +8,9 @@
 
 import UIKit
 
-class SelectRecieverViewController: UITableViewController {
+class SelectRecieverViewController: UITableViewController, LocationUser {
+    
+    var locationManager: LocationManager!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +22,11 @@ class SelectRecieverViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if var destinationController = segue.destinationViewController as? LocationUser {
+            destinationController.locationManager = locationManager
+        }
+    }
 
     @IBAction func donePressed(sender: AnyObject) {
         let sb = UIStoryboard(name: "Main", bundle: nil)

@@ -9,7 +9,9 @@
 import UIKit
 import MapKit
 
-class SharingViewController: UIViewController {
+class SharingViewController: UIViewController, LocationUser {
+    
+    var locationManager: LocationManager!
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var pickUpButton: UIButton!
