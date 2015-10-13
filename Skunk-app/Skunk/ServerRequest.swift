@@ -14,14 +14,55 @@ enum RequestType: String {
     case PUT = "PUT"
 }
 
-enum ResponseFailure {
+enum ResponseFailure: Equatable {
     case ServerError(NSError?)
     case UnexpectedStatusCode(Int)
     case UnexpectedContentType(AnyObject?)
     case DeserializeJSONError(data: NSData?)
 }
 
-enum ServerResponse {
+func ==(a: ResponseFailure, b: ResponseFailure) -> Bool {
+    switch (a, b) {
+    case (.ServerError(let a), .ServerError(let b)) where a == b:
+        return true
+    case (.UnexpectedStatusCode(let a), .UnexpectedStatusCode(let b)) where a == b:
+        return true
+    case (.UnexpectedContentType(_), .UnexpectedContentType(_)):
+        return true
+    case (.DeserializeJSONError(let a), .DeserializeJSONError(let b)) where a == b:
+        return true
+    default:
+        return false
+    }
+}
+
+/// Returns equality of two possibly nil JSON objects
+/// (Returned by NSJSONSerialization.JSONObjectWithData)
+func JSONEquals(a: AnyObject?, _ b: AnyObject?) -> Bool {
+    if a == nil && b == nil {
+        return true
+    }
+    if let a = a as? [NSObject], b = b as? [NSObject] {
+        return a == b
+    }
+    if let a = a as? [String: NSObject], b = b as? [String: NSObject] {
+        return a == b
+    }
+    return false
+}
+
+func ==(a: ServerResponse, b: ServerResponse) -> Bool {
+    switch (a, b) {
+    case (.Success(let a), .Success(let b)):
+        return JSONEquals(a, b)
+    case (.Failure(let a), .Failure(let b)) where a == b:
+        return true
+    default:
+        return false
+    }
+}
+
+enum ServerResponse: Equatable {
     /// Type of `response` is guaranteed by `ResponseBodyType`
     case Success(response: AnyObject?)
     case Failure(ResponseFailure)
