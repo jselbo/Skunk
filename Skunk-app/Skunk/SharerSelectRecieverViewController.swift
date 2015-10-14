@@ -23,6 +23,7 @@ class SelectRecieverViewController: UITableViewController, LocationUser {
             if accessGranted {
                 self.readContacts({ (phoneNumbers) -> Void in
                     if let phoneNumbers = phoneNumbers {
+                        print("numbers: \(phoneNumbers)")
                     } else {
                         dispatch_async(dispatch_get_main_queue(), { _ in
                             self.presentErrorAlert("Failed to read contacts from address book.")
@@ -69,20 +70,23 @@ class SelectRecieverViewController: UITableViewController, LocationUser {
     
     // Read address book contacts. Call this off the main thread.
     // At this point it is assumed authorization has been granted by user.
-    func readContacts(completion: (phoneNumbers: [PhoneNumber]?) -> Void) {
+    func readContacts(completion: (phoneNumbers: Set<PhoneNumber>?) -> Void) {
         let keys = [CNContactGivenNameKey, CNContactPhoneNumbersKey]
         let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
         do {
+            var phoneNumbers = Set<PhoneNumber>()
+            
             try contactStore.enumerateContactsWithFetchRequest(fetchRequest) { (contact, stop) -> Void in
-                // assert US numbers only
-                var listPhoneNumberObjects = [PhoneNumber]()
-                for phoneNumbers in contact.phoneNumbers {
-                    let CNPhoneNumberObject = phoneNumbers.value as! CNPhoneNumber
-                    let phoneNumberString = CNPhoneNumberObject.stringValue
-                    let phoneNumberObject = PhoneNumber(text: phoneNumberString)
-                    listPhoneNumberObjects.append(phoneNumberObject!)
+                // TODO: assert US numbers only
+                for phoneNumberValue in contact.phoneNumbers {
+                    let phoneNumberInfo = phoneNumberValue.value as! CNPhoneNumber
+                    if let phoneNumber = PhoneNumber(text: phoneNumberInfo.stringValue) {
+                        phoneNumbers.insert(phoneNumber)
+                    }
                 }
             }
+            
+            completion(phoneNumbers: phoneNumbers)
         } catch {
             completion(phoneNumbers: nil)
         }
