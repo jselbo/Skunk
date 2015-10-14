@@ -13,7 +13,6 @@ import Contacts
 class SelectRecieverViewController: UITableViewController {
     
     let contactStore = CNContactStore()
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,12 +59,12 @@ class SelectRecieverViewController: UITableViewController {
     }
     
     //read address book
-    func readContact() -> Bool {
+    func readContact() -> [PhoneNumber]? {
         print("READ CONTACT METHOD")
+        var listPhoneNumberObjects = [PhoneNumber]()
         self.requestAuthContacts { (accessGranted) -> Void in
             if accessGranted {
                 print("Granted Premissions to play with contacts")
-                
                 let store = CNContactStore()
                 store.requestAccessForEntityType(.Contacts) {(access,accessError) -> Void in
                     let keys = [CNContactGivenNameKey, CNContactPhoneNumbersKey]
@@ -73,16 +72,21 @@ class SelectRecieverViewController: UITableViewController {
                     do {
                         try store.enumerateContactsWithFetchRequest(fetchRequest) { (contact, stop) -> Void in
                             print(contact.givenName)
-                            print(contact.phoneNumbers)
+                            //assert US numbers only
+                            for phoneNumbers in contact.phoneNumbers {
+                                let CNPhoneNumberObject = phoneNumbers.value as! CNPhoneNumber
+                                let phoneNumberString = CNPhoneNumberObject.stringValue
+                                let phoneNumberObject = PhoneNumber(text: phoneNumberString)
+                                listPhoneNumberObjects.append(phoneNumberObject!)
+                            }
                         }
-                        
                     } catch {
                         print( "Unable to get Contacts." )
                     }
                 }
             }
         }
-        return true
+        return listPhoneNumberObjects
     }
     
 
