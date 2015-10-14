@@ -40,6 +40,9 @@ struct Constants {
         static let usersLoginURL = baseURL.URLByAppendingPathComponent("/users/login/")
         
         static let sessionsURL = baseURL.URLByAppendingPathComponent("/sessions/")
+        
+        static let sessionsCreateURL = baseURL.URLByAppendingPathComponent("/sessions/create")
+        
     }
     
     // In seconds
