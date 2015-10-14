@@ -56,6 +56,10 @@ class SharerOptionsViewController: UITableViewController, LocationUser, ShareSel
             let navigationController = segue.destinationViewController as! UINavigationController
             let destinationController = navigationController.topViewController as! ShareSelectLocationViewController
             destinationController.delegate = self
+        case selectFriendsSegue?:
+            let receiversController = segue.destinationViewController as! SharerSelectRecieverViewController
+            receiversController.endCondition = endCondition
+            receiversController.needsDriver = requestRideOption.on
         default:
             break
         }

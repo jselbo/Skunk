@@ -101,7 +101,7 @@
         <!--Choose Friends-->
         <scene sceneID="8gc-T2-LvO">
             <objects>
-                <tableViewController storyboardIdentifier="SelectFriends" id="g18-mT-2Je" customClass="SelectRecieverViewController" customModule="Skunk" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SelectFriends" id="g18-mT-2Je" customClass="SharerSelectRecieverViewController" customModule="Skunk" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="88" sectionHeaderHeight="28" sectionFooterHeight="28" id="aTY-ZY-hxU">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

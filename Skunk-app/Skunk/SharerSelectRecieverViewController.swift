@@ -10,8 +10,10 @@ import UIKit
 import Contacts
 
 
-class SelectRecieverViewController: UITableViewController, LocationUser {
+class SharerSelectRecieverViewController: UITableViewController, LocationUser {
     
+    var endCondition: ShareEndCondition!
+    var needsDriver: Bool!
     var locationManager: LocationManager!
     
     let contactStore = CNContactStore()
