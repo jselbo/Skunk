@@ -15,82 +15,71 @@ class SelectRecieverViewController: UITableViewController, LocationUser {
     var locationManager: LocationManager!
     
     let contactStore = CNContactStore()
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        requestAuthContacts { (accessGranted) -> Void in
-            readContact()
+        
+        requestAuthContacts { accessGranted in
+            if accessGranted {
+                self.readContacts({ (phoneNumbers) -> Void in
+                    if let phoneNumbers = phoneNumbers {
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), { _ in
+                            self.presentErrorAlert("Failed to read contacts from address book.")
+                        })
+                    }
+                })
+            } else {
+                dispatch_async(dispatch_get_main_queue(), { _ in
+                    self.presentErrorAlert(Constants.needContactsAuthorizationMessage)
+                })
+            }
         }
     }
-        
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if var destinationController = segue.destinationViewController as? LocationUser {
             destinationController.locationManager = locationManager
         }
     }
 
-    //Auth To Use Address Book
-    func requestAuthContacts( completionHandler: (accessGranted: Bool) -> Void ) {
+    // Auth To Use Address Book
+    private func requestAuthContacts( completionHandler: (accessGranted: Bool) -> Void ) {
         let authorizationStatus = CNContactStore.authorizationStatusForEntityType(CNEntityType.Contacts)
         
         switch authorizationStatus {
         case .Authorized:
-            print("Authorized")
             completionHandler(accessGranted: true)
-        case .Denied, .NotDetermined:
-            print("Not sure if Denied or Not Determined")
-            contactStore.requestAccessForEntityType(CNEntityType.Contacts, completionHandler: { (access, accessError) -> Void in
-                if access {
-                    //Not Determined Case
-                    print("Not Determined")
-                    completionHandler(accessGranted: access)
+        case .NotDetermined:
+            // First attempt to authorize
+            contactStore.requestAccessForEntityType(.Contacts, completionHandler: { access, accessError in
+                if let accessError = accessError {
+                    print("Access error: \(accessError.localizedDescription)")
                 }
-                else {
-                    if authorizationStatus == CNAuthorizationStatus.Denied {
-                        print("Denied")
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            print ("Allow Access Rejected")
-                        })
-                    }
-                }
+                completionHandler(accessGranted: access)
             })
-        default:
-            print("default")
+        case .Denied:
+            // User denied authorization before
+            completionHandler(accessGranted: false)
+        case .Restricted:
+            print("CNContactStore authorization status Restricted")
             completionHandler(accessGranted: false)
         }
     }
     
-    //read address book
-    func readContact() -> Bool {
-        print("READ CONTACT METHOD")
-        self.requestAuthContacts { (accessGranted) -> Void in
-            if accessGranted {
-                print("Granted Premissions to play with contacts")
-                
-                let store = CNContactStore()
-                store.requestAccessForEntityType(.Contacts) {(access,accessError) -> Void in
-                    let keys = [CNContactGivenNameKey, CNContactPhoneNumbersKey]
-                    let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
-                    do {
-                        try store.enumerateContactsWithFetchRequest(fetchRequest) { (contact, stop) -> Void in
-                            print(contact.givenName)
-                            print(contact.phoneNumbers)
-                        }
-                        
-                    } catch {
-                        print( "Unable to get Contacts." )
-                    }
-                }
+    // Read address book contacts. Call this off the main thread.
+    // At this point it is assumed authorization has been granted by user.
+    func readContacts(completion: (phoneNumbers: [PhoneNumber]?) -> Void) {
+        let keys = [CNContactGivenNameKey, CNContactPhoneNumbersKey]
+        let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
+        do {
+            try contactStore.enumerateContactsWithFetchRequest(fetchRequest) { (contact, stop) -> Void in
+                print(contact.givenName)
+                print(contact.phoneNumbers)
             }
+        } catch {
+            completion(phoneNumbers: nil)
         }
-        return true
     }
     
     @IBAction func donePressed(sender: AnyObject) {

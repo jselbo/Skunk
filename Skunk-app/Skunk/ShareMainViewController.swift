@@ -31,7 +31,7 @@ class ShareMainViewController: UIViewController, LocationUser {
                 if authorized {
                     self.initializeAfterAuthorization()
                 } else {
-                    self.presentErrorAlert(Constants.needAuthorizationMessage)
+                    self.presentErrorAlert(Constants.needLocationAuthorizationMessage)
                 }
             }
         }

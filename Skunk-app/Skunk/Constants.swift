@@ -26,7 +26,8 @@ struct Constants {
     
     // UI strings
     static let HUDProgressText = "Working"
-    static let needAuthorizationMessage = "Skunk requires location permissions to share your location with family and friends. Please enable location permissions by going to Settings > Skunk > Location and setting access to 'Always'."
+    static let needLocationAuthorizationMessage = "Skunk requires location permissions to share your location with family and friends. Please enable location permissions by going to Settings > Skunk > Location and setting access to 'Always'."
+    static let needContactsAuthorizationMessage = "Skunk requires contact permissions to match your contacts' phone numbers to other Skunk users. Please enable contact permissions by going to Settings > Skunk and setting Contacts access to on."
     
     // Debug settings
     static let debugUserIdentifier = Uid(12345)
