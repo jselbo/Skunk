@@ -74,8 +74,14 @@ class SelectRecieverViewController: UITableViewController, LocationUser {
         let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
         do {
             try contactStore.enumerateContactsWithFetchRequest(fetchRequest) { (contact, stop) -> Void in
-                print(contact.givenName)
-                print(contact.phoneNumbers)
+                // assert US numbers only
+                var listPhoneNumberObjects = [PhoneNumber]()
+                for phoneNumbers in contact.phoneNumbers {
+                    let CNPhoneNumberObject = phoneNumbers.value as! CNPhoneNumber
+                    let phoneNumberString = CNPhoneNumberObject.stringValue
+                    let phoneNumberObject = PhoneNumber(text: phoneNumberString)
+                    listPhoneNumberObjects.append(phoneNumberObject!)
+                }
             }
         } catch {
             completion(phoneNumbers: nil)
