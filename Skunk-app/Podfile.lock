@@ -1,4 +1,5 @@
 PODS:
+  - ActionSheetPicker-3.0 (2.0.3)
   - MBProgressHUD (0.9.1)
   - OHHTTPStubs (4.3.0):
     - OHHTTPStubs/Default (= 4.3.0)
@@ -17,11 +18,13 @@ PODS:
     - OHHTTPStubs/Core
 
 DEPENDENCIES:
+  - ActionSheetPicker-3.0
   - MBProgressHUD (~> 0.9.1)
   - OHHTTPStubs
   - OHHTTPStubs/Swift
 
 SPEC CHECKSUMS:
+  ActionSheetPicker-3.0: 11f2053085d3088dc1ef9d38a9f11c18b528dd9e
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   OHHTTPStubs: 0aec5755528693a165bd616cb79f69387de306a8
 
