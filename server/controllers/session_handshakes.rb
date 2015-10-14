@@ -74,7 +74,7 @@ if session.driver_id != 0 	#TODO: will this be the default value?
 	rescue
 		halt 500, 'Invalid driver_id for this session.'
 	end
-	
+
 	#TODO: Send notification to receiver.
 
 #No driver was specified for this session
@@ -113,8 +113,8 @@ if params[:response]   #TODO: how will ruby handle invalid input
 	#Ensure eta is in correct format
 	begin
 		#Try parsing eta parameter
-		duration = DateTime.iso8601(params[:eta])		
-		
+		duration = DateTime.iso8601(params[:eta])
+
 		#Convert from duration to concrete time
 		eta = DateTime.now + duration
 
@@ -122,7 +122,7 @@ if params[:response]   #TODO: how will ruby handle invalid input
 		session.driver_eta = eta
 
 	#Eta is not in proper format.
-	rescue 
+	rescue
 		#Do nothing.
 		#TODO: Should we send a message that eta failed?
 	end
@@ -148,4 +148,16 @@ end
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
 post '/sessions/:id/driver/response' do
+  # If the receiver indicated that they want to be the driver...
+  if params[:response]
+    # find the session they are responding to,
+    session = Session.find(params[:id])
+    # assign the driver to the session,
+    session.driver_id = request.env[:HTTP_SKUNK_USERID]
+    # and save the session
+    session.save
+    # Return a 204 indicating that they request has suceeded
+    halt 204
+  end
+  # Otherwise, nothing happens
 end
