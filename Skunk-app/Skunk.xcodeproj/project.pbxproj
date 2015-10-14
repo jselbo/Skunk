@@ -20,6 +20,7 @@
 		033B160D1BB4628500A945FD /* PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B160C1BB4628500A945FD /* PhoneNumberTests.swift */; settings = {ASSET_TAGS = (); }; };
 		034BD0091BBEB94A00FCFA75 /* empty.json in Resources */ = {isa = PBXBuildFile; fileRef = 034BD0081BBEB94A00FCFA75 /* empty.json */; settings = {ASSET_TAGS = (); }; };
 		034D95FF1BA9E2C000F997C5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034D95FE1BA9E2C000F997C5 /* MapKit.framework */; };
+		036094C71BCE06F50040D767 /* ShareSelectLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036094C61BCE06F50040D767 /* ShareSelectLocationViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		037283F41BC316C30097BF5D /* invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 037283F31BC316C30097BF5D /* invalid.json */; settings = {ASSET_TAGS = (); }; };
 		037283F71BC3188A0097BF5D /* array.json in Resources */ = {isa = PBXBuildFile; fileRef = 037283F51BC3188A0097BF5D /* array.json */; settings = {ASSET_TAGS = (); }; };
 		037283F81BC3188A0097BF5D /* object.json in Resources */ = {isa = PBXBuildFile; fileRef = 037283F61BC3188A0097BF5D /* object.json */; settings = {ASSET_TAGS = (); }; };
@@ -83,6 +84,7 @@
 		033B160C1BB4628500A945FD /* PhoneNumberTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumberTests.swift; sourceTree = "<group>"; };
 		034BD0081BBEB94A00FCFA75 /* empty.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = empty.json; sourceTree = "<group>"; };
 		034D95FE1BA9E2C000F997C5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		036094C61BCE06F50040D767 /* ShareSelectLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareSelectLocationViewController.swift; sourceTree = "<group>"; };
 		037283F31BC316C30097BF5D /* invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = invalid.json; sourceTree = "<group>"; };
 		037283F51BC3188A0097BF5D /* array.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = array.json; sourceTree = "<group>"; };
 		037283F61BC3188A0097BF5D /* object.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = object.json; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 				038A40421BA9184600E65E1D /* ShareMainViewController.swift */,
 				E56A142A1BAF4BA600985CC7 /* SharerOptionsViewController.swift */,
 				E5F2F9F81BB311000082CF84 /* SharerSelectRecieverViewController.swift */,
+				036094C61BCE06F50040D767 /* ShareSelectLocationViewController.swift */,
 				E5E1A4DD1BB03DD1008EE8FC /* SharingViewController.swift */,
 			);
 			name = Sharer;
@@ -557,6 +560,7 @@
 				03AB65FB1BB193E20094B9CC /* NSDateUtilities.swift in Sources */,
 				03AD41841BB0363B0053FF45 /* Constants.swift in Sources */,
 				033B160B1BB44AA700A945FD /* PhoneNumber.swift in Sources */,
+				036094C71BCE06F50040D767 /* ShareSelectLocationViewController.swift in Sources */,
 				03AB65FD1BB195D30094B9CC /* CLLocationUtilities.swift in Sources */,
 				038A40431BA9184600E65E1D /* ShareMainViewController.swift in Sources */,
 				033B16091BB437D800A945FD /* UIViewControllerUtilities.swift in Sources */,
