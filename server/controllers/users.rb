@@ -3,8 +3,8 @@ require 'digest'
 # POST /users/create
 # {
 #   "name": "name",
-#   "phone": "phone number",
-#   "password": "user password",
+#   "phone": "phonenumber",
+#   "password": "userpassword",
 #   ...
 # }
 # -> 200 OK <user_id>
@@ -63,4 +63,24 @@ post '/users/login' do
   halt(404) unless @user
   # If they do exist, return their ID.
   { user_id: @user.id }.to_json
+end
+
+# POST /users/find
+# {
+#   "phone": ["phonenumber", "phonenumber"]
+# }
+# -> 200 OK <user_ids>
+# -> 500 Internal Server Error
+#
+# This endpoint is hit whenever a sharer is presented with a list of users who
+# who are capable of receiving their location (registered users of the app).
+# The body of the request contains the filtering information (primarily phone
+# numbers, but potentially names and ids).
+#
+# On success, returns an array of User objects (id, first_name, last_name,
+# and phone_number) which match the filtering criteria.
+# On error, returns a 500 Internal Server Error with details about what went
+# wrong.
+post 'users/find' do
+  User.where(params).to_json
 end
