@@ -45,10 +45,9 @@ class UserAccountManager: NSObject {
             case .Success(let response):
                 let JSONResponse = response as! [String: AnyObject]
                 
-                guard let firstName = JSONResponse["firstName"] as? String,
-                    lastName = JSONResponse["lastName"] as? String,
-                    identifierString = JSONResponse["userID"] as? String,
-                    identifier = Uid(identifierString)
+                guard let firstName = JSONResponse["first_name"] as? String,
+                    lastName = JSONResponse["last_name"] as? String,
+                    identifier = JSONResponse["user_id"] as? Int
                 else {
                     print("Error: Failed to parse values from JSON: \(JSONResponse)")
                     completion(registeredAccount: nil)
@@ -57,7 +56,7 @@ class UserAccountManager: NSObject {
                 
                 let account = UserAccount(firstName: firstName, lastName: lastName,
                     phoneNumber: phone, password: password)
-                let registered = RegisteredUserAccount(userAccount: account, identifier: identifier)
+                let registered = RegisteredUserAccount(userAccount: account, identifier: Uid(identifier))
                 completion(registeredAccount: registered)
                 
             case .Failure(let failure):
@@ -85,13 +84,13 @@ class UserAccountManager: NSObject {
             case .Success(let response):
                 let JSONResponse = response as! [String: AnyObject]
                 
-                guard let identifierString = JSONResponse["userID"] as? String, identifier = Uid(identifierString) else {
+                guard let identifier = JSONResponse["user_id"] as? Int else {
                     print("Error: Failed to parse values from JSON: \(JSONResponse)")
                     completion(registeredAccount: nil)
                     break
                 }
                 
-                let registered = RegisteredUserAccount(userAccount: account, identifier: identifier)
+                let registered = RegisteredUserAccount(userAccount: account, identifier: Uid(identifier))
                 completion(registeredAccount: registered)
                 
             case .Failure(let failure):

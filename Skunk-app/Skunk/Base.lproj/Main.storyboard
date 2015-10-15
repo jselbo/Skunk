@@ -347,6 +347,7 @@
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zv6-a5-Qnd">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+                                    <accessibility key="accessibilityConfiguration" label="selectFriendsButton"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="26"/>
                                     <state key="normal" title="Choose Friends"/>
                                     <connections>

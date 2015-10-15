@@ -48,6 +48,14 @@
 		03AD41841BB0363B0053FF45 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AD41831BB0363B0053FF45 /* Constants.swift */; settings = {ASSET_TAGS = (); }; };
 		03AD41861BB037D60053FF45 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03AD41851BB037D60053FF45 /* CoreLocation.framework */; };
 		03AD41891BB09B0C0053FF45 /* ShareSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AD41881BB09B0C0053FF45 /* ShareSessionManager.swift */; settings = {ASSET_TAGS = (); }; };
+		03E0096E1BCFE770003E6135 /* login.json in Resources */ = {isa = PBXBuildFile; fileRef = 03E0096D1BCFE770003E6135 /* login.json */; settings = {ASSET_TAGS = (); }; };
+		03E009701BCFE83A003E6135 /* register.json in Resources */ = {isa = PBXBuildFile; fileRef = 03E0096F1BCFE83A003E6135 /* register.json */; settings = {ASSET_TAGS = (); }; };
+		03E009721BCFF83F003E6135 /* login.json in Resources */ = {isa = PBXBuildFile; fileRef = 03E0096D1BCFE770003E6135 /* login.json */; };
+		03E009731BCFF83F003E6135 /* register.json in Resources */ = {isa = PBXBuildFile; fileRef = 03E0096F1BCFE83A003E6135 /* register.json */; };
+		03E009741BCFF83F003E6135 /* array.json in Resources */ = {isa = PBXBuildFile; fileRef = 037283F51BC3188A0097BF5D /* array.json */; };
+		03E009751BCFF83F003E6135 /* empty.json in Resources */ = {isa = PBXBuildFile; fileRef = 034BD0081BBEB94A00FCFA75 /* empty.json */; };
+		03E009761BCFF83F003E6135 /* invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 037283F31BC316C30097BF5D /* invalid.json */; };
+		03E009771BCFF83F003E6135 /* object.json in Resources */ = {isa = PBXBuildFile; fileRef = 037283F61BC3188A0097BF5D /* object.json */; };
 		03F1CEC31BC722B60040BF51 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F1CEC21BC722B60040BF51 /* LocationManager.swift */; settings = {ASSET_TAGS = (); }; };
 		4B18D352DA71E7918A3597E2 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 415C7F2891D02584B84E1204 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		B23369DC1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23369DB1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift */; settings = {ASSET_TAGS = (); }; };
@@ -120,6 +128,8 @@
 		03AD41831BB0363B0053FF45 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		03AD41851BB037D60053FF45 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		03AD41881BB09B0C0053FF45 /* ShareSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareSessionManager.swift; sourceTree = "<group>"; };
+		03E0096D1BCFE770003E6135 /* login.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = login.json; sourceTree = "<group>"; };
+		03E0096F1BCFE83A003E6135 /* register.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = register.json; sourceTree = "<group>"; };
 		03F1CEC21BC722B60040BF51 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		1D83405E1F23E1A90E99FE58 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		415C7F2891D02584B84E1204 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -180,6 +190,7 @@
 		034BD0071BBEB90700FCFA75 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				03E0096C1BCFE744003E6135 /* Server Responses */,
 				037283F51BC3188A0097BF5D /* array.json */,
 				034BD0081BBEB94A00FCFA75 /* empty.json */,
 				037283F31BC316C30097BF5D /* invalid.json */,
@@ -346,6 +357,15 @@
 			name = Receiver;
 			sourceTree = "<group>";
 		};
+		03E0096C1BCFE744003E6135 /* Server Responses */ = {
+			isa = PBXGroup;
+			children = (
+				03E0096D1BCFE770003E6135 /* login.json */,
+				03E0096F1BCFE83A003E6135 /* register.json */,
+			);
+			name = "Server Responses";
+			sourceTree = "<group>";
+		};
 		03F1CEC11BC722990040BF51 /* Location */ = {
 			isa = PBXGroup;
 			children = (
@@ -491,7 +511,9 @@
 			files = (
 				034BD0091BBEB94A00FCFA75 /* empty.json in Resources */,
 				037283F71BC3188A0097BF5D /* array.json in Resources */,
+				03E0096E1BCFE770003E6135 /* login.json in Resources */,
 				037283F81BC3188A0097BF5D /* object.json in Resources */,
+				03E009701BCFE83A003E6135 /* register.json in Resources */,
 				037283F41BC316C30097BF5D /* invalid.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -500,6 +522,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03E009721BCFF83F003E6135 /* login.json in Resources */,
+				03E009731BCFF83F003E6135 /* register.json in Resources */,
+				03E009741BCFF83F003E6135 /* array.json in Resources */,
+				03E009751BCFF83F003E6135 /* empty.json in Resources */,
+				03E009761BCFF83F003E6135 /* invalid.json in Resources */,
+				03E009771BCFF83F003E6135 /* object.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
