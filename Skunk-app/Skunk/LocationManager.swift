@@ -9,16 +9,22 @@
 import Foundation
 import MapKit
 
+@objc protocol LocationManagerDelegate: NSObjectProtocol {
+    optional func locationManager(manager: LocationManager, didUpdateLocation location: CLLocation)
+}
+
 class LocationManager: NSObject, CLLocationManagerDelegate {
     
     var manager: CLLocationManager!
+    var delegate: LocationManagerDelegate?
     
-    var authorizationCompletion: ((authorized: Bool) -> Void)?
+    private var authorizationCompletion: ((authorized: Bool) -> Void)?
     
     override init() {
         super.init()
         
         manager = CLLocationManager()
+        manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.delegate = self
     }
     
@@ -50,6 +56,10 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    func startUpdatingLocation() {
+        manager.startUpdatingLocation()
+    }
+    
     
     //MARK: - CLLocationManagerDelegate
     
@@ -60,6 +70,12 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
-    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let lastLocation = locations.last else {
+            return
+        }
+        
+        delegate?.locationManager?(self, didUpdateLocation: lastLocation)
+    }
     
 }

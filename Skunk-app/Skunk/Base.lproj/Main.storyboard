@@ -67,7 +67,7 @@
                                 </state>
                                 <connections>
                                     <action selector="sharePressed:" destination="FPd-Ut-7fa" eventType="touchUpInside" id="gIm-qJ-R1F"/>
-                                    <segue destination="gmA-Cj-GkQ" kind="push" id="hAq-Zo-1V8"/>
+                                    <segue destination="gmA-Cj-GkQ" kind="push" identifier="Options" id="hAq-Zo-1V8"/>
                                 </connections>
                             </button>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="4T0-Xt-sWt">
@@ -157,7 +157,7 @@
         <!--Share-->
         <scene sceneID="ZjP-zE-oLE">
             <objects>
-                <viewController storyboardIdentifier="PickMeUp" id="PhS-iw-iKI" customClass="SharingViewController" customModule="Skunk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PickMeUp" id="PhS-iw-iKI" customClass="ShareSessionViewController" customModule="Skunk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nVx-dq-g0y"/>
                         <viewControllerLayoutGuide type="bottom" id="W2o-Ja-DAu"/>
@@ -166,52 +166,95 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="DeL-hV-lgj">
-                                <rect key="frame" x="0.0" y="20" width="320" height="392"/>
-                                <animations/>
-                            </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ye8-hN-z6i">
-                                <rect key="frame" x="0.0" y="420" width="320" height="74"/>
+                                <rect key="frame" x="0.0" y="494" width="320" height="74"/>
                                 <animations/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <accessibility key="accessibilityConfiguration" label="pickMeUpButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="74" id="DI2-dw-rb6"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
-                                <state key="normal" title="Pick me up!"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljv-MD-Cfp">
-                                <rect key="frame" x="0.0" y="494" width="320" height="74"/>
-                                <animations/>
-                                <accessibility key="accessibilityConfiguration" label="stopSharingButton"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="74" id="ZcW-om-vh0"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
-                                <state key="normal" title="Stop Sharing">
-                                    <color key="titleColor" red="1" green="0.16002692767563964" blue="0.19565217519909206" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Pick me up!">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="pickupRequestPressed:" destination="PhS-iw-iKI" eventType="touchUpInside" id="DwH-HJ-AV4"/>
+                                </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Broadcasting Location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mEy-KJ-xPO">
+                                <rect key="frame" x="68" y="72" width="236" height="37"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2rH-Py-LTw">
+                                <rect key="frame" x="16" y="72" width="44" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="37" id="YjJ-YZ-lfN"/>
+                                    <constraint firstAttribute="width" constant="44" id="eNs-ll-Xd0"/>
+                                </constraints>
+                            </imageView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zhn-pL-QGu">
+                                <rect key="frame" x="0.0" y="117" width="320" height="377"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReceiverCell" textLabel="h0j-BM-akf" detailTextLabel="RAu-9c-MPQ" style="IBUITableViewCellStyleSubtitle" id="k9I-Vb-n7i">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k9I-Vb-n7i" id="VIQ-JO-XT1">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="h0j-BM-akf">
+                                                    <rect key="frame" x="15" y="5" width="32" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RAu-9c-MPQ">
+                                                    <rect key="frame" x="15" y="25" width="41" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="PhS-iw-iKI" id="lNV-yd-RhB"/>
+                                    <outlet property="delegate" destination="PhS-iw-iKI" id="5G8-YY-w5x"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="DeL-hV-lgj" secondAttribute="trailing" id="Eja-EY-4PT"/>
-                            <constraint firstItem="ljv-MD-Cfp" firstAttribute="top" secondItem="ye8-hN-z6i" secondAttribute="bottom" id="OsA-Aj-Q3u"/>
-                            <constraint firstItem="W2o-Ja-DAu" firstAttribute="top" secondItem="ljv-MD-Cfp" secondAttribute="bottom" id="Tu5-qP-clF"/>
-                            <constraint firstItem="DeL-hV-lgj" firstAttribute="leading" secondItem="Xea-Eu-AYc" secondAttribute="leading" id="hWu-gO-R8R"/>
-                            <constraint firstAttribute="trailing" secondItem="ljv-MD-Cfp" secondAttribute="trailing" id="lKG-ZG-TVJ"/>
+                            <constraint firstItem="2rH-Py-LTw" firstAttribute="top" secondItem="nVx-dq-g0y" secondAttribute="bottom" constant="8" id="0vd-B4-oUj"/>
+                            <constraint firstItem="zhn-pL-QGu" firstAttribute="top" secondItem="mEy-KJ-xPO" secondAttribute="bottom" constant="8" id="N3f-Br-cOI"/>
+                            <constraint firstAttribute="trailing" secondItem="zhn-pL-QGu" secondAttribute="trailing" id="Ni2-Pp-mCr"/>
+                            <constraint firstItem="mEy-KJ-xPO" firstAttribute="leading" secondItem="2rH-Py-LTw" secondAttribute="trailing" constant="8" id="Zmf-5R-6m0"/>
+                            <constraint firstItem="mEy-KJ-xPO" firstAttribute="trailing" secondItem="Xea-Eu-AYc" secondAttribute="trailingMargin" id="bC2-lD-9pf"/>
+                            <constraint firstItem="mEy-KJ-xPO" firstAttribute="top" secondItem="nVx-dq-g0y" secondAttribute="bottom" constant="8" id="cgR-bp-vRC"/>
+                            <constraint firstItem="ye8-hN-z6i" firstAttribute="top" secondItem="zhn-pL-QGu" secondAttribute="bottom" id="eHy-tM-b4s"/>
+                            <constraint firstItem="zhn-pL-QGu" firstAttribute="leading" secondItem="Xea-Eu-AYc" secondAttribute="leading" id="okA-jH-szy"/>
+                            <constraint firstItem="zhn-pL-QGu" firstAttribute="top" secondItem="2rH-Py-LTw" secondAttribute="bottom" constant="8" id="p4z-dD-Los"/>
+                            <constraint firstItem="ye8-hN-z6i" firstAttribute="bottom" secondItem="W2o-Ja-DAu" secondAttribute="top" id="qrY-pp-5vR"/>
                             <constraint firstAttribute="trailing" secondItem="ye8-hN-z6i" secondAttribute="trailing" id="u4M-Yr-AVR"/>
-                            <constraint firstItem="ye8-hN-z6i" firstAttribute="top" secondItem="DeL-hV-lgj" secondAttribute="bottom" constant="8" id="u4v-8E-iqP"/>
-                            <constraint firstItem="DeL-hV-lgj" firstAttribute="top" secondItem="nVx-dq-g0y" secondAttribute="bottom" id="uvX-aC-JFE"/>
+                            <constraint firstItem="2rH-Py-LTw" firstAttribute="leading" secondItem="Xea-Eu-AYc" secondAttribute="leadingMargin" id="yRk-uL-0TR"/>
                             <constraint firstItem="ye8-hN-z6i" firstAttribute="leading" secondItem="Xea-Eu-AYc" secondAttribute="leading" id="ykw-Os-xJM"/>
-                            <constraint firstItem="ljv-MD-Cfp" firstAttribute="leading" secondItem="Xea-Eu-AYc" secondAttribute="leading" id="yxa-4f-Wz1"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Share" id="RDI-UE-dbM"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="pickUpButton" destination="ye8-hN-z6i" id="zbr-JD-bVV"/>
-                        <outlet property="stopSharingButton" destination="ljv-MD-Cfp" id="kRp-E0-Pun"/>
+                        <outlet property="broadcastImageView" destination="2rH-Py-LTw" id="tGo-qu-fYD"/>
+                        <outlet property="pickUpButton" destination="ye8-hN-z6i" id="p3W-NN-iev"/>
+                        <outlet property="receiversTableView" destination="zhn-pL-QGu" id="nUQ-ZB-DXe"/>
+                        <outlet property="statusLabel" destination="mEy-KJ-xPO" id="aCV-PP-Vnq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pqg-bG-Vnh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -232,7 +275,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8jJ-GG-nrb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1494" y="-1165"/>
+            <point key="canvasLocation" x="1988" y="-1173"/>
         </scene>
         <!--Select Location-->
         <scene sceneID="gvh-S6-VQR">
@@ -255,7 +298,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Long press on the map to indicate the location at which you would like to stop sharing your location." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wSz-t3-Zl6">
                                 <rect key="frame" x="16" y="509" width="288" height="51"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -288,7 +331,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XND-ce-lE7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1988" y="-1165"/>
+            <point key="canvasLocation" x="2462" y="-1173"/>
         </scene>
         <!--Start Sharing-->
         <scene sceneID="bwB-f9-qJt">
@@ -297,7 +340,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="static" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="heA-j2-atO">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="K5X-Hk-0Hg">
                             <rect key="frame" x="0.0" y="300" width="320" height="80"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -332,7 +375,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No value selected" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="cWC-zV-XKk">
                                                     <rect key="frame" x="15" y="0.0" width="290" height="43"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -392,7 +435,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Request a Ride" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LCP-Y1-Yva">
                                                     <rect key="frame" x="15" y="0.0" width="115" height="43"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bu7-He-Hdf">
@@ -588,7 +631,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
                             <tableViewSection headerTitle="Debug" id="ZS3-9h-PW3">
                                 <cells>
@@ -604,7 +647,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>

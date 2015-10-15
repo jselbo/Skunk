@@ -18,15 +18,19 @@
 		033B16091BB437D800A945FD /* UIViewControllerUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B16081BB437D800A945FD /* UIViewControllerUtilities.swift */; settings = {ASSET_TAGS = (); }; };
 		033B160B1BB44AA700A945FD /* PhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B160A1BB44AA700A945FD /* PhoneNumber.swift */; settings = {ASSET_TAGS = (); }; };
 		033B160D1BB4628500A945FD /* PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B160C1BB4628500A945FD /* PhoneNumberTests.swift */; settings = {ASSET_TAGS = (); }; };
+		0345D9EC1BCF1119003544FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0345D9EB1BCF1119003544FC /* Assets.xcassets */; settings = {ASSET_TAGS = (); }; };
+		0345D9F01BCF1146003544FC /* broadcast1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0345D9ED1BCF1146003544FC /* broadcast1.png */; settings = {ASSET_TAGS = (); }; };
+		0345D9F11BCF1146003544FC /* broadcast2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0345D9EE1BCF1146003544FC /* broadcast2.png */; settings = {ASSET_TAGS = (); }; };
+		0345D9F21BCF1146003544FC /* broadcast3.png in Resources */ = {isa = PBXBuildFile; fileRef = 0345D9EF1BCF1146003544FC /* broadcast3.png */; settings = {ASSET_TAGS = (); }; };
 		034BD0091BBEB94A00FCFA75 /* empty.json in Resources */ = {isa = PBXBuildFile; fileRef = 034BD0081BBEB94A00FCFA75 /* empty.json */; settings = {ASSET_TAGS = (); }; };
 		034D95FF1BA9E2C000F997C5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034D95FE1BA9E2C000F997C5 /* MapKit.framework */; };
 		036094C71BCE06F50040D767 /* ShareSelectLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036094C61BCE06F50040D767 /* ShareSelectLocationViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		036094C91BCEE90B0040D767 /* ShareSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036094C81BCEE90B0040D767 /* ShareSessionViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		037283F41BC316C30097BF5D /* invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 037283F31BC316C30097BF5D /* invalid.json */; settings = {ASSET_TAGS = (); }; };
 		037283F71BC3188A0097BF5D /* array.json in Resources */ = {isa = PBXBuildFile; fileRef = 037283F51BC3188A0097BF5D /* array.json */; settings = {ASSET_TAGS = (); }; };
 		037283F81BC3188A0097BF5D /* object.json in Resources */ = {isa = PBXBuildFile; fileRef = 037283F61BC3188A0097BF5D /* object.json */; settings = {ASSET_TAGS = (); }; };
 		038A40101BA908FF00E65E1D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A400F1BA908FF00E65E1D /* AppDelegate.swift */; };
 		038A40171BA908FF00E65E1D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 038A40151BA908FF00E65E1D /* Main.storyboard */; };
-		038A40191BA908FF00E65E1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 038A40181BA908FF00E65E1D /* Assets.xcassets */; };
 		038A401C1BA908FF00E65E1D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 038A401A1BA908FF00E65E1D /* LaunchScreen.storyboard */; };
 		038A40321BA908FF00E65E1D /* SkunkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40311BA908FF00E65E1D /* SkunkUITests.swift */; };
 		038A40431BA9184600E65E1D /* ShareMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038A40421BA9184600E65E1D /* ShareMainViewController.swift */; settings = {ASSET_TAGS = (); }; };
@@ -44,12 +48,10 @@
 		03AD41841BB0363B0053FF45 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AD41831BB0363B0053FF45 /* Constants.swift */; settings = {ASSET_TAGS = (); }; };
 		03AD41861BB037D60053FF45 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03AD41851BB037D60053FF45 /* CoreLocation.framework */; };
 		03AD41891BB09B0C0053FF45 /* ShareSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AD41881BB09B0C0053FF45 /* ShareSessionManager.swift */; settings = {ASSET_TAGS = (); }; };
-		03D7E3C41BCC153B009AC7A8 /* LocationUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D7E3C31BCC153B009AC7A8 /* LocationUser.swift */; settings = {ASSET_TAGS = (); }; };
 		03F1CEC31BC722B60040BF51 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F1CEC21BC722B60040BF51 /* LocationManager.swift */; settings = {ASSET_TAGS = (); }; };
 		4B18D352DA71E7918A3597E2 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 415C7F2891D02584B84E1204 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		B23369DC1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23369DB1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		E56A142B1BAF4BA600985CC7 /* SharerOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A142A1BAF4BA600985CC7 /* SharerOptionsViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		E5E1A4DE1BB03DD1008EE8FC /* SharingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E1A4DD1BB03DD1008EE8FC /* SharingViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		E5F2F9F91BB311000082CF84 /* SharerSelectRecieverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F2F9F81BB311000082CF84 /* SharerSelectRecieverViewController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
@@ -82,16 +84,20 @@
 		033B16081BB437D800A945FD /* UIViewControllerUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerUtilities.swift; sourceTree = "<group>"; };
 		033B160A1BB44AA700A945FD /* PhoneNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumber.swift; sourceTree = "<group>"; };
 		033B160C1BB4628500A945FD /* PhoneNumberTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumberTests.swift; sourceTree = "<group>"; };
+		0345D9EB1BCF1119003544FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
+		0345D9ED1BCF1146003544FC /* broadcast1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = broadcast1.png; path = Resources/broadcast1.png; sourceTree = "<group>"; };
+		0345D9EE1BCF1146003544FC /* broadcast2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = broadcast2.png; path = Resources/broadcast2.png; sourceTree = "<group>"; };
+		0345D9EF1BCF1146003544FC /* broadcast3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = broadcast3.png; path = Resources/broadcast3.png; sourceTree = "<group>"; };
 		034BD0081BBEB94A00FCFA75 /* empty.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = empty.json; sourceTree = "<group>"; };
 		034D95FE1BA9E2C000F997C5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		036094C61BCE06F50040D767 /* ShareSelectLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareSelectLocationViewController.swift; sourceTree = "<group>"; };
+		036094C81BCEE90B0040D767 /* ShareSessionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareSessionViewController.swift; sourceTree = "<group>"; };
 		037283F31BC316C30097BF5D /* invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = invalid.json; sourceTree = "<group>"; };
 		037283F51BC3188A0097BF5D /* array.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = array.json; sourceTree = "<group>"; };
 		037283F61BC3188A0097BF5D /* object.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = object.json; sourceTree = "<group>"; };
 		038A400C1BA908FF00E65E1D /* Skunk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Skunk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		038A400F1BA908FF00E65E1D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		038A40161BA908FF00E65E1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		038A40181BA908FF00E65E1D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		038A401B1BA908FF00E65E1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		038A401D1BA908FF00E65E1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		038A40221BA908FF00E65E1D /* SkunkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkunkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,14 +120,12 @@
 		03AD41831BB0363B0053FF45 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		03AD41851BB037D60053FF45 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		03AD41881BB09B0C0053FF45 /* ShareSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareSessionManager.swift; sourceTree = "<group>"; };
-		03D7E3C31BCC153B009AC7A8 /* LocationUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationUser.swift; sourceTree = "<group>"; };
 		03F1CEC21BC722B60040BF51 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		1D83405E1F23E1A90E99FE58 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		415C7F2891D02584B84E1204 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B0AE1F0ED9F4AD39FAE7CC7 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		B23369DB1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiveFriendsListViewController.swift; sourceTree = "<group>"; };
 		E56A142A1BAF4BA600985CC7 /* SharerOptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharerOptionsViewController.swift; sourceTree = "<group>"; };
-		E5E1A4DD1BB03DD1008EE8FC /* SharingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharingViewController.swift; sourceTree = "<group>"; };
 		E5F2F9F81BB311000082CF84 /* SharerSelectRecieverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharerSelectRecieverViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -283,7 +287,10 @@
 		038A40411BA9166700E65E1D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				038A40181BA908FF00E65E1D /* Assets.xcassets */,
+				0345D9EB1BCF1119003544FC /* Assets.xcassets */,
+				0345D9ED1BCF1146003544FC /* broadcast1.png */,
+				0345D9EE1BCF1146003544FC /* broadcast2.png */,
+				0345D9EF1BCF1146003544FC /* broadcast3.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -325,7 +332,7 @@
 				E56A142A1BAF4BA600985CC7 /* SharerOptionsViewController.swift */,
 				E5F2F9F81BB311000082CF84 /* SharerSelectRecieverViewController.swift */,
 				036094C61BCE06F50040D767 /* ShareSelectLocationViewController.swift */,
-				E5E1A4DD1BB03DD1008EE8FC /* SharingViewController.swift */,
+				036094C81BCEE90B0040D767 /* ShareSessionViewController.swift */,
 			);
 			name = Sharer;
 			sourceTree = "<group>";
@@ -343,7 +350,6 @@
 			isa = PBXGroup;
 			children = (
 				03F1CEC21BC722B60040BF51 /* LocationManager.swift */,
-				03D7E3C31BCC153B009AC7A8 /* LocationUser.swift */,
 			);
 			name = Location;
 			sourceTree = "<group>";
@@ -427,6 +433,7 @@
 				TargetAttributes = {
 					038A400B1BA908FF00E65E1D = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = H5639XUXQB;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -468,10 +475,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0345D9F11BCF1146003544FC /* broadcast2.png in Resources */,
+				0345D9F21BCF1146003544FC /* broadcast3.png in Resources */,
 				033B15FC1BB34B3700A945FD /* Login.storyboard in Resources */,
 				038A401C1BA908FF00E65E1D /* LaunchScreen.storyboard in Resources */,
-				038A40191BA908FF00E65E1D /* Assets.xcassets in Resources */,
 				038A40171BA908FF00E65E1D /* Main.storyboard in Resources */,
+				0345D9F01BCF1146003544FC /* broadcast1.png in Resources */,
+				0345D9EC1BCF1119003544FC /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -550,12 +560,12 @@
 			files = (
 				033B16011BB34F8C00A945FD /* LoginViewController.swift in Sources */,
 				033B16071BB432B100A945FD /* MainTabBarController.swift in Sources */,
+				036094C91BCEE90B0040D767 /* ShareSessionViewController.swift in Sources */,
 				03F1CEC31BC722B60040BF51 /* LocationManager.swift in Sources */,
 				03AD417C1BAFB0B10053FF45 /* UserAccount.swift in Sources */,
 				038A40451BA9185000E65E1D /* ReceiveMainViewController.swift in Sources */,
 				033B15F81BB31A4A00A945FD /* UserAccountManager.swift in Sources */,
 				03AD41821BB034BE0053FF45 /* ShareSession.swift in Sources */,
-				03D7E3C41BCC153B009AC7A8 /* LocationUser.swift in Sources */,
 				039D7F4F1BB9B5CF00955ACC /* ServerRequest.swift in Sources */,
 				03AB65F91BB18C770094B9CC /* Serializable.swift in Sources */,
 				E56A142B1BAF4BA600985CC7 /* SharerOptionsViewController.swift in Sources */,
@@ -572,7 +582,6 @@
 				03AD41891BB09B0C0053FF45 /* ShareSessionManager.swift in Sources */,
 				033B15FF1BB34B8000A945FD /* LaunchViewController.swift in Sources */,
 				03AD417E1BB033350053FF45 /* RegisteredUserAccount.swift in Sources */,
-				E5E1A4DE1BB03DD1008EE8FC /* SharingViewController.swift in Sources */,
 				B23369DC1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift in Sources */,
 				039D7F511BB9E0BE00955ACC /* SettingsViewController.swift in Sources */,
 			);
@@ -719,11 +728,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Skunk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-D DEBUG $(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.purdue.jselbo.Skunk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -733,10 +745,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Skunk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.purdue.jselbo.Skunk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

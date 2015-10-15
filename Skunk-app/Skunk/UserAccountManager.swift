@@ -60,11 +60,9 @@ class UserAccountManager: NSObject {
                 let registered = RegisteredUserAccount(userAccount: account, identifier: identifier)
                 completion(registeredAccount: registered)
                 
-                break
             case .Failure(let failure):
                 request.logResponseFailure(failure)
                 completion(registeredAccount: nil)
-                break
             }
         }
     }
@@ -76,7 +74,7 @@ class UserAccountManager: NSObject {
             "firstName": account.firstName,
             "lastName": account.lastName,
             "phone": account.phoneNumber.serialize(),
-            "password": account.password,
+            "password": account.password!,
         ]
         
         let request = ServerRequest(type: .POST, url: Constants.Endpoints.usersCreateURL)
@@ -96,11 +94,9 @@ class UserAccountManager: NSObject {
                 let registered = RegisteredUserAccount(userAccount: account, identifier: identifier)
                 completion(registeredAccount: registered)
                 
-                break
             case .Failure(let failure):
                 request.logResponseFailure(failure)
                 completion(registeredAccount: nil)
-                break
             }
         }
     }
@@ -114,7 +110,7 @@ class UserAccountManager: NSObject {
             throw UserAccountManagerError.DefaultsSynchronize
         }
         
-        try savePassword(account.userAccount.password)
+        try savePassword(account.userAccount.password!)
         try saveUserIdentifier(account.identifier)
         
         registeredAccount = account

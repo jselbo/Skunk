@@ -10,10 +10,11 @@ import UIKit
 import Contacts
 
 
-class SharerSelectRecieverViewController: UITableViewController, LocationUser {
+class SharerSelectRecieverViewController: UITableViewController {
     
     var endCondition: ShareEndCondition!
     var needsDriver: Bool!
+    var accountManager: UserAccountManager!
     var locationManager: LocationManager!
     
     let contactStore = CNContactStore()
@@ -37,12 +38,6 @@ class SharerSelectRecieverViewController: UITableViewController, LocationUser {
                     self.presentErrorAlert(Constants.needContactsAuthorizationMessage)
                 })
             }
-        }
-    }
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if var destinationController = segue.destinationViewController as? LocationUser {
-            destinationController.locationManager = locationManager
         }
     }
 
@@ -95,8 +90,10 @@ class SharerSelectRecieverViewController: UITableViewController, LocationUser {
     }
     
     @IBAction func donePressed(sender: AnyObject) {
-        let sb = UIStoryboard(name: "Main", bundle: nil)
-        let dest = sb.instantiateViewControllerWithIdentifier( "PickMeUp" )
-        self.navigationController!.viewControllers = [dest]
+        let shareSessionController = self.storyboard!.instantiateViewControllerWithIdentifier("PickMeUp") as! ShareSessionViewController
+        shareSessionController.accountManager = accountManager
+        shareSessionController.locationManager = locationManager
+        
+        self.navigationController!.viewControllers = [shareSessionController]
     }
 }

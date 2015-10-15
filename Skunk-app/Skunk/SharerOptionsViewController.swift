@@ -11,12 +11,14 @@ import MapKit
 
 import ActionSheetPicker_3_0
 
-class SharerOptionsViewController: UITableViewController, LocationUser, ShareSelectLocationViewControllerDelegate {
+class SharerOptionsViewController: UITableViewController, ShareSelectLocationViewControllerDelegate {
     
     private let selectLocationSegue = "SelectLocation"
     private let selectFriendsSegue = "SelectFriends"
 
+    var accountManager: UserAccountManager!
     var locationManager: LocationManager!
+    
     var endCondition: ShareEndCondition?
     
     @IBOutlet weak var requestRideOption: UISwitch!
@@ -47,10 +49,6 @@ class SharerOptionsViewController: UITableViewController, LocationUser, ShareSel
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if var destinationController = segue.destinationViewController as? LocationUser {
-            destinationController.locationManager = locationManager
-        }
-        
         switch segue.identifier {
         case selectLocationSegue?:
             let navigationController = segue.destinationViewController as! UINavigationController
@@ -60,6 +58,8 @@ class SharerOptionsViewController: UITableViewController, LocationUser, ShareSel
             let receiversController = segue.destinationViewController as! SharerSelectRecieverViewController
             receiversController.endCondition = endCondition
             receiversController.needsDriver = requestRideOption.on
+            receiversController.accountManager = accountManager
+            receiversController.locationManager = locationManager
         default:
             break
         }

@@ -9,7 +9,9 @@
 import MapKit
 import UIKit
 
-class ShareMainViewController: UIViewController, LocationUser {
+class ShareMainViewController: UIViewController {
+    
+    let optionsSegue = "Options"
     
     var accountManager: UserAccountManager!
     var locationManager: LocationManager!
@@ -38,8 +40,13 @@ class ShareMainViewController: UIViewController, LocationUser {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if var destinationController = segue.destinationViewController as? LocationUser {
-            destinationController.locationManager = locationManager
+        switch segue.identifier {
+        case optionsSegue?:
+            let optionsController = segue.destinationViewController as! SharerOptionsViewController
+            optionsController.accountManager = accountManager
+            optionsController.locationManager = locationManager
+        default:
+            break
         }
     }
     

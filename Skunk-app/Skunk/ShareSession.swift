@@ -49,17 +49,18 @@ enum ShareEndCondition: Serializable {
 }
 
 class ReceiverInfo: NSObject {
-    let identifier: Uid
+    let account: RegisteredUserAccount
     /// Sharer can request to stop sharing location with individual receivers.
     let stopSharingState = RequestState.None
     
-    init(identifier: Uid) {
-        self.identifier = identifier
+    init(account: RegisteredUserAccount) {
+        self.account = account
     }
 }
 
 /// Class that contains and manages all information for a given sharing session.
 class ShareSession: NSObject {
+    let sharerAccount: RegisteredUserAccount
     let endCondition: ShareEndCondition
     let needsDriver: Bool
     
@@ -81,10 +82,14 @@ class ShareSession: NSObject {
     var currentLocation: CLLocation?
     var lastLocationUpdate: NSDate?
     
-    init(endCondition: ShareEndCondition, needsDriver: Bool, receivers: Set<Uid>) {
+    init(sharerAccount: RegisteredUserAccount,
+        endCondition: ShareEndCondition,
+        needsDriver: Bool,
+        receivers: Set<RegisteredUserAccount>) {
+        self.sharerAccount = sharerAccount
         self.endCondition = endCondition
         self.needsDriver = needsDriver
-        self.receivers = Set(receivers.map { id in ReceiverInfo(identifier: id) })
+        self.receivers = Set(receivers.map { account in ReceiverInfo(account: account) })
         
         if needsDriver {
             currentDriverState = .Requested
@@ -96,7 +101,7 @@ class ShareSession: NSObject {
         let receiverIDs = receivers
             // Uint64 are not directly castable to NSNumber, so we must
             // initialize with NSNumber explicitly. This is necessary to cast to NSDictionary -> AnyObject
-            .map { r in NSNumber(unsignedLongLong: r.identifier) }
+            .map { r in NSNumber(unsignedLongLong: r.account.identifier) }
             // Also sort for deterministic order during testing.
             .sort { r1, r2 in r1.unsignedLongLongValue < r2.unsignedLongLongValue }
         
