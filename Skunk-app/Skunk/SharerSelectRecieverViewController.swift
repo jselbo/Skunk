@@ -9,6 +9,7 @@
 import UIKit
 import Contacts
 
+import MBProgressHUD
 
 class SharerSelectRecieverViewController: UITableViewController {
     
@@ -16,11 +17,15 @@ class SharerSelectRecieverViewController: UITableViewController {
     var needsDriver: Bool!
     var accountManager: UserAccountManager!
     var locationManager: LocationManager!
+    var sessionManager: ShareSessionManager!
+    var session: ShareSession!
     
     let contactStore = CNContactStore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        sessionManager = ShareSessionManager(account: accountManager.registeredAccount!)
         
         requestAuthContacts { accessGranted in
             if accessGranted {
@@ -90,9 +95,41 @@ class SharerSelectRecieverViewController: UITableViewController {
     }
     
     @IBAction func donePressed(sender: AnyObject) {
+        let hud = MBProgressHUD(view: self.view)
+        hud.dimBackground = true
+        hud.labelText = Constants.HUDProgressText
+        
+        self.view.addSubview(hud)
+        hud.show(true)
+        
+        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
+        dispatch_async(queue) { () -> Void in
+            // TODO replace this with Don's fetch result
+            let a1 = UserAccount(firstName: "John", lastName: "Smith", phoneNumber: PhoneNumber(text: "5551112222")!)
+            let acc1 = RegisteredUserAccount(userAccount: a1, identifier: 123)
+            let a2 = UserAccount(firstName: "Jaden", lastName: "Jones", phoneNumber: PhoneNumber(text: "4449998888")!)
+            let acc2 = RegisteredUserAccount(userAccount: a2, identifier: 456)
+            let dummy: Set<RegisteredUserAccount> = [acc1, acc2]
+            
+            self.session = ShareSession(sharerAccount: self.accountManager.registeredAccount!, endCondition: self.endCondition, needsDriver: self.needsDriver, receivers: dummy)
+            self.sessionManager.registerSession(self.session, completion: { (success) -> () in
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    if success {
+                        self.presentSessionController()
+                    } else {
+                        self.presentErrorAlert("Failed to create sharing session")
+                    }
+                })
+            })
+        }
+    }
+    
+    private func presentSessionController() {
         let shareSessionController = self.storyboard!.instantiateViewControllerWithIdentifier("PickMeUp") as! ShareSessionViewController
         shareSessionController.accountManager = accountManager
         shareSessionController.locationManager = locationManager
+        shareSessionController.sessionManager = sessionManager
+        shareSessionController.session = session
         
         self.navigationController!.viewControllers = [shareSessionController]
     }

@@ -36,15 +36,6 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
         
         broadcastImageView.image = UIImage.animatedImageNamed("broadcast", duration: 1.0)
         
-        let hourLater = NSDate(timeIntervalSinceNow: NSTimeInterval(60 * 60))
-        let condition = ShareEndCondition.Time(hourLater)
-        let acc1 = RegisteredUserAccount(userAccount: UserAccount(firstName: "John", lastName: "Smith", phoneNumber: PhoneNumber(text: "6365789271")!), identifier: 123)
-        let acc2 = RegisteredUserAccount(userAccount: UserAccount(firstName: "Fred", lastName: "Jones", phoneNumber: PhoneNumber(text: "5551112222")!), identifier: 456)
-        let receiverAccounts: Set<RegisteredUserAccount> = [acc1, acc2]
-        session = ShareSession(sharerAccount: accountManager.registeredAccount!, endCondition: condition, needsDriver: true, receivers: receiverAccounts)
-        
-        sessionManager = ShareSessionManager(account: accountManager.registeredAccount!)
-        
         locationManager.delegate = self
         
         lastUpdatedTime = CACurrentMediaTime()
@@ -52,6 +43,12 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
         locationManager.startUpdatingLocation()
         
         receivers = Array(session.receivers)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        locationManager.stopUpdatingLocation()
     }
     
     //MARK: - IBAction

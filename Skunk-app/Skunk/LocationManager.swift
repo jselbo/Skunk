@@ -60,6 +60,10 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         manager.startUpdatingLocation()
     }
     
+    func stopUpdatingLocation() {
+        manager.stopUpdatingLocation()
+    }
+    
     
     //MARK: - CLLocationManagerDelegate
     
