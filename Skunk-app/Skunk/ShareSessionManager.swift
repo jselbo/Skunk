@@ -20,19 +20,31 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
     // On success, the ShareSession object is assigned a session identifier and success is true.
     func registerSession(session: ShareSession, completion: (success: Bool) -> ()) {
         
-        completion(success: true)
-        return
-        
         let params = session.serializeForCreate()
         
         let request = ServerRequest(type: .POST, url: Constants.Endpoints.sessionsCreateURL)
         request.expectedContentType = .JSON
         request.expectedBodyType = .JSONObject
         request.execute(params) { (response) -> Void in
+            switch (response) {
+            case .Success(let response):
+                let JSONResponse = response as! [String: AnyObject]
+                
+                guard let identifier = JSONResponse["session_id"] as? Int else {
+                        print("Error: Failed to parse values from JSON: \(JSONResponse)")
+                        completion(success: false)
+                        break
+                }
+                session.identifier = Sid(identifier)
+                completion(success: true)
+                
+            case .Failure(let failure):
+                request.logResponseFailure(failure)
+                completion(success: false)
+            }
         }
-
     }
-    
+
     func sendLocationHeartbeat(session: ShareSession, location: CLLocation, completion: (success: Bool) -> ()) {
         let sessionURL = Constants.Endpoints.sessionsURL.URLByAppendingPathComponent("\(session.identifier)")
         let request = ServerRequest(type: .PUT, url: sessionURL)
@@ -50,12 +62,11 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
                 // Will it include any new information?
                 let _ = response as! [String: AnyObject]
                 completion(success: true)
-                
+            
             case .Failure(let failure):
                 request.logResponseFailure(failure)
                 completion(success: false)
             }
         }
     }
-    
 }

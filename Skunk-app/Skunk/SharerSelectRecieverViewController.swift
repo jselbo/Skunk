@@ -94,6 +94,45 @@ class SharerSelectRecieverViewController: UITableViewController {
         }
     }
     
+    func postUsersFind(listPhoneNumbers: PhoneNumber, completion: (listOfValidUserAccounts: [UserAccount]?)-> () ) {
+        let params = [
+            "phone": listPhoneNumbers
+        ]
+        
+        let request = ServerRequest(type: .POST, url: Constants.Endpoints.usersFind)
+        request.expectedContentType = .JSON
+        request.expectedBodyType = .JSONArray
+        request.execute(params) { (response) -> Void in
+            switch (response) {
+            case .Success(let response):
+                var listUserAccounts =  [UserAccount]()
+                let JSONResponse = response as! [AnyObject]
+                
+                for object in JSONResponse {
+                    guard let account = object as? [String: AnyObject] else {
+                        completion(listOfValidUserAccounts: nil)
+                        return
+                    }
+                    guard let firstName = account["first_name"] as? String,
+                        lastName = account["last_name"] as? String,
+                        phone = account["phone_number"] as? String
+                    else {
+                        completion(listOfValidUserAccounts: nil)
+                        return
+                    }
+                    let phoneObject = PhoneNumber(text: phone)
+                    let accountObject = UserAccount(firstName: firstName, lastName: lastName
+                        , phoneNumber: phoneObject!)
+                    listUserAccounts.append(accountObject)
+                }
+                completion(listOfValidUserAccounts: listUserAccounts)
+            case .Failure(let failure):
+                request.logResponseFailure(failure)
+                completion(listOfValidUserAccounts: nil)
+            }
+        }
+    }
+    
     @IBAction func donePressed(sender: AnyObject) {
         let hud = MBProgressHUD(view: self.view)
         hud.dimBackground = true

@@ -72,8 +72,6 @@ class ShareSession: NSObject {
     
     /// Current state of the driver request. Only changed if `needsDriver` is `true`.
     var currentDriverState = RequestState.None
-    /// Current state of the pickup request. Only changed if `needsDriver` is `true`.
-    var currentPickupState = RequestState.None
     
     /// ETA given by the accepting driver. Only set if a pickup request has been made and accepted.
     var driverEstimatedArrival: NSDate?
