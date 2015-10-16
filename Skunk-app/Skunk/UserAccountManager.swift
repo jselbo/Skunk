@@ -45,10 +45,9 @@ class UserAccountManager: NSObject {
             case .Success(let response):
                 let JSONResponse = response as! [String: AnyObject]
                 
-                guard let firstName = JSONResponse["firstName"] as? String,
-                    lastName = JSONResponse["lastName"] as? String,
-                    identifierString = JSONResponse["userID"] as? String,
-                    identifier = Uid(identifierString)
+                guard let firstName = JSONResponse["first_name"] as? String,
+                    lastName = JSONResponse["last_name"] as? String,
+                    identifier = JSONResponse["user_id"] as? Int
                 else {
                     print("Error: Failed to parse values from JSON: \(JSONResponse)")
                     completion(registeredAccount: nil)
@@ -57,14 +56,12 @@ class UserAccountManager: NSObject {
                 
                 let account = UserAccount(firstName: firstName, lastName: lastName,
                     phoneNumber: phone, password: password)
-                let registered = RegisteredUserAccount(userAccount: account, identifier: identifier)
+                let registered = RegisteredUserAccount(userAccount: account, identifier: Uid(identifier))
                 completion(registeredAccount: registered)
                 
-                break
             case .Failure(let failure):
                 request.logResponseFailure(failure)
                 completion(registeredAccount: nil)
-                break
             }
         }
     }
@@ -76,7 +73,7 @@ class UserAccountManager: NSObject {
             "firstName": account.firstName,
             "lastName": account.lastName,
             "phone": account.phoneNumber.serialize(),
-            "password": account.password,
+            "password": account.password!,
         ]
         
         let request = ServerRequest(type: .POST, url: Constants.Endpoints.usersCreateURL)
@@ -87,20 +84,18 @@ class UserAccountManager: NSObject {
             case .Success(let response):
                 let JSONResponse = response as! [String: AnyObject]
                 
-                guard let identifierString = JSONResponse["userID"] as? String, identifier = Uid(identifierString) else {
+                guard let identifier = JSONResponse["user_id"] as? Int else {
                     print("Error: Failed to parse values from JSON: \(JSONResponse)")
                     completion(registeredAccount: nil)
                     break
                 }
                 
-                let registered = RegisteredUserAccount(userAccount: account, identifier: identifier)
+                let registered = RegisteredUserAccount(userAccount: account, identifier: Uid(identifier))
                 completion(registeredAccount: registered)
                 
-                break
             case .Failure(let failure):
                 request.logResponseFailure(failure)
                 completion(registeredAccount: nil)
-                break
             }
         }
     }
@@ -114,7 +109,7 @@ class UserAccountManager: NSObject {
             throw UserAccountManagerError.DefaultsSynchronize
         }
         
-        try savePassword(account.userAccount.password)
+        try savePassword(account.userAccount.password!)
         try saveUserIdentifier(account.identifier)
         
         registeredAccount = account

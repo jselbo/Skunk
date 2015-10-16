@@ -11,6 +11,13 @@ import UIKit
 class MainTabBarController: UITabBarController {
     
     var accountManager: UserAccountManager!
+    var locationManager: LocationManager!
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        locationManager = LocationManager()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +28,7 @@ class MainTabBarController: UITabBarController {
         let shareNavController = viewControllers![0] as! UINavigationController
         let shareController = shareNavController.viewControllers.first! as! ShareMainViewController
         shareController.accountManager = accountManager
+        shareController.locationManager = locationManager
         
         let receiveNavController = viewControllers![1] as! UINavigationController
         let receiveController = receiveNavController.viewControllers.first! as! ReceiveFriendsListViewController
