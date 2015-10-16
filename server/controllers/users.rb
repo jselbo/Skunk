@@ -2,8 +2,9 @@ require 'digest'
 
 # POST /users/create
 # {
-#   "name": "name",
-#   "phone": "phonenumber",
+#   "first_name": "firstname",
+#   "last_name": "lastname",
+#   "phone_number": "phonenumber",
 #   "password": "userpassword",
 #   ...
 # }
@@ -23,9 +24,10 @@ require 'digest'
 post '/users/create' do
   # Filter the parameters from the request JSON
   user_params = {
-    name: params['name'],
-    email: params['email'],
-    password: params['password']
+    first_name:   params['first_name'],
+    last_name:    params['last_name'],
+    phone_number: params['phone_number'],
+    password:     params['password']
   }
   # See if the User already exists
   @user = User.find_by_identity user_params
@@ -67,7 +69,7 @@ end
 
 # POST /users/find
 # {
-#   "phone": ["phonenumber", "phonenumber"]
+#   "phone_number": ["phonenumber", "phonenumber"]
 # }
 # -> 200 OK <user_ids>
 # -> 500 Internal Server Error
