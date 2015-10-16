@@ -28,6 +28,8 @@ class ShareMainViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
         if !authorized {
             locationManager.requestAuthorizationIfNotAuthorized { (authorized) -> Void in
                 if authorized {

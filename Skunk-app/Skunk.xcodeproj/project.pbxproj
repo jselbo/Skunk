@@ -24,6 +24,12 @@
 		0345D9F21BCF1146003544FC /* broadcast3.png in Resources */ = {isa = PBXBuildFile; fileRef = 0345D9EF1BCF1146003544FC /* broadcast3.png */; settings = {ASSET_TAGS = (); }; };
 		034BD0091BBEB94A00FCFA75 /* empty.json in Resources */ = {isa = PBXBuildFile; fileRef = 034BD0081BBEB94A00FCFA75 /* empty.json */; settings = {ASSET_TAGS = (); }; };
 		034D95FF1BA9E2C000F997C5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034D95FE1BA9E2C000F997C5 /* MapKit.framework */; };
+		034F23CE1BD1851F00CD4A60 /* login.json in Resources */ = {isa = PBXBuildFile; fileRef = 03E0096D1BCFE770003E6135 /* login.json */; settings = {ASSET_TAGS = (); }; };
+		034F23CF1BD1851F00CD4A60 /* register.json in Resources */ = {isa = PBXBuildFile; fileRef = 03E0096F1BCFE83A003E6135 /* register.json */; settings = {ASSET_TAGS = (); }; };
+		034F23D01BD1851F00CD4A60 /* array.json in Resources */ = {isa = PBXBuildFile; fileRef = 037283F51BC3188A0097BF5D /* array.json */; settings = {ASSET_TAGS = (); }; };
+		034F23D11BD1851F00CD4A60 /* empty.json in Resources */ = {isa = PBXBuildFile; fileRef = 034BD0081BBEB94A00FCFA75 /* empty.json */; settings = {ASSET_TAGS = (); }; };
+		034F23D21BD1851F00CD4A60 /* invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 037283F31BC316C30097BF5D /* invalid.json */; settings = {ASSET_TAGS = (); }; };
+		034F23D31BD1851F00CD4A60 /* object.json in Resources */ = {isa = PBXBuildFile; fileRef = 037283F61BC3188A0097BF5D /* object.json */; settings = {ASSET_TAGS = (); }; };
 		036094C71BCE06F50040D767 /* ShareSelectLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036094C61BCE06F50040D767 /* ShareSelectLocationViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		036094C91BCEE90B0040D767 /* ShareSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036094C81BCEE90B0040D767 /* ShareSessionViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		037283F41BC316C30097BF5D /* invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 037283F31BC316C30097BF5D /* invalid.json */; settings = {ASSET_TAGS = (); }; };
@@ -50,12 +56,6 @@
 		03AD41891BB09B0C0053FF45 /* ShareSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AD41881BB09B0C0053FF45 /* ShareSessionManager.swift */; settings = {ASSET_TAGS = (); }; };
 		03E0096E1BCFE770003E6135 /* login.json in Resources */ = {isa = PBXBuildFile; fileRef = 03E0096D1BCFE770003E6135 /* login.json */; settings = {ASSET_TAGS = (); }; };
 		03E009701BCFE83A003E6135 /* register.json in Resources */ = {isa = PBXBuildFile; fileRef = 03E0096F1BCFE83A003E6135 /* register.json */; settings = {ASSET_TAGS = (); }; };
-		03E009721BCFF83F003E6135 /* login.json in Resources */ = {isa = PBXBuildFile; fileRef = 03E0096D1BCFE770003E6135 /* login.json */; };
-		03E009731BCFF83F003E6135 /* register.json in Resources */ = {isa = PBXBuildFile; fileRef = 03E0096F1BCFE83A003E6135 /* register.json */; };
-		03E009741BCFF83F003E6135 /* array.json in Resources */ = {isa = PBXBuildFile; fileRef = 037283F51BC3188A0097BF5D /* array.json */; };
-		03E009751BCFF83F003E6135 /* empty.json in Resources */ = {isa = PBXBuildFile; fileRef = 034BD0081BBEB94A00FCFA75 /* empty.json */; };
-		03E009761BCFF83F003E6135 /* invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 037283F31BC316C30097BF5D /* invalid.json */; };
-		03E009771BCFF83F003E6135 /* object.json in Resources */ = {isa = PBXBuildFile; fileRef = 037283F61BC3188A0097BF5D /* object.json */; };
 		03F1CEC31BC722B60040BF51 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F1CEC21BC722B60040BF51 /* LocationManager.swift */; settings = {ASSET_TAGS = (); }; };
 		4B18D352DA71E7918A3597E2 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 415C7F2891D02584B84E1204 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		B23369DC1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23369DB1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift */; settings = {ASSET_TAGS = (); }; };
@@ -496,12 +496,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				0345D9F11BCF1146003544FC /* broadcast2.png in Resources */,
+				034F23D01BD1851F00CD4A60 /* array.json in Resources */,
+				034F23D31BD1851F00CD4A60 /* object.json in Resources */,
+				034F23D11BD1851F00CD4A60 /* empty.json in Resources */,
 				0345D9F21BCF1146003544FC /* broadcast3.png in Resources */,
 				033B15FC1BB34B3700A945FD /* Login.storyboard in Resources */,
+				034F23CE1BD1851F00CD4A60 /* login.json in Resources */,
+				034F23CF1BD1851F00CD4A60 /* register.json in Resources */,
 				038A401C1BA908FF00E65E1D /* LaunchScreen.storyboard in Resources */,
 				038A40171BA908FF00E65E1D /* Main.storyboard in Resources */,
 				0345D9F01BCF1146003544FC /* broadcast1.png in Resources */,
 				0345D9EC1BCF1119003544FC /* Assets.xcassets in Resources */,
+				034F23D21BD1851F00CD4A60 /* invalid.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,12 +528,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03E009721BCFF83F003E6135 /* login.json in Resources */,
-				03E009731BCFF83F003E6135 /* register.json in Resources */,
-				03E009741BCFF83F003E6135 /* array.json in Resources */,
-				03E009751BCFF83F003E6135 /* empty.json in Resources */,
-				03E009761BCFF83F003E6135 /* invalid.json in Resources */,
-				03E009771BCFF83F003E6135 /* object.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

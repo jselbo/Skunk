@@ -18,9 +18,11 @@ class UserAccount: NSObject, CustomDebugStringConvertible {
     /// Used to authenticate user. Only non-nil for the operating user's account.
     let password: String?
     
+    var debug = false
+    
     override var debugDescription: String {
         get {
-            return "UserAccount {name: '\(firstName) \(lastName)', phone: '\(phoneNumber.debugDescription)', pass: \(password)}"
+            return "UserAccount {name: '\(firstName) \(lastName)', phone: '\(phoneNumber.debugDescription)', pass: \(password), debug: \(debug)}"
         }
     }
     
@@ -32,7 +34,7 @@ class UserAccount: NSObject, CustomDebugStringConvertible {
         self.firstName = firstName
         self.lastName = lastName
         self.phoneNumber = phoneNumber
-        self.password = password!
+        self.password = password
     }
 
 }
