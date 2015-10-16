@@ -68,7 +68,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     //MARK: - CLLocationManagerDelegate
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if let authorizationCompletion = authorizationCompletion {
+        if let authorizationCompletion = authorizationCompletion where status != .NotDetermined {
             authorizationCompletion(authorized: status == .AuthorizedAlways)
             self.authorizationCompletion = nil
         }
