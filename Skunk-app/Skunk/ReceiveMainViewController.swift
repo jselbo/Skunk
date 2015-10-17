@@ -12,7 +12,8 @@ import MapKit
 class ReceiveMainViewController: UIViewController {
     
     var accountManager: UserAccountManager!
-
+    var sharerSession: ShareSessionManager!
+    
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var canPickUp: UIButton!
     @IBOutlet weak var stopReceivingUpdates: UIButton!
@@ -20,7 +21,7 @@ class ReceiveMainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        //var sharerInformation = sharerSession.sharerInformation
         // Do any additional setup after loading the view.
     }
 
