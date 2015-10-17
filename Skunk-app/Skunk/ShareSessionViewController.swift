@@ -42,7 +42,9 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
         cumulativeTime = 0.0
         locationManager.startUpdatingLocation()
         
-        receivers = Array(session.receivers)
+        receivers = session.receivers.sort { r1, r2 in
+            return r1.account.userAccount.firstName.compare(r2.account.userAccount.firstName) == .OrderedAscending
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -54,9 +56,6 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
     //MARK: - IBAction
     
     @IBAction func pickupRequestPressed(sender: AnyObject) {
-    }
-    
-    @IBAction func stopSharingPressed(sender: AnyObject) {
     }
     
     //MARK: - UITableViewDataSource
@@ -72,14 +71,39 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(receiverCellIdentifier, forIndexPath: indexPath)
         
-        let receiverAccount = receivers[indexPath.row].account
+        let receiver = receivers[indexPath.row]
+        let receiverAccount = receiver.account
         cell.textLabel!.text = "\(receiverAccount.userAccount.firstName) \(receiverAccount.userAccount.lastName)"
-        cell.detailTextLabel!.text = "Some detail"
+        cell.textLabel!.textColor = UIColor.blackColor()
+        cell.detailTextLabel!.textColor = UIColor.blackColor()
+        
+        switch receiver.stopSharingState {
+        case .None:
+            break
+        case .Requested:
+            cell.detailTextLabel!.text = ""
+        case .Accepted(_):
+            cell.textLabel!.textColor = UIColor.grayColor()
+            cell.detailTextLabel!.textColor = UIColor.grayColor()
+            cell.detailTextLabel!.text = "Sharing Ended"
+        }
         
         return cell
     }
     
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let action = UITableViewRowAction(style: .Default, title: "Title") { (action, indexPath) -> Void in
+            print("did something")
+        }
+        return [action]
+    }
+    
+    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        return .Insert
+    }
+    
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        print("Commit editing style")
         if editingStyle == .Delete {
             // TODO delete
         }

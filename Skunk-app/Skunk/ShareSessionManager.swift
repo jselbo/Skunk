@@ -30,7 +30,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
             case .Success(let response):
                 let JSONResponse = response as! [String: AnyObject]
                 
-                guard let identifier = JSONResponse["session_id"] as? Int else {
+                guard let identifier = JSONResponse["id"] as? Int else {
                         print("Error: Failed to parse values from JSON: \(JSONResponse)")
                         completion(success: false)
                         break

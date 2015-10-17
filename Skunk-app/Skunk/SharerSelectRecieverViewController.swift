@@ -13,12 +13,16 @@ import MBProgressHUD
 
 class SharerSelectRecieverViewController: UITableViewController {
     
+    let accountCellIdentifier = "FriendCell"
+    
     var endCondition: ShareEndCondition!
     var needsDriver: Bool!
     var accountManager: UserAccountManager!
     var locationManager: LocationManager!
     var sessionManager: ShareSessionManager!
     var session: ShareSession!
+    
+    var registeredAccounts: [RegisteredUserAccount]?
     
     let contactStore = CNContactStore()
     
@@ -31,7 +35,16 @@ class SharerSelectRecieverViewController: UITableViewController {
             if accessGranted {
                 self.readContacts({ (phoneNumbers) -> Void in
                     if let phoneNumbers = phoneNumbers {
-                        print("numbers: \(phoneNumbers)")
+                        self.postUsersFind(phoneNumbers, completion: { (accounts) -> () in
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                if let accounts = accounts {
+                                    self.registeredAccounts = accounts
+                                    self.tableView.reloadData()
+                                } else {
+                                    self.presentErrorAlert("Failed to match contacts with server.")
+                                }
+                            })
+                        })
                     } else {
                         dispatch_async(dispatch_get_main_queue(), { _ in
                             self.presentErrorAlert("Failed to read contacts from address book.")
@@ -72,7 +85,7 @@ class SharerSelectRecieverViewController: UITableViewController {
     
     // Read address book contacts. Call this off the main thread.
     // At this point it is assumed authorization has been granted by user.
-    func readContacts(completion: (phoneNumbers: Set<PhoneNumber>?) -> Void) {
+    private func readContacts(completion: (phoneNumbers: Set<PhoneNumber>?) -> Void) {
         let keys = [CNContactGivenNameKey, CNContactPhoneNumbersKey]
         let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
         do {
@@ -94,44 +107,88 @@ class SharerSelectRecieverViewController: UITableViewController {
         }
     }
     
-    func postUsersFind(listPhoneNumbers: PhoneNumber, completion: (listOfValidUserAccounts: [UserAccount]?)-> () ) {
-        let params = [
-            "phone": listPhoneNumbers
-        ]
+    private func postUsersFind(phoneNumbers: Set<PhoneNumber>, completion: (accounts: [RegisteredUserAccount]?)-> () ) {
+        let params = phoneNumbers.map { number in number.serialize() }
         
-        let request = ServerRequest(type: .POST, url: Constants.Endpoints.usersFind)
+        let request = ServerRequest(type: .POST, url: Constants.Endpoints.usersFindURL)
         request.expectedContentType = .JSON
         request.expectedBodyType = .JSONArray
         request.execute(params) { (response) -> Void in
             switch (response) {
             case .Success(let response):
-                var listUserAccounts =  [UserAccount]()
+                var listUserAccounts =  [RegisteredUserAccount]()
                 let JSONResponse = response as! [AnyObject]
                 
                 for object in JSONResponse {
                     guard let account = object as? [String: AnyObject] else {
-                        completion(listOfValidUserAccounts: nil)
+                        completion(accounts: nil)
                         return
                     }
                     guard let firstName = account["first_name"] as? String,
                         lastName = account["last_name"] as? String,
-                        phone = account["phone_number"] as? String
+                        phone = account["phone_number"] as? String,
+                        identifier = account["id"] as? Int
                     else {
-                        completion(listOfValidUserAccounts: nil)
+                        completion(accounts: nil)
                         return
                     }
                     let phoneObject = PhoneNumber(text: phone)
                     let accountObject = UserAccount(firstName: firstName, lastName: lastName
                         , phoneNumber: phoneObject!)
-                    listUserAccounts.append(accountObject)
+                    let registeredAccount = RegisteredUserAccount(userAccount: accountObject, identifier: Uid(identifier))
+                    listUserAccounts.append(registeredAccount)
                 }
-                completion(listOfValidUserAccounts: listUserAccounts)
+                completion(accounts: listUserAccounts)
             case .Failure(let failure):
                 request.logResponseFailure(failure)
-                completion(listOfValidUserAccounts: nil)
+                completion(accounts: nil)
             }
         }
     }
+    
+    private func presentSessionController() {
+        let shareSessionController = self.storyboard!.instantiateViewControllerWithIdentifier("PickMeUp") as! ShareSessionViewController
+        shareSessionController.accountManager = accountManager
+        shareSessionController.locationManager = locationManager
+        shareSessionController.sessionManager = sessionManager
+        shareSessionController.session = session
+        
+        self.navigationController!.viewControllers = [shareSessionController]
+    }
+    
+    //MARK: - UITableViewDataSource
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return registeredAccounts?.count ?? 0
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(accountCellIdentifier, forIndexPath: indexPath)
+        
+        let account = registeredAccounts![indexPath.row].userAccount
+        cell.textLabel!.text = "\(account.firstName) \(account.lastName)"
+        cell.detailTextLabel!.text = account.phoneNumber.formatForUser()
+        
+        return cell
+    }
+    
+    //MARK: - UITableViewDelegate
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath)!
+        cell.accessoryType = .Checkmark
+    }
+    
+    override func tableView(tableView: UITableView, didUnhighlightRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath)!
+        cell.accessoryType = .None
+    }
+    
+    //MARK: - IBAction
     
     @IBAction func donePressed(sender: AnyObject) {
         let hud = MBProgressHUD(view: self.view)
@@ -161,15 +218,5 @@ class SharerSelectRecieverViewController: UITableViewController {
                 })
             })
         }
-    }
-    
-    private func presentSessionController() {
-        let shareSessionController = self.storyboard!.instantiateViewControllerWithIdentifier("PickMeUp") as! ShareSessionViewController
-        shareSessionController.accountManager = accountManager
-        shareSessionController.locationManager = locationManager
-        shareSessionController.sessionManager = sessionManager
-        shareSessionController.session = session
-        
-        self.navigationController!.viewControllers = [shareSessionController]
     }
 }

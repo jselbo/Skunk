@@ -30,6 +30,10 @@
 		034F23D11BD1851F00CD4A60 /* empty.json in Resources */ = {isa = PBXBuildFile; fileRef = 034BD0081BBEB94A00FCFA75 /* empty.json */; settings = {ASSET_TAGS = (); }; };
 		034F23D21BD1851F00CD4A60 /* invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 037283F31BC316C30097BF5D /* invalid.json */; settings = {ASSET_TAGS = (); }; };
 		034F23D31BD1851F00CD4A60 /* object.json in Resources */ = {isa = PBXBuildFile; fileRef = 037283F61BC3188A0097BF5D /* object.json */; settings = {ASSET_TAGS = (); }; };
+		034F23D51BD1FE7600CD4A60 /* find.json in Resources */ = {isa = PBXBuildFile; fileRef = 034F23D41BD1FE7600CD4A60 /* find.json */; settings = {ASSET_TAGS = (); }; };
+		034F23D71BD1FFDC00CD4A60 /* session_create.json in Resources */ = {isa = PBXBuildFile; fileRef = 034F23D61BD1FFDC00CD4A60 /* session_create.json */; settings = {ASSET_TAGS = (); }; };
+		034F23D81BD2014700CD4A60 /* session_create.json in Resources */ = {isa = PBXBuildFile; fileRef = 034F23D61BD1FFDC00CD4A60 /* session_create.json */; settings = {ASSET_TAGS = (); }; };
+		034F23D91BD2056A00CD4A60 /* find.json in Resources */ = {isa = PBXBuildFile; fileRef = 034F23D41BD1FE7600CD4A60 /* find.json */; settings = {ASSET_TAGS = (); }; };
 		036094C71BCE06F50040D767 /* ShareSelectLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036094C61BCE06F50040D767 /* ShareSelectLocationViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		036094C91BCEE90B0040D767 /* ShareSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036094C81BCEE90B0040D767 /* ShareSessionViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		037283F41BC316C30097BF5D /* invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 037283F31BC316C30097BF5D /* invalid.json */; settings = {ASSET_TAGS = (); }; };
@@ -98,6 +102,8 @@
 		0345D9EF1BCF1146003544FC /* broadcast3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = broadcast3.png; path = Resources/broadcast3.png; sourceTree = "<group>"; };
 		034BD0081BBEB94A00FCFA75 /* empty.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = empty.json; sourceTree = "<group>"; };
 		034D95FE1BA9E2C000F997C5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		034F23D41BD1FE7600CD4A60 /* find.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = find.json; sourceTree = "<group>"; };
+		034F23D61BD1FFDC00CD4A60 /* session_create.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = session_create.json; sourceTree = "<group>"; };
 		036094C61BCE06F50040D767 /* ShareSelectLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareSelectLocationViewController.swift; sourceTree = "<group>"; };
 		036094C81BCEE90B0040D767 /* ShareSessionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareSessionViewController.swift; sourceTree = "<group>"; };
 		037283F31BC316C30097BF5D /* invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = invalid.json; sourceTree = "<group>"; };
@@ -360,8 +366,10 @@
 		03E0096C1BCFE744003E6135 /* Server Responses */ = {
 			isa = PBXGroup;
 			children = (
+				034F23D41BD1FE7600CD4A60 /* find.json */,
 				03E0096D1BCFE770003E6135 /* login.json */,
 				03E0096F1BCFE83A003E6135 /* register.json */,
+				034F23D61BD1FFDC00CD4A60 /* session_create.json */,
 			);
 			name = "Server Responses";
 			sourceTree = "<group>";
@@ -497,6 +505,7 @@
 			files = (
 				0345D9F11BCF1146003544FC /* broadcast2.png in Resources */,
 				034F23D01BD1851F00CD4A60 /* array.json in Resources */,
+				034F23D81BD2014700CD4A60 /* session_create.json in Resources */,
 				034F23D31BD1851F00CD4A60 /* object.json in Resources */,
 				034F23D11BD1851F00CD4A60 /* empty.json in Resources */,
 				0345D9F21BCF1146003544FC /* broadcast3.png in Resources */,
@@ -506,6 +515,7 @@
 				038A401C1BA908FF00E65E1D /* LaunchScreen.storyboard in Resources */,
 				038A40171BA908FF00E65E1D /* Main.storyboard in Resources */,
 				0345D9F01BCF1146003544FC /* broadcast1.png in Resources */,
+				034F23D91BD2056A00CD4A60 /* find.json in Resources */,
 				0345D9EC1BCF1119003544FC /* Assets.xcassets in Resources */,
 				034F23D21BD1851F00CD4A60 /* invalid.json in Resources */,
 			);
@@ -515,7 +525,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				034F23D51BD1FE7600CD4A60 /* find.json in Resources */,
 				034BD0091BBEB94A00FCFA75 /* empty.json in Resources */,
+				034F23D71BD1FFDC00CD4A60 /* session_create.json in Resources */,
 				037283F71BC3188A0097BF5D /* array.json in Resources */,
 				03E0096E1BCFE770003E6135 /* login.json in Resources */,
 				037283F81BC3188A0097BF5D /* object.json in Resources */,
