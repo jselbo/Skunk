@@ -32,7 +32,7 @@ class UserAccount: NSObject, CustomDebugStringConvertible {
         self.firstName = firstName
         self.lastName = lastName
         self.phoneNumber = phoneNumber
-        self.password = password!
+        self.password = password
     }
 
 }
