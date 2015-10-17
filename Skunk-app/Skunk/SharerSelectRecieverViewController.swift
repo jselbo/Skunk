@@ -77,7 +77,6 @@ class SharerSelectRecieverViewController: UITableViewController {
         let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
         do {
             var phoneNumbers = Set<PhoneNumber>()
-            
             try contactStore.enumerateContactsWithFetchRequest(fetchRequest) { (contact, stop) -> Void in
                 // TODO: assert US numbers only
                 for phoneNumberValue in contact.phoneNumbers {
@@ -94,9 +93,9 @@ class SharerSelectRecieverViewController: UITableViewController {
         }
     }
     
-    func postUsersFind(listPhoneNumbers: PhoneNumber, completion: (listOfValidUserAccounts: [UserAccount]?)-> () ) {
+    func postUsersFind(listPhoneNumbers: PhoneNumber, completion: (listOfValidUserAccounts: [RegisteredUserAccount]?)-> () ) {
         let params = [
-            "phone": listPhoneNumbers
+            "phone_number": listPhoneNumbers
         ]
         
         let request = ServerRequest(type: .POST, url: Constants.Endpoints.usersFind)
@@ -105,7 +104,7 @@ class SharerSelectRecieverViewController: UITableViewController {
         request.execute(params) { (response) -> Void in
             switch (response) {
             case .Success(let response):
-                var listUserAccounts =  [UserAccount]()
+                var listUserAccounts =  [RegisteredUserAccount]()
                 let JSONResponse = response as! [AnyObject]
                 
                 for object in JSONResponse {
@@ -115,7 +114,8 @@ class SharerSelectRecieverViewController: UITableViewController {
                     }
                     guard let firstName = account["first_name"] as? String,
                         lastName = account["last_name"] as? String,
-                        phone = account["phone_number"] as? String
+                        phone = account["phone_number"] as? String,
+                        id = account["id"] as? Int
                     else {
                         completion(listOfValidUserAccounts: nil)
                         return
@@ -123,7 +123,8 @@ class SharerSelectRecieverViewController: UITableViewController {
                     let phoneObject = PhoneNumber(text: phone)
                     let accountObject = UserAccount(firstName: firstName, lastName: lastName
                         , phoneNumber: phoneObject!)
-                    listUserAccounts.append(accountObject)
+                    let userRegAccount = RegisteredUserAccount(userAccount: accountObject, identifier: Uid(id))
+                    listUserAccounts.append(userRegAccount)
                 }
                 completion(listOfValidUserAccounts: listUserAccounts)
             case .Failure(let failure):
