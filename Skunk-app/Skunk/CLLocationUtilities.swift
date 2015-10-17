@@ -12,7 +12,7 @@ import CoreLocation
 extension CLLocation {
     
     func serializeISO6709() -> String {
-        return NSString(format: "%+lf%+lf", self.coordinate.latitude, self.coordinate.longitude) as String
+        return NSString(format: "%+lf,%+lf", self.coordinate.latitude, self.coordinate.longitude) as String
     }
     
 }

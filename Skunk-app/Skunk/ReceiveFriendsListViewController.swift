@@ -12,11 +12,17 @@ import UIKit
 class ReceiveFriendsListViewController: UIViewController {
     
     var accountManager: UserAccountManager!
+    var sessionManager: ShareSessionManager!
     
     @IBOutlet weak var friendsTableView: UITableView!
+    var sharerList = [RegisteredUserAccount]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.sessionManager.sendServerRequestforReceiver { (registeredAccounts) -> () in
+            self.sharerList = registeredAccounts!
+            self.friendsTableView.reloadData()
+        }
         // Do any additional setup after loading the view.
     }
     
@@ -30,12 +36,13 @@ class ReceiveFriendsListViewController: UIViewController {
     }
     
     func tableView(friendsTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1;
+        return sharerList.count;
     }
     
     func tableView(friendsTableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = friendsTableView.dequeueReusableCellWithIdentifier("Friends Cell", forIndexPath: indexPath)
-        cell.textLabel?.text = "John Smith"
+        let sharerItem = sharerList[indexPath.row].userAccount
+        cell.textLabel!.text = sharerItem.firstName + " " + sharerItem.lastName
         return cell
     }
 }
