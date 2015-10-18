@@ -12,6 +12,11 @@ import UIKit
 typealias Sid = UInt64
 typealias Uid = UInt64
 
+func replaceIdURL(endPoint: String, id: String) ->String {
+    let sessions = "/sessions/"
+    return sessions + id + "/" + endPoint
+}
+
 struct Constants {
     static let alertTitle = "Skunk"
     
@@ -47,6 +52,13 @@ struct Constants {
         
         static let usersFind = baseURL.URLByAppendingPathComponent("/users/find")
         
+        //handshakes
+        static let sessionTermRequest = "/terminate/request"
+        static let sessionTermResponse = "/terminate/response"
+        static let sessionsPickupRequest = "/pickup/request"
+        static let sessionsPickupResponse = "/pickup/response"
+        static let sessionsDriverResponse = "/driver/response"
+
         
     }
     

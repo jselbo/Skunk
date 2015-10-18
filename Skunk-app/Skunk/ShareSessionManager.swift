@@ -69,4 +69,32 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
             }
         }
     }
+    
+    //Session Term Request
+    func sessiontermRequest(session: ShareSession, completion:(sucess: Bool)->()) {
+        
+    }
+    
+    //Session Term Response 
+    func sessionTermResponse(session: ShareSession, completion:(sucess: Bool)->()){
+        
+    }
+    
+    //Session PickUp Request
+    func sessionPickUpRequest(session: ShareSession, completion:(sucess: Bool)->()) {
+        
+    }
+    
+    //Session PickUp Response
+    func sessionPickUpResponse(session: ShareSession, completion:(sucess: Bool)->()) {
+        
+    }
+    
+    //Session Driver Response
+    func sessionDriverResponse(session: ShareSession, completion:(sucess: Bool)->()) {
+        
+    }
+    
+    
+    
 }
