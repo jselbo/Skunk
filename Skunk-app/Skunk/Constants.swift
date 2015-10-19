@@ -19,6 +19,7 @@ struct Constants {
     static let keyFirstName = "first_name"
     static let keyLastName = "last_name"
     static let keyPhoneNumber = "phone_number"
+    static let keyDebug = "debug"
     
     // For Keychain access
     static let userIdentifierService = "SkunkUserIdentifier"
@@ -44,9 +45,21 @@ struct Constants {
         static let sessionsURL = baseURL.URLByAppendingPathComponent("/sessions/")
         
         static let sessionsCreateURL = baseURL.URLByAppendingPathComponent("/sessions/create")
+        static let sessionsTerminateRequestPath = "/terminate/request"
+        static let sessionsTerminateResponsePath = "/terminate/response"
+        static let sessionsPickupRequestPath = "/pickup/request"
+        static let sessionsPickupResponsePath = "/pickup/response"
+        static let sessionsDriverResponsePath = "/driver/response"
         
-        static let usersFind = baseURL.URLByAppendingPathComponent("/users/find")
+        static let usersFindURL = baseURL.URLByAppendingPathComponent("/users/find")
         
+        //handshakes
+        static let sessionTermRequest = "/terminate/request"
+        static let sessionTermResponse = "/terminate/response"
+        static let sessionsPickupRequest = "/pickup/request"
+        static let sessionsPickupResponse = "/pickup/response"
+        static let sessionsDriverResponse = "/driver/response"
+
         
     }
     
@@ -56,6 +69,7 @@ struct Constants {
     
     // HTTP Response Codes
     static let statusOK = 200
+    static let nilContent = 204
     
     struct Storyboards {
         static let launchScreen = "LaunchScreen"
