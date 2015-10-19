@@ -119,6 +119,9 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
             case .Failure(let failure):
                 request.logResponseFailure(failure)
                 break
+            }
+        }
+    }
     
     func replaceIdURL(endPoint: String, id: Uid?) ->String {
         let sessions = "/sessions/"
