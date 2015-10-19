@@ -70,9 +70,9 @@ class UserAccountManager: NSObject {
     /// given by the server. Otherwise, returns nil.
     func registerAccount(account: UserAccount, completion: (registeredAccount: RegisteredUserAccount?) -> ()) {
         let params = [
-            "firstName": account.firstName,
-            "lastName": account.lastName,
-            "phone": account.phoneNumber.serialize(),
+            "first_name": account.firstName,
+            "last_name": account.lastName,
+            "phone_number": account.phoneNumber.serialize(),
             "password": account.password!,
         ]
         
