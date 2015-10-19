@@ -51,14 +51,13 @@ class ReceiveFriendsListViewController: UIViewController {
         let sharerRegisteredUserAccount = sharerList[indexPath.row]
         let sharerUserAccount = sharerRegisteredUserAccount.userAccount
         let sharerUid = sharerRegisteredUserAccount.identifier
-        let sharerSession = sessionManager.sharerInformation[sharerUid]
-        let needsDriver = sharerSession?.needsDriver
+        let sharerSession = sessionManager.sharerInformation[sharerUid]!
         cell.textLabel!.text = sharerUserAccount.firstName + " " + sharerUserAccount.lastName
-        if((needsDriver) != nil){
+        if sharerSession.needsDriver {
             cell.detailTextLabel!.text = "Needs Driver"
         }
         else {
-            switch sharerSession!.endCondition {
+            switch sharerSession.endCondition {
             case .Location(let location): break
             case .Time(let endDate):
                 let currentDate = NSDate()
