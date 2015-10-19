@@ -87,14 +87,10 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
                         phoneNum = sharerSession["phone_number"] as? PhoneNumber,
                         userID = sharerSession["UID"] as? UInt64 ,
                         needsDriver = responseData["needs_driver"] as? Bool,
-                        //driverID = responseData["driver_id"] as? Int,
-                        //startTime = responseData["start_time"] as? String,
                         isTimeBased = responseData["is_time_based"] as? Bool,
                         endTime = responseData["end_time"] as? String,
                         destination = responseData["destination"] as? String,
-                        //terminated = responseData["terminated"] as? Bool,
                         lastUpdated = responseData["last_updated"] as? String,
-                        //requestedPickup = responseData["requested_pickup"] as? Bool,
                         driverETA = responseData["driver_eta"] as? String,
                         currentLocation = responseData["current_location"] as? String else {
                             print("Error: Failed to parse values from JSON: \(JSONResponse)")
@@ -108,12 +104,12 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
                         shareSession = ShareSession.init(sharerAccount: account, endCondition: ShareEndCondition.Time(endTime.parseSQLDate()), needsDriver: needsDriver, receivers: [])
                     } else {
                         let components = destination.componentsSeparatedByString(",")
-                        shareSession = ShareSession.init(sharerAccount: account, endCondition: ShareEndCondition.Location(CLLocation.init(latitude: Double(components[0])!, longitude: Double(components[1])!)) , needsDriver: needsDriver, receivers: [])
+                        shareSession = ShareSession.init(sharerAccount: account, endCondition: ShareEndCondition.Location(CLLocation(latitude: Double(components[0])!, longitude: Double(components[1])!)) , needsDriver: needsDriver, receivers: [])
                     }
                     sharerList.append(account)
                     shareSession.driverEstimatedArrival = driverETA.parseSQLDate()
                     let components = currentLocation.componentsSeparatedByString(",")
-                    shareSession.currentLocation = CLLocation.init(latitude: Double(components[0])!, longitude: Double(components[1])!)
+                    shareSession.currentLocation = CLLocation(latitude: Double(components[0])!, longitude: Double(components[1])!)
                     shareSession.lastLocationUpdate = lastUpdated.parseSQLDate()
                     self.sharerInformation[Uid(userID)] = shareSession
                 }
