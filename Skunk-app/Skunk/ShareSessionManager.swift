@@ -46,7 +46,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
     }
 
     func sendLocationHeartbeat(session: ShareSession, location: CLLocation, completion: (success: Bool) -> ()) {
-        let sessionURL = Constants.Endpoints.sessionsURL.URLByAppendingPathComponent("\(session.identifier)")
+        let sessionURL = Constants.Endpoints.sessionsURL.URLByAppendingPathComponent("\(session.identifier!)")
         let request = ServerRequest(type: .PUT, url: sessionURL)
         request.expectedContentType = .JSON
         request.expectedBodyType = .JSONObject
@@ -68,5 +68,8 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
                 completion(success: false)
             }
         }
+    }
+    
+    func requestStopSharing(session: ShareSession, receiverIdentifier: Uid, completion: (success: Bool) -> ()) {
     }
 }

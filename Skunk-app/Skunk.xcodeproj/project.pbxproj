@@ -58,6 +58,8 @@
 		03AD41841BB0363B0053FF45 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AD41831BB0363B0053FF45 /* Constants.swift */; settings = {ASSET_TAGS = (); }; };
 		03AD41861BB037D60053FF45 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03AD41851BB037D60053FF45 /* CoreLocation.framework */; };
 		03AD41891BB09B0C0053FF45 /* ShareSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AD41881BB09B0C0053FF45 /* ShareSessionManager.swift */; settings = {ASSET_TAGS = (); }; };
+		03C649CB1BD2BB3700979846 /* session_heartbeat.json in Resources */ = {isa = PBXBuildFile; fileRef = 03C649CA1BD2BB3700979846 /* session_heartbeat.json */; settings = {ASSET_TAGS = (); }; };
+		03C649CC1BD2F07600979846 /* session_heartbeat.json in Resources */ = {isa = PBXBuildFile; fileRef = 03C649CA1BD2BB3700979846 /* session_heartbeat.json */; settings = {ASSET_TAGS = (); }; };
 		03E0096E1BCFE770003E6135 /* login.json in Resources */ = {isa = PBXBuildFile; fileRef = 03E0096D1BCFE770003E6135 /* login.json */; settings = {ASSET_TAGS = (); }; };
 		03E009701BCFE83A003E6135 /* register.json in Resources */ = {isa = PBXBuildFile; fileRef = 03E0096F1BCFE83A003E6135 /* register.json */; settings = {ASSET_TAGS = (); }; };
 		03F1CEC31BC722B60040BF51 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F1CEC21BC722B60040BF51 /* LocationManager.swift */; settings = {ASSET_TAGS = (); }; };
@@ -134,6 +136,7 @@
 		03AD41831BB0363B0053FF45 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		03AD41851BB037D60053FF45 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		03AD41881BB09B0C0053FF45 /* ShareSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareSessionManager.swift; sourceTree = "<group>"; };
+		03C649CA1BD2BB3700979846 /* session_heartbeat.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = session_heartbeat.json; sourceTree = "<group>"; };
 		03E0096D1BCFE770003E6135 /* login.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = login.json; sourceTree = "<group>"; };
 		03E0096F1BCFE83A003E6135 /* register.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = register.json; sourceTree = "<group>"; };
 		03F1CEC21BC722B60040BF51 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -196,7 +199,6 @@
 		034BD0071BBEB90700FCFA75 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				03E0096C1BCFE744003E6135 /* Server Responses */,
 				037283F51BC3188A0097BF5D /* array.json */,
 				034BD0081BBEB94A00FCFA75 /* empty.json */,
 				037283F31BC316C30097BF5D /* invalid.json */,
@@ -308,6 +310,7 @@
 				0345D9ED1BCF1146003544FC /* broadcast1.png */,
 				0345D9EE1BCF1146003544FC /* broadcast2.png */,
 				0345D9EF1BCF1146003544FC /* broadcast3.png */,
+				03E0096C1BCFE744003E6135 /* Server Responses */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -370,9 +373,11 @@
 				03E0096D1BCFE770003E6135 /* login.json */,
 				03E0096F1BCFE83A003E6135 /* register.json */,
 				034F23D61BD1FFDC00CD4A60 /* session_create.json */,
+				03C649CA1BD2BB3700979846 /* session_heartbeat.json */,
 			);
 			name = "Server Responses";
-			sourceTree = "<group>";
+			path = SkunkTests;
+			sourceTree = SOURCE_ROOT;
 		};
 		03F1CEC11BC722990040BF51 /* Location */ = {
 			isa = PBXGroup;
@@ -504,6 +509,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0345D9F11BCF1146003544FC /* broadcast2.png in Resources */,
+				03C649CC1BD2F07600979846 /* session_heartbeat.json in Resources */,
 				034F23D01BD1851F00CD4A60 /* array.json in Resources */,
 				034F23D81BD2014700CD4A60 /* session_create.json in Resources */,
 				034F23D31BD1851F00CD4A60 /* object.json in Resources */,
@@ -527,6 +533,7 @@
 			files = (
 				034F23D51BD1FE7600CD4A60 /* find.json in Resources */,
 				034BD0091BBEB94A00FCFA75 /* empty.json in Resources */,
+				03C649CB1BD2BB3700979846 /* session_heartbeat.json in Resources */,
 				034F23D71BD1FFDC00CD4A60 /* session_create.json in Resources */,
 				037283F71BC3188A0097BF5D /* array.json in Resources */,
 				03E0096E1BCFE770003E6135 /* login.json in Resources */,

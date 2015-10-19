@@ -45,6 +45,11 @@ struct Constants {
         static let sessionsURL = baseURL.URLByAppendingPathComponent("/sessions/")
         
         static let sessionsCreateURL = baseURL.URLByAppendingPathComponent("/sessions/create")
+        static let sessionsTerminateRequestPath = "/terminate/request"
+        static let sessionsTerminateResponsePath = "/terminate/response"
+        static let sessionsPickupRequestPath = "/pickup/request"
+        static let sessionsPickupResponsePath = "/pickup/response"
+        static let sessionsDriverResponsePath = "/driver/response"
         
         static let usersFindURL = baseURL.URLByAppendingPathComponent("/users/find")
         

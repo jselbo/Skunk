@@ -45,6 +45,8 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
         receivers = session.receivers.sort { r1, r2 in
             return r1.account.userAccount.firstName.compare(r2.account.userAccount.firstName) == .OrderedAscending
         }
+        
+        receiversTableView.editing = true
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -79,9 +81,10 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
         
         switch receiver.stopSharingState {
         case .None:
+            cell.detailTextLabel!.text = ""
             break
         case .Requested:
-            cell.detailTextLabel!.text = ""
+            cell.detailTextLabel!.text = "Requested to end sharing"
         case .Accepted(_):
             cell.textLabel!.textColor = UIColor.grayColor()
             cell.detailTextLabel!.textColor = UIColor.grayColor()
@@ -92,24 +95,32 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
-        let action = UITableViewRowAction(style: .Default, title: "Title") { (action, indexPath) -> Void in
-            print("did something")
+        
+        let action = UITableViewRowAction(style: UITableViewRowActionStyle.Destructive, title: "End Sharing") { (action, indexPath) -> Void in
+            let receiver = self.receivers[indexPath.row]
+            let account = receiver.account.userAccount
+            self.presentDecisionAlert("Are you sure you would like to stop sharing your location with \"\(account.firstName) \(account.lastName)\"? This receiver must approve your request.") { _ in
+                self.sessionManager.requestStopSharing(self.session, receiverIdentifier: receiver.account.identifier, completion: { (success) in
+                    
+                })
+            }
         }
         return [action]
     }
     
     func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return .Insert
+        return .Delete
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        print("Commit editing style")
-        if editingStyle == .Delete {
-            // TODO delete
-        }
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Receivers"
     }
     
     //MARK: - UITableViewDelegate
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 64.0
+    }
     
     //MARK: - LocationManagerDelegate
     

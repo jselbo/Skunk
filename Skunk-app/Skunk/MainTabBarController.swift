@@ -41,15 +41,25 @@ class MainTabBarController: UITabBarController {
         settingsController.accountManager = accountManager
         
         if accountManager.registeredAccount!.userAccount.debug {
-            stub(isPath(Constants.Endpoints.usersFindURL.path!), response: { _ in
-                let path = OHPathForFile("find.json", self.dynamicType)
-                return fixture(path!, status: 200, headers: ["Content-Type": "application/json"])
-            })
-            
-            stub(isPath(Constants.Endpoints.sessionsCreateURL.path!), response: { _ in
-                let path = OHPathForFile("session_create.json", self.dynamicType)
-                return fixture(path!, status: 200, headers: ["Content-Type": "application/json"])
-            })
+            self.mockDebugRequests()
         }
+    }
+    
+    private func mockDebugRequests() {
+        stub(isPath(Constants.Endpoints.usersFindURL.path!), response: { _ in
+            let path = OHPathForFile("find.json", self.dynamicType)
+            return fixture(path!, status: 200, headers: ["Content-Type": "application/json"])
+        })
+        
+        stub(isPath(Constants.Endpoints.sessionsCreateURL.path!), response: { _ in
+            let path = OHPathForFile("session_create.json", self.dynamicType)
+            return fixture(path!, status: 200, headers: ["Content-Type": "application/json"])
+        })
+        
+        // This session ID must match the ID given in session_create.json
+        stub(isPath(Constants.Endpoints.sessionsURL.URLByAppendingPathComponent("555").path!), response: { _ in
+            let path = OHPathForFile("session_heartbeat.json", self.dynamicType)
+            return fixture(path!, status: 200, headers: ["Content-Type": "application/json"])
+        })
     }
 }
