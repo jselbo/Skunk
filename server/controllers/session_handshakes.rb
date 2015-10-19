@@ -29,6 +29,27 @@
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
 post '/sessions/:id/terminate/request' do
+
+
+	#parse the receivers JSON
+	begin
+		receivers = JSON.parse(params[:receivers])
+	rescue
+		halt 500, 'Improperly formatted JSON for sharers'
+	end
+	
+	#get the session
+	@session = Session.find(params[:id])
+
+	#cycle through session_users to mark if the sharer ended the session
+	receivers.each do |rid|
+		@session_user = SessionUser.find_by(receiver: rid, session: @session)
+		@session_user.sharer_ended = true
+	end
+
+	#TODO Push notification to notify receivers of sharer termination
+
+	return 204
 end
 
 # POST /sessions/:id/terminate/response
@@ -47,6 +68,32 @@ end
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
 post '/sessions/:id/terminate/response' do
+	
+	#get user id for the receiver
+	@user = User.find(headers["HTTP_SKUNK_USERID"])
+
+	#parse the JSON
+	begin
+		response = JSON.parse(params[:response])
+	rescue
+		halt 500, 'Improperly formatted JSON for receivers'
+	end
+
+	#get the session
+	@session = Session.find(params[:id])
+	
+	#get the session_user to mark if the receiver approved
+	#if response is true, then mark receiver ended as true
+	#if not keep it false
+	@session_user = SessionUser.find_by(receiver: @user, session: @session)
+	
+	if response
+		@session_user.receiver_ended = true
+	end
+
+	return 204
+
+	
 end
 
 # PUT /sessions/:id/pickup/request
@@ -63,6 +110,27 @@ end
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
 put '/sessions/:id/pickup/request' do
+session = Session.find(params[:id])
+
+#If the driver_id has been specified for this session, send notification to the driver
+if session.driver_id != 0 	#TODO: will this be the default value?
+	#TODO: will drivers be stored as users like this?
+	#Ensure that driver actually exists in the database
+	begin
+		driver = Users.find(session.driver_id)
+	rescue
+		halt 500, 'Invalid driver_id for this session.'
+	end
+
+	#TODO: Send notification to receiver.
+
+#No driver was specified for this session
+else
+	halt 500, 'No driver exists for this session.'
+end
+
+session.requested_pickup = true
+return 204
 end
 
 # POST /sessions/:id/pickup/response
@@ -85,6 +153,28 @@ end
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
 post '/sessions/:id/pickup/response' do
+session = Session.find(params[:id])
+
+#If an eta is provided, update session with the eta
+if params[:response]   #TODO: how will ruby handle invalid input
+	#Ensure eta is in correct format
+	begin
+		#Try parsing eta parameter
+		duration = DateTime.iso8601(params[:eta])
+
+		#Convert from duration to concrete time
+		eta = DateTime.now + duration
+
+		#Update eta on session object
+		session.driver_eta = eta
+
+	#Eta is not in proper format.
+	rescue
+		#Do nothing.
+		#TODO: Should we send a message that eta failed?
+	end
+end
+return 204
 end
 
 # POST /sessions/:id/driver/response
@@ -105,4 +195,16 @@ end
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
 post '/sessions/:id/driver/response' do
+  # If the receiver indicated that they want to be the driver...
+  if params[:response]
+    # find the session they are responding to,
+    session = Session.find(params[:id])
+    # assign the driver to the session,
+    session.driver_id = request.env[:HTTP_SKUNK_USERID]
+    # and save the session
+    session.save
+    # Return a 204 indicating that they request has suceeded
+    halt 204
+  end
+  # Otherwise, nothing happens
 end
