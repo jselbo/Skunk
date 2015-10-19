@@ -29,6 +29,27 @@
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
 post '/sessions/:id/terminate/request' do
+
+
+	#parse the receivers JSON
+	begin
+		receivers = JSON.parse(params[:receivers])
+	rescue
+		halt 500, 'Improperly formatted JSON for sharers'
+	end
+	
+	#get the session
+	@session = Session.find(params[:id])
+
+	#cycle through session_users to mark if the sharer ended the session
+	receivers.each do |rid|
+		@session_user = SessionUser.find_by(receiver: rid, session: @session)
+		@session_user.sharer_ended = true
+	end
+
+	#TODO Push notification to notify receivers of sharer termination
+
+	return 204
 end
 
 # POST /sessions/:id/terminate/response
@@ -47,6 +68,32 @@ end
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
 post '/sessions/:id/terminate/response' do
+	
+	#get user id for the receiver
+	@user = User.find(headers["HTTP_SKUNK_USERID"])
+
+	#parse the JSON
+	begin
+		response = JSON.parse(params[:response])
+	rescue
+		halt 500, 'Improperly formatted JSON for receivers'
+	end
+
+	#get the session
+	@session = Session.find(params[:id])
+	
+	#get the session_user to mark if the receiver approved
+	#if response is true, then mark receiver ended as true
+	#if not keep it false
+	@session_user = SessionUser.find_by(receiver: @user, session: @session)
+	
+	if response
+		@session_user.receiver_ended = true
+	end
+
+	return 204
+
+	
 end
 
 # PUT /sessions/:id/pickup/request
