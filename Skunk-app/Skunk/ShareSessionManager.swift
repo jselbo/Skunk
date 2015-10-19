@@ -51,7 +51,6 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         request.expectedContentType = .JSON
         request.expectedBodyType = .JSONObject
         request.additionalHTTPHeaders = ["Skunk-UserID": 234]
-        
         let params = [
             "location": location.serializeISO6709(),
         ]
@@ -66,6 +65,106 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
             case .Failure(let failure):
                 request.logResponseFailure(failure)
                 completion(success: false)
+            }
+        }
+    }
+    
+    func replaceIdURL(endPoint: String, id: Uid?) ->String {
+        let sessions = "/sessions/"
+        return sessions + id!.description + "/" + endPoint
+    }
+    
+    //Session Term Request
+    func sessionTermRequest(session: ShareSession, completion:(sucess: Bool)->()) {
+        let params = [
+            "receivers": session.receivers
+        ]
+        let url = replaceIdURL(Constants.Endpoints.sessionTermRequest, id: session.identifier )
+        let request = ServerRequest(type: .POST, url: NSURL(fileURLWithPath: url))
+        request.expectedStatusCode = Constants.nilContent
+        request.execute(params) { (response) -> Void in
+            switch (response) {
+            case .Success(_):
+                completion(sucess: true)
+            case .Failure(let failure):
+                request.logResponseFailure(failure)
+                completion(sucess: false)
+            }
+        }
+    }
+    
+    //Session Term Response 
+    func sessionTermResponse(session: ShareSession, completion:(sucess: Bool)->()){
+        let params = [
+            "response": true
+        ]
+        let url = replaceIdURL(Constants.Endpoints.sessionTermResponse, id: session.identifier )
+        let request = ServerRequest(type: .POST, url: NSURL(fileURLWithPath: url))
+        request.expectedContentType = .JSON
+        request.expectedBodyType = .JSONObject
+        request.expectedStatusCode = Constants.nilContent
+        request.execute(params) { (response) -> Void in
+            switch (response) {
+            case .Success(_):
+                completion(sucess: true)
+            case .Failure(let failure):
+                request.logResponseFailure(failure)
+                completion(sucess: false)
+            }
+        }
+    }
+    
+    //Session PickUp Request
+    func sessionPickUpRequest(session: ShareSession, completion:(sucess: Bool)->()) {
+        let url = replaceIdURL(Constants.Endpoints.sessionsPickupRequest, id: session.identifier )
+        let request = ServerRequest(type: .PUT, url: NSURL(fileURLWithPath: url))
+        request.expectedStatusCode = Constants.nilContent
+        request.execute() { (response) -> Void in
+            switch (response) {
+            case .Success(_):
+                completion(sucess: true)
+            case .Failure(let failure):
+                request.logResponseFailure(failure)
+                completion(sucess: false)
+            }
+        }
+    }
+    
+    //Session PickUp Response
+    func sessionPickUpResponse(session: ShareSession, completion:(sucess: Bool)->()) {
+        let params = [
+            "response": true,
+            "eta": session.driverEstimatedArrival!.serializeISO8601()
+        ]
+        let url = replaceIdURL(Constants.Endpoints.sessionsPickupResponse, id: session.identifier )
+        let request = ServerRequest(type: .POST, url: NSURL(fileURLWithPath: url))
+        request.expectedStatusCode = Constants.nilContent
+        request.execute(params) { (response) -> Void in
+            switch (response) {
+            case .Success(_):
+                completion(sucess: true)
+            case .Failure(let failure):
+                request.logResponseFailure(failure)
+                completion(sucess: false)
+            }
+        }
+    }
+    
+    //Session Driver Response
+    func sessionDriverResponse(session: ShareSession, completion:(sucess: Bool)->()) {
+        let params = [
+            "response": true,
+        ]
+        let url = replaceIdURL(Constants.Endpoints.sessionsDriverResponse, id: session.identifier )
+        let request = ServerRequest(type: .POST, url: NSURL(fileURLWithPath: url))
+        request.expectedStatusCode = Constants.nilContent
+        request.execute(params) { (response) -> Void in
+            switch (response) {
+            case .Success(_):
+                completion(sucess: true)
+            case .Failure(let failure):
+                request.logResponseFailure(failure)
+                completion(sucess: false)
             }
         }
     }

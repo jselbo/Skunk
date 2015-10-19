@@ -47,6 +47,13 @@ struct Constants {
         
         static let usersFind = baseURL.URLByAppendingPathComponent("/users/find")
         
+        //handshakes
+        static let sessionTermRequest = "/terminate/request"
+        static let sessionTermResponse = "/terminate/response"
+        static let sessionsPickupRequest = "/pickup/request"
+        static let sessionsPickupResponse = "/pickup/response"
+        static let sessionsDriverResponse = "/driver/response"
+
         
     }
     
@@ -56,6 +63,7 @@ struct Constants {
     
     // HTTP Response Codes
     static let statusOK = 200
+    static let nilContent = 204
     
     struct Storyboards {
         static let launchScreen = "LaunchScreen"
