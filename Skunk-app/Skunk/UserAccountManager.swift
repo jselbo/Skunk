@@ -105,6 +105,7 @@ class UserAccountManager: NSObject {
         defaults.setObject(account.userAccount.firstName, forKey: Constants.keyFirstName)
         defaults.setObject(account.userAccount.lastName, forKey: Constants.keyLastName)
         defaults.setObject(account.userAccount.phoneNumber.sanitizedText, forKey: Constants.keyPhoneNumber)
+        defaults.setBool(account.userAccount.debug, forKey: Constants.keyDebug)
         guard defaults.synchronize() else {
             throw UserAccountManagerError.DefaultsSynchronize
         }
@@ -122,6 +123,7 @@ class UserAccountManager: NSObject {
         defaults.removeObjectForKey(Constants.keyFirstName)
         defaults.removeObjectForKey(Constants.keyLastName)
         defaults.removeObjectForKey(Constants.keyPhoneNumber)
+        defaults.removeObjectForKey(Constants.keyDebug)
         guard defaults.synchronize() else {
             throw UserAccountManagerError.DefaultsSynchronize
         }
@@ -139,7 +141,10 @@ class UserAccountManager: NSObject {
             phone = PhoneNumber(text: defaults.objectForKey(Constants.keyPhoneNumber) as? String),
             pass = loadPassword() {
                 
-            return UserAccount(firstName: firstName, lastName: lastName, phoneNumber: phone, password: pass)
+            let debug = defaults.boolForKey(Constants.keyDebug)
+            let account = UserAccount(firstName: firstName, lastName: lastName, phoneNumber: phone, password: pass)
+            account.debug = debug
+            return account
         }
         return nil
     }

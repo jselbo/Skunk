@@ -30,7 +30,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
             case .Success(let response):
                 let JSONResponse = response as! [String: AnyObject]
                 
-                guard let identifier = JSONResponse["session_id"] as? Int else {
+                guard let identifier = JSONResponse["id"] as? Int else {
                         print("Error: Failed to parse values from JSON: \(JSONResponse)")
                         completion(success: false)
                         break
@@ -46,7 +46,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
     }
 
     func sendLocationHeartbeat(session: ShareSession, location: CLLocation, completion: (success: Bool) -> ()) {
-        let sessionURL = Constants.Endpoints.sessionsURL.URLByAppendingPathComponent("\(session.identifier)")
+        let sessionURL = Constants.Endpoints.sessionsURL.URLByAppendingPathComponent("\(session.identifier!)")
         let request = ServerRequest(type: .PUT, url: sessionURL)
         request.expectedContentType = .JSON
         request.expectedBodyType = .JSONObject
@@ -75,9 +75,9 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
     }
     
     //Session Term Request
-    func sessionTermRequest(session: ShareSession, completion:(sucess: Bool)->()) {
+    func sessionTermRequest(session: ShareSession, receiver: RegisteredUserAccount, completion:(sucess: Bool)->()) {
         let params = [
-            "receivers": session.receivers
+            "receivers": [NSNumber(unsignedLongLong: receiver.identifier)],
         ]
         let url = replaceIdURL(Constants.Endpoints.sessionTermRequest, id: session.identifier )
         let request = ServerRequest(type: .POST, url: NSURL(fileURLWithPath: url))

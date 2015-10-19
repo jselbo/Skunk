@@ -22,6 +22,17 @@ extension UIViewController {
         return alert
     }
     
+    func presentDecisionAlert(message: String, OKHandler: (UIAlertAction) -> Void) -> UIAlertController {
+        let alert = UIAlertController(title: Constants.alertTitle, message: message, preferredStyle: .Alert)
+        let OKAction = UIAlertAction(title: "OK", style: .Default, handler: OKHandler)
+        alert.addAction(OKAction)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        alert.addAction(cancelAction)
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        return alert
+    }
+    
     // Shared by LoginViewController and RegisterViewController.
     // Also dismisses the currently shown MBProgressHUD.
     func saveRegisteredAccountAndPresentMainController(account: RegisteredUserAccount, accountManager: UserAccountManager) {
