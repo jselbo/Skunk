@@ -63,6 +63,7 @@ struct Constants {
     
     // HTTP Response Codes
     static let statusOK = 200
+    static let nilContent = 204
     
     struct Storyboards {
         static let launchScreen = "LaunchScreen"
