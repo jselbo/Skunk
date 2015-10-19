@@ -41,7 +41,7 @@ extension UIViewController {
             }
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                MBProgressHUD(forView: self.view).hide(true)
+                MBProgressHUD(forView: self.view)?.hide(true)
                 
                 if success {
                     // Jump to Main storyboard

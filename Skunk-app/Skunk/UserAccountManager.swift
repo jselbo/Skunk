@@ -12,6 +12,7 @@ import Security
 enum UserAccountManagerError: ErrorType {
     case DefaultsSynchronize
     case KeychainSave(OSStatus, NSData)
+    case KeychainDelete(OSStatus)
 }
 
 class UserAccountManager: NSObject {
@@ -28,23 +29,79 @@ class UserAccountManager: NSObject {
         }
     }
     
-    func logInWithCredentials(phone: PhoneNumber, password: String, completion: (registeredAccount: RegisteredUserAccount) -> ()) {
-        // TODO make actual POST request to log in (receive name, ID from server)
+    /// If login request succeeds, returns the RegisteredUserAccount associated with this user's phone and password.
+    /// Otherwise, returns nil.
+    func logInWithCredentials(phone: PhoneNumber, password: String, completion: (registeredAccount: RegisteredUserAccount?) -> ()) {
+        let params = [
+            "phone": phone.serialize(),
+            "password": password,
+        ]
         
-        let account = UserAccount(firstName: "Placeholder", lastName: "Name", phoneNumber: phone, password: password)
-        let registered = RegisteredUserAccount(userAccount: account, identifier: 12345)
-        completion(registeredAccount: registered)
+        let request = ServerRequest(type: .POST, url: Constants.Endpoints.usersLoginURL)
+        request.expectedContentType = .JSON
+        request.expectedBodyType = .JSONObject
+        request.execute(params) { (response) -> Void in
+            switch (response) {
+            case .Success(let response):
+                let JSONResponse = response as! [String: AnyObject]
+                
+                guard let firstName = JSONResponse["first_name"] as? String,
+                    lastName = JSONResponse["last_name"] as? String,
+                    identifier = JSONResponse["user_id"] as? Int
+                else {
+                    print("Error: Failed to parse values from JSON: \(JSONResponse)")
+                    completion(registeredAccount: nil)
+                    break
+                }
+                
+                let account = UserAccount(firstName: firstName, lastName: lastName,
+                    phoneNumber: phone, password: password)
+                let registered = RegisteredUserAccount(userAccount: account, identifier: Uid(identifier))
+                completion(registeredAccount: registered)
+                
+            case .Failure(let failure):
+                request.logResponseFailure(failure)
+                completion(registeredAccount: nil)
+            }
+        }
     }
     
+    /// If register request succeeds, returns a RegisteredUserAccount object with the newly assigned user identifier
+    /// given by the server. Otherwise, returns nil.
     func registerAccount(account: UserAccount, completion: (registeredAccount: RegisteredUserAccount?) -> ()) {
-        // TODO make actual POST request to register (receive ID from server)
+        let params = [
+            "firstName": account.firstName,
+            "lastName": account.lastName,
+            "phone": account.phoneNumber.serialize(),
+            "password": account.password!,
+        ]
         
-        let registered = RegisteredUserAccount(userAccount: account, identifier: 12345)
-        completion(registeredAccount: registered)
+        let request = ServerRequest(type: .POST, url: Constants.Endpoints.usersCreateURL)
+        request.expectedContentType = .JSON
+        request.expectedBodyType = .JSONObject
+        request.execute(params) { (response) -> Void in
+            switch (response) {
+            case .Success(let response):
+                let JSONResponse = response as! [String: AnyObject]
+                
+                guard let identifier = JSONResponse["user_id"] as? Int else {
+                    print("Error: Failed to parse values from JSON: \(JSONResponse)")
+                    completion(registeredAccount: nil)
+                    break
+                }
+                
+                let registered = RegisteredUserAccount(userAccount: account, identifier: Uid(identifier))
+                completion(registeredAccount: registered)
+                
+            case .Failure(let failure):
+                request.logResponseFailure(failure)
+                completion(registeredAccount: nil)
+            }
+        }
     }
     
     func saveRegisteredAccount(account: RegisteredUserAccount) throws {
-        let defaults = NSUserDefaults()
+        let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(account.userAccount.firstName, forKey: Constants.keyFirstName)
         defaults.setObject(account.userAccount.lastName, forKey: Constants.keyLastName)
         defaults.setObject(account.userAccount.phoneNumber.sanitizedText, forKey: Constants.keyPhoneNumber)
@@ -52,10 +109,26 @@ class UserAccountManager: NSObject {
             throw UserAccountManagerError.DefaultsSynchronize
         }
         
-        try savePassword(account.userAccount.password)
+        try savePassword(account.userAccount.password!)
         try saveUserIdentifier(account.identifier)
         
         registeredAccount = account
+    }
+    
+    /// Deletes all stored account credentials on this device.
+    func clearCredentials() throws {
+        // Clear user defaults
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.removeObjectForKey(Constants.keyFirstName)
+        defaults.removeObjectForKey(Constants.keyLastName)
+        defaults.removeObjectForKey(Constants.keyPhoneNumber)
+        guard defaults.synchronize() else {
+            throw UserAccountManagerError.DefaultsSynchronize
+        }
+        
+        // Clear keychain data
+        try deleteFromKeychain(Constants.userIdentifierService)
+        try deleteFromKeychain(Constants.userPasswordService)
     }
     
     private func loadAccount() -> UserAccount? {
@@ -128,5 +201,17 @@ class UserAccountManager: NSObject {
         }
         
         return nil
+    }
+    
+    private func deleteFromKeychain(service: String) throws {
+        let deleteQuery = [
+            kSecClass as NSString: kSecClassGenericPassword,
+            kSecAttrService as NSString: service,
+        ]
+        
+        let deleteStatus = SecItemDelete(deleteQuery)
+        guard deleteStatus == errSecSuccess else {
+            throw UserAccountManagerError.KeychainDelete(deleteStatus)
+        }
     }
 }
