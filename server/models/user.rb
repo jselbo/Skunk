@@ -17,17 +17,31 @@ class User < ActiveRecord::Base
     self.password = User.encrypt(self.password)
   end
 
+  def as_json
+    to_json(except: :password)
+  end
+
 
   # Class Utilities
   class << self
-    # Find a User by their name and email
+    # Find a User by their full name and phone number
     def find_by_identity user_params
-      User.find_by name: user_params[:name], email: user_params[:email]
+      criteria = {
+        first_name:   user_params[:first_name],
+        last_name:    user_params[:last_name],
+        phone_number: user_params[:phone_number]
+      }
+      User.find_by criteria
     end
 
-    # Find a User by their name and (raw) password
+    # Find a User by their full name and (raw) password
     def find_by_credentials user_params
-      User.find_by name: user_params[:name], password: User.encrypt(user_params[:password])
+      credentials = {
+        first_name: user_params[:first_name],
+        last_name: user_params[:last_name],
+        password: User.encrypt(user_params[:password])
+      }
+      User.find_by credentials
     end
 
     def encrypt needle
