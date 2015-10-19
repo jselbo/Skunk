@@ -100,9 +100,9 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
             let receiver = self.receivers[indexPath.row]
             let account = receiver.account.userAccount
             self.presentDecisionAlert("Are you sure you would like to stop sharing your location with \"\(account.firstName) \(account.lastName)\"? This receiver must approve your request.") { _ in
-                self.sessionManager.requestStopSharing(self.session, receiverIdentifier: receiver.account.identifier, completion: { (success) in
+                /*self.sessionManager.requestStopSharing(self.session, receiverIdentifier: receiver.account.identifier, completion: { (success) in
                     
-                })
+                })*/
             }
         }
         return [action]
