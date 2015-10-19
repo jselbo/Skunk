@@ -114,9 +114,9 @@ class SharerSelectRecieverViewController: UITableViewController {
         }
     }
     
-    func postUsersFind(listPhoneNumbers: Set<PhoneNumber>, completion: (accounts: [RegisteredUserAccount]?)-> () ) {
+    func postUsersFind(phoneNumbers: Set<PhoneNumber>, completion: (accounts: [RegisteredUserAccount]?)-> () ) {
         let params = [
-            "phone_number": Array(listPhoneNumbers),
+            "phone_number": phoneNumbers.map { p in p.serialize() },
         ]
         
         let request = ServerRequest(type: .POST, url: Constants.Endpoints.usersFindURL)
