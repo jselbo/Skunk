@@ -98,7 +98,6 @@ class SharerSelectRecieverViewController: UITableViewController {
         let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
         do {
             var phoneNumbers = Set<PhoneNumber>()
-            
             try contactStore.enumerateContactsWithFetchRequest(fetchRequest) { (contact, stop) -> Void in
                 // TODO: assert US numbers only
                 for phoneNumberValue in contact.phoneNumbers {
@@ -116,7 +115,9 @@ class SharerSelectRecieverViewController: UITableViewController {
     }
     
     private func postUsersFind(phoneNumbers: Set<PhoneNumber>, completion: (accounts: [RegisteredUserAccount]?)-> () ) {
-        let params = phoneNumbers.map { number in number.serialize() }
+        let params = [
+            "phone_number": phoneNumbers.map { number in number.serialize() }
+        ]
         
         let request = ServerRequest(type: .POST, url: Constants.Endpoints.usersFindURL)
         request.expectedContentType = .JSON
