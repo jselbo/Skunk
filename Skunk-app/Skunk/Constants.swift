@@ -12,11 +12,6 @@ import UIKit
 typealias Sid = UInt64
 typealias Uid = UInt64
 
-func replaceIdURL(endPoint: String, id: String) ->String {
-    let sessions = "/sessions/"
-    return sessions + id + "/" + endPoint
-}
-
 struct Constants {
     static let alertTitle = "Skunk"
     

@@ -70,14 +70,53 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         }
     }
     
+    func replaceIdURL(endPoint: String, id: Uid?) ->String {
+        let sessions = "/sessions/"
+        return sessions + id!.description + "/" + endPoint
+    }
+    
     //Session Term Request
     func sessiontermRequest(session: ShareSession, completion:(sucess: Bool)->()) {
+        let params = [
+            "receivers": session.receivers
+        ]
         
+        let url = replaceIdURL(Constants.Endpoints.sessionTermRequest, id: session.identifier )
+        
+        let request = ServerRequest(type: .POST, url: NSURL(fileURLWithPath: url))
+        request.expectedContentType = .JSON
+        request.expectedBodyType = .JSONObject
+        request.execute(params) { (response) -> Void in
+            switch (response) {
+            case .Success(_):
+                completion(sucess: true)
+            case .Failure(let failure):
+                request.logResponseFailure(failure)
+                completion(sucess: false)
+            }
+        }
     }
     
     //Session Term Response 
     func sessionTermResponse(session: ShareSession, completion:(sucess: Bool)->()){
+        let params = [
+            "response": "true"
+        ]
         
+        let url = replaceIdURL(Constants.Endpoints.sessionTermResponse, id: session.identifier )
+        
+        let request = ServerRequest(type: .POST, url: NSURL(fileURLWithPath: url))
+        request.expectedContentType = .JSON
+        request.expectedBodyType = .JSONObject
+        request.execute(params) { (response) -> Void in
+            switch (response) {
+            case .Success(_):
+                completion(sucess: true)
+            case .Failure(let failure):
+                request.logResponseFailure(failure)
+                completion(sucess: false)
+            }
+        }
     }
     
     //Session PickUp Request
