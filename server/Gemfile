@@ -15,3 +15,7 @@ gem 'json'
 
 # Rake is break?
 gem 'rake'
+
+# Testing models made easy
+gem 'factory_girl'
+gem 'faker'

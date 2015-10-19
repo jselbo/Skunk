@@ -18,6 +18,10 @@ GEM
     builder (3.2.2)
     daemons (1.2.3)
     eventmachine (1.0.8)
+    factory_girl (4.5.0)
+      activesupport (>= 3.0.0)
+    faker (1.5.0)
+      i18n (~> 0.5)
     i18n (0.7.0)
     json (1.8.3)
     minitest (5.8.0)
@@ -46,6 +50,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  factory_girl
+  faker
   json
   mysql2 (~> 0.3.20)
   rake
