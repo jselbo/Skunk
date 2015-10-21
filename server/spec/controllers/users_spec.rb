@@ -1,5 +1,5 @@
 describe 'Users Controller' do
-  context '/users/create' do
+  describe '/users/create' do
     it 'returns "200 OK" when a User is created' do
       post '/users/create', FactoryGirl.attributes_for(:user).to_json
       expect(last_response.status).to eq(200)
@@ -28,7 +28,7 @@ describe 'Users Controller' do
   end
 
 
-  context '/users/login' do
+  describe '/users/login' do
     before :each do
       @user_attributes = FactoryGirl.attributes_for(:user)
       @user = User.create(@user_attributes)
@@ -70,7 +70,7 @@ describe 'Users Controller' do
     end
   end
 
-  context '/users/find' do
+  describe '/users/find' do
     before :all do
       @users = (0..10).map { FactoryGirl.create(:user) }
     end
