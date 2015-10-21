@@ -19,4 +19,5 @@ gem 'rake'
 # Testing models made easy
 gem 'factory_girl'
 gem 'faker'
-
+# Ensure a fresh database between tests
+gem 'database_cleaner'

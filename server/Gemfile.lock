@@ -17,6 +17,7 @@ GEM
     arel (6.0.3)
     builder (3.2.2)
     daemons (1.2.3)
+    database_cleaner (1.5.1)
     eventmachine (1.0.8)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
@@ -50,6 +51,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  database_cleaner
   factory_girl
   faker
   json
