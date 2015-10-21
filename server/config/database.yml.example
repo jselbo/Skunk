@@ -1,0 +1,18 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  username: skunk_server
+  password: skunk_server_password
+
+development:
+  <<: *default
+  database: skunk_dev
+
+test:
+  <<: *default
+  database: skunk_test
+
+production:
+  <<: *default
+  database: skunk
