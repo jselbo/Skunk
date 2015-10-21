@@ -6,6 +6,7 @@ require 'digest'
 #   "last_name": "lastname",
 #   "phone_number": "phonenumber",
 #   "password": "userpassword",
+#   "device_id": "token"
 #   ...
 # }
 # -> 200 OK <user_id>
@@ -27,7 +28,8 @@ post '/users/create' do
     first_name:   params['first_name'],
     last_name:    params['last_name'],
     phone_number: params['phone_number'],
-    password:     params['password']
+    password:     params['password'],
+    device_id:    params['device_id']
   }
   # See if the User already exists
   @user = User.find_by_identity user_params
@@ -44,8 +46,9 @@ end
 
 # POST /users/login
 # {
-#   "phone": "phonenumber",
-#   "password": "userpassword"
+#   "phone_number": "phonenumber",
+#   "password": "userpassword",
+#   "device_id": "token"
 # }
 # -> 200 OK <user_id>
 # -> 404 Not Found
@@ -61,6 +64,7 @@ end
 post '/users/login' do
   # Try to find the user by their credentials
   @user = User.find_by_credentials params
+  @user.update(device_id: params[:device_id]) if @user
   # If the user does not exist, return a 404
   halt(404) unless @user
   # If they do exist, return their ID.
