@@ -46,7 +46,7 @@ end
 
 # POST /users/login
 # {
-#   "phone": "phonenumber",
+#   "phone_number": "phonenumber",
 #   "password": "userpassword",
 #   "device_id": "token"
 # }
