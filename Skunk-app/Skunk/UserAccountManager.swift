@@ -19,6 +19,8 @@ class UserAccountManager: NSObject {
     
     private(set) var registeredAccount: RegisteredUserAccount?
     
+    let defaults = NSUserDefaults.standardUserDefaults()
+    
     override init() {
         super.init()
         
@@ -32,9 +34,11 @@ class UserAccountManager: NSObject {
     /// If login request succeeds, returns the RegisteredUserAccount associated with this user's phone and password.
     /// Otherwise, returns nil.
     func logInWithCredentials(phone: PhoneNumber, password: String, completion: (registeredAccount: RegisteredUserAccount?) -> ()) {
+        let deviceToken = defaults.objectForKey(Constants.keyDeviceToken) as? NSData
         let params = [
             "phone": phone.serialize(),
             "password": password,
+            "device_id": deviceToken?.description ?? NSNull(),
         ]
         
         let request = ServerRequest(type: .POST, url: Constants.Endpoints.usersLoginURL)
@@ -69,11 +73,13 @@ class UserAccountManager: NSObject {
     /// If register request succeeds, returns a RegisteredUserAccount object with the newly assigned user identifier
     /// given by the server. Otherwise, returns nil.
     func registerAccount(account: UserAccount, completion: (registeredAccount: RegisteredUserAccount?) -> ()) {
+        let deviceToken = defaults.objectForKey(Constants.keyDeviceToken) as? NSData
         let params = [
             "first_name": account.firstName,
             "last_name": account.lastName,
             "phone_number": account.phoneNumber.serialize(),
             "password": account.password!,
+            "device_id": deviceToken?.description ?? NSNull(),
         ]
         
         let request = ServerRequest(type: .POST, url: Constants.Endpoints.usersCreateURL)
@@ -101,7 +107,6 @@ class UserAccountManager: NSObject {
     }
     
     func saveRegisteredAccount(account: RegisteredUserAccount) throws {
-        let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(account.userAccount.firstName, forKey: Constants.keyFirstName)
         defaults.setObject(account.userAccount.lastName, forKey: Constants.keyLastName)
         defaults.setObject(account.userAccount.phoneNumber.sanitizedText, forKey: Constants.keyPhoneNumber)
@@ -119,7 +124,6 @@ class UserAccountManager: NSObject {
     /// Deletes all stored account credentials on this device.
     func clearCredentials() throws {
         // Clear user defaults
-        let defaults = NSUserDefaults.standardUserDefaults()
         defaults.removeObjectForKey(Constants.keyFirstName)
         defaults.removeObjectForKey(Constants.keyLastName)
         defaults.removeObjectForKey(Constants.keyPhoneNumber)
@@ -134,7 +138,6 @@ class UserAccountManager: NSObject {
     }
     
     private func loadAccount() -> UserAccount? {
-        let defaults = NSUserDefaults()
         if let
             firstName = defaults.objectForKey(Constants.keyFirstName) as? String,
             lastName = defaults.objectForKey(Constants.keyLastName) as? String,

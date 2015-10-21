@@ -20,6 +20,7 @@ struct Constants {
     static let keyLastName = "last_name"
     static let keyPhoneNumber = "phone_number"
     static let keyDebug = "debug"
+    static let keyDeviceToken = "device_token"
     
     // For Keychain access
     static let userIdentifierService = "SkunkUserIdentifier"
