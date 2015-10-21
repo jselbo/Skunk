@@ -4,3 +4,6 @@ config/database.yml
 # Logs are useless, really.
 *.log
 */*.log
+
+# Don't track the private SSL certificate for Push Notifications
+apn_cert.pem
