@@ -7,3 +7,6 @@ config/database.yml
 
 # Don't track the private SSL certificate for Push Notifications
 apn_cert.pem
+
+# Don't track the sinatra config
+config/sinatra.yml

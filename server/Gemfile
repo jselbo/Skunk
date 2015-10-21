@@ -6,6 +6,8 @@ ruby '2.2.1'
 gem 'sinatra'
 # ActiveRecord is just too good.
 gem 'sinatra-activerecord'
+# Enable a configuration file for Sinatra settings
+gem 'sinatra-contrib'
 # Events are what drive 'Merica.
 gem 'thin'
 # MariaDB runs off of the same adapter as MySQL.

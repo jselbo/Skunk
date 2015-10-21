@@ -1,6 +1,11 @@
 require 'sinatra'
 require 'sinatra/activerecord'
+require 'sinatra/config_file'
 require 'mysql2'
+
+
+# Load the Sinatra configuration from a file
+config_file './config/sinatra.yml'
 
 # Rack is being a bit weird with thin, making some random asserts. Let's just
 # ignore those, shall we?
@@ -32,6 +37,7 @@ end
 require './models/session.rb'
 require './models/session_user.rb'
 require './models/user.rb'
+require './models/push_notification.rb'
 
 
 # #

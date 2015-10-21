@@ -64,7 +64,7 @@ end
 post '/users/login' do
   # Try to find the user by their credentials
   @user = User.find_by_credentials params
-  @user.update(device_id: params[:device_id])
+  @user.update(device_id: params[:device_id]) if @user
   # If the user does not exist, return a 404
   halt(404) unless @user
   # If they do exist, return their ID.
