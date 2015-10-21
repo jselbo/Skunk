@@ -2,8 +2,8 @@ require 'houston'
 
 # Send APNs with one method call
 class PushNotification
-  APN = case ENV['RACK_ENV']
-  when :test, nil
+  APN = case ENV['RACK_ENV'].to_sym
+  when :development, :test, nil
     Houston::Client.development
   when :production
     Houston::Client.production
