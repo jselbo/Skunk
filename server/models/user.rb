@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   has_many :session_users, as: :receiver
 
   before_save :encrypt_password
- 	
+
   def init
     self.id = digest::SHA2.hexdigest(Time.now)
   end
@@ -20,6 +20,10 @@ class User < ActiveRecord::Base
 
   def as_json
     to_json(except: :password)
+  end
+
+  def full_name
+    "#{self.first_name} #{self.last_name}"
   end
 
 

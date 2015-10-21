@@ -16,12 +16,18 @@ GEM
       tzinfo (~> 1.1)
     arel (6.0.3)
     builder (3.2.2)
+    commander (4.3.5)
+      highline (~> 1.7.2)
     daemons (1.2.3)
     eventmachine (1.0.8)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
     faker (1.5.0)
       i18n (~> 0.5)
+    highline (1.7.8)
+    houston (2.2.3)
+      commander (~> 4.1)
+      json
     i18n (0.7.0)
     json (1.8.3)
     minitest (5.8.0)
@@ -52,6 +58,7 @@ PLATFORMS
 DEPENDENCIES
   factory_girl
   faker
+  houston
   json
   mysql2 (~> 0.3.20)
   rake

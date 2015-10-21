@@ -13,10 +13,12 @@ gem 'mysql2', '~> 0.3.20'
 # JSON responses all the way
 gem 'json'
 
+# Push Notifications
+gem 'houston'
+
 # Rake is break?
 gem 'rake'
 
 # Testing models made easy
 gem 'factory_girl'
 gem 'faker'
-
