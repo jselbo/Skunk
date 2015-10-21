@@ -17,6 +17,10 @@ describe 'User' do
     expect(FactoryGirl.build(:user, password: nil)).not_to be_valid
   end
 
+  it 'is valid without a device_id' do
+    expect(FactoryGirl.build(:user, password: nil)).to be_valid
+  end
+
   it 'does not allow duplicate phone numbers' do
     FactoryGirl.create(:user, phone_number: '1112223333')
     expect(FactoryGirl.build(:user, phone_number: '1112223333')).not_to be_valid
