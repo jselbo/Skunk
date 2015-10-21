@@ -139,19 +139,13 @@ describe 'User' do
     describe '::find_by_credentials' do
       before :each do
         @criteria = {
-          first_name: @subject.first_name,
-          last_name: @subject.last_name,
+          phone_number: @subject.phone_number,
           password: @password
         }
       end
 
-      it 'requires a first name' do
-        @criteria.delete(:first_name)
-        expect(User.find_by_credentials(@criteria)).to be_nil
-      end
-
-      it 'requires a last name' do
-        @criteria.delete(:last_name)
+      it 'requires a phone number' do
+        @criteria.delete(:phone_number)
         expect(User.find_by_credentials(@criteria)).to be_nil
       end
 
@@ -161,13 +155,8 @@ describe 'User' do
       end
 
 
-      it 'does not allow more than one first name' do
-        @criteria[:first_name] = @users.map{ |u| u.first_name }
-        expect(User.find_by_credentials(@criteria)).to be_nil
-      end
-
-      it 'does not allow more than one last name' do
-        @criteria[:last_name] = @users.map{ |u| u.last_name }
+      it 'does not allow more than one phone number' do
+        @criteria[:phone_number] = @users.map{ |u| u.phone_number }
         expect(User.find_by_credentials(@criteria)).to be_nil
       end
 

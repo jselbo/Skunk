@@ -42,8 +42,7 @@ class User < ActiveRecord::Base
     # Find a User by their full name and (raw) password
     def find_by_credentials user_params
       credentials = {
-        first_name: user_params[:first_name],
-        last_name: user_params[:last_name],
+        phone_number: user_params[:phone_number],
         password: User.encrypt(user_params[:password])
       }
       User.find_by credentials
