@@ -60,6 +60,13 @@ describe 'User' do
     end
   end
 
+  describe '#full_name' do
+    it 'concatenates first and last names' do
+      @user = FactoryGirl.build(:user, first_name: 'John', last_name: 'Smith')
+      expect(@user.full_name).to eq('John Smith')
+    end
+  end
+
 
   describe 'class method' do
     before :each do
