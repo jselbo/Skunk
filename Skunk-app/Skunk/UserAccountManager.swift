@@ -36,7 +36,7 @@ class UserAccountManager: NSObject {
     func logInWithCredentials(phone: PhoneNumber, password: String, completion: (registeredAccount: RegisteredUserAccount?) -> ()) {
         let deviceToken = defaults.objectForKey(Constants.keyDeviceToken) as? NSData
         let params = [
-            "phone": phone.serialize(),
+            "phone_number": phone.serialize(),
             "password": password,
             "device_id": deviceToken?.description ?? NSNull(),
         ]
@@ -45,7 +45,7 @@ class UserAccountManager: NSObject {
         request.expectedContentType = .JSON
         request.expectedBodyType = .JSONObject
         request.execute(params) { (response) -> Void in
-            switch (response) {
+            switch response {
             case .Success(let response):
                 let JSONResponse = response as! [String: AnyObject]
                 
@@ -86,7 +86,7 @@ class UserAccountManager: NSObject {
         request.expectedContentType = .JSON
         request.expectedBodyType = .JSONObject
         request.execute(params) { (response) -> Void in
-            switch (response) {
+            switch response {
             case .Success(let response):
                 let JSONResponse = response as! [String: AnyObject]
                 
