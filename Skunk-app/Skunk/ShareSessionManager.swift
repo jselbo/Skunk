@@ -119,8 +119,8 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         }
     }
     
-    //Session Term Request
-    func sessionTermRequest(session: ShareSession, receiver: RegisteredUserAccount, completion:(sucess: Bool)->()) {
+    // Session Terminate Request
+    func sessionTermRequest(session: ShareSession, receiver: RegisteredUserAccount, completion:(success: Bool)->()) {
         let params = [
             "receivers": [NSNumber(unsignedLongLong: receiver.identifier)],
         ]
@@ -130,16 +130,16 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         request.execute(params) { (response) -> Void in
             switch (response) {
             case .Success(_):
-                completion(sucess: true)
+                completion(success: true)
             case .Failure(let failure):
                 request.logResponseFailure(failure)
-                completion(sucess: false)
+                completion(success: false)
             }
         }
     }
     
-    //Session Term Response 
-    func sessionTermResponse(session: ShareSession, completion:(sucess: Bool)->()){
+    // Session Terminate Response 
+    func sessionTermResponse(session: ShareSession, completion:(success: Bool)->()){
         let params = [
             "response": true
         ]
@@ -151,32 +151,32 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         request.execute(params) { (response) -> Void in
             switch (response) {
             case .Success(_):
-                completion(sucess: true)
+                completion(success: true)
             case .Failure(let failure):
                 request.logResponseFailure(failure)
-                completion(sucess: false)
+                completion(success: false)
             }
         }
     }
     
-    //Session PickUp Request
-    func sessionPickUpRequest(session: ShareSession, completion:(sucess: Bool)->()) {
+    // Session PickUp Request
+    func sessionPickUpRequest(session: ShareSession, completion:(success: Bool)->()) {
         let url = replaceIdURL(Constants.Endpoints.sessionsPickupRequest, id: session.identifier )
         let request = ServerRequest(type: .PUT, url: NSURL(fileURLWithPath: url))
         request.expectedStatusCode = Constants.nilContent
         request.execute() { (response) -> Void in
             switch (response) {
             case .Success(_):
-                completion(sucess: true)
+                completion(success: true)
             case .Failure(let failure):
                 request.logResponseFailure(failure)
-                completion(sucess: false)
+                completion(success: false)
             }
         }
     }
     
-    //Session PickUp Response
-    func sessionPickUpResponse(session: ShareSession, completion:(sucess: Bool)->()) {
+    // Session PickUp Response
+    func sessionPickUpResponse(session: ShareSession, completion:(success: Bool)->()) {
         let params = [
             "response": true,
             "eta": session.driverEstimatedArrival!.serializeISO8601()
@@ -187,16 +187,16 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         request.execute(params) { (response) -> Void in
             switch (response) {
             case .Success(_):
-                completion(sucess: true)
+                completion(success: true)
             case .Failure(let failure):
                 request.logResponseFailure(failure)
-                completion(sucess: false)
+                completion(success: false)
             }
         }
     }
     
-    //Session Driver Response
-    func sessionDriverResponse(session: ShareSession, completion:(sucess: Bool)->()) {
+    // Session Driver Response
+    func sessionDriverResponse(session: ShareSession, completion:(success: Bool)->()) {
         let params = [
             "response": true,
         ]
@@ -206,10 +206,10 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         request.execute(params) { (response) -> Void in
             switch (response) {
             case .Success(_):
-                completion(sucess: true)
+                completion(success: true)
             case .Failure(let failure):
                 request.logResponseFailure(failure)
-                completion(sucess: false)
+                completion(success: false)
             }
         }
     }

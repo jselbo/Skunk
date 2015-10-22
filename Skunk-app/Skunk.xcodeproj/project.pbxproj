@@ -66,6 +66,7 @@
 		4B18D352DA71E7918A3597E2 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 415C7F2891D02584B84E1204 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		B23369DC1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23369DB1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		B252126C1BD1818200664470 /* StringUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B252126B1BD1818200664470 /* StringUtilities.swift */; settings = {ASSET_TAGS = (); }; };
+		B2936B481BD812CE00D9C3E4 /* ReceiverPickUpSharerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2936B471BD812CE00D9C3E4 /* ReceiverPickUpSharerViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		E56A142B1BAF4BA600985CC7 /* SharerOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A142A1BAF4BA600985CC7 /* SharerOptionsViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		E5F2F9F91BB311000082CF84 /* SharerSelectRecieverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F2F9F81BB311000082CF84 /* SharerSelectRecieverViewController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
@@ -146,6 +147,7 @@
 		4B0AE1F0ED9F4AD39FAE7CC7 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		B23369DB1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiveFriendsListViewController.swift; sourceTree = "<group>"; };
 		B252126B1BD1818200664470 /* StringUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtilities.swift; sourceTree = "<group>"; };
+		B2936B471BD812CE00D9C3E4 /* ReceiverPickUpSharerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiverPickUpSharerViewController.swift; sourceTree = "<group>"; };
 		E56A142A1BAF4BA600985CC7 /* SharerOptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharerOptionsViewController.swift; sourceTree = "<group>"; };
 		E5F2F9F81BB311000082CF84 /* SharerSelectRecieverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharerSelectRecieverViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -363,6 +365,7 @@
 		03D7E3C61BCC1655009AC7A8 /* Receiver */ = {
 			isa = PBXGroup;
 			children = (
+				B2936B471BD812CE00D9C3E4 /* ReceiverPickUpSharerViewController.swift */,
 				B23369DB1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift */,
 				038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */,
 			);
@@ -620,6 +623,7 @@
 				03AB65F91BB18C770094B9CC /* Serializable.swift in Sources */,
 				E56A142B1BAF4BA600985CC7 /* SharerOptionsViewController.swift in Sources */,
 				E5F2F9F91BB311000082CF84 /* SharerSelectRecieverViewController.swift in Sources */,
+				B2936B481BD812CE00D9C3E4 /* ReceiverPickUpSharerViewController.swift in Sources */,
 				033B16031BB34F9A00A945FD /* RegisterViewController.swift in Sources */,
 				038A40101BA908FF00E65E1D /* AppDelegate.swift in Sources */,
 				03AB65FB1BB193E20094B9CC /* NSDateUtilities.swift in Sources */,
