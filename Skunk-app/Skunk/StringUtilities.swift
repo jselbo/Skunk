@@ -10,7 +10,7 @@ import Foundation
 extension String {
     func parseSQLDate() -> NSDate {
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let date = dateFormatter.dateFromString(self)
         return date!
     }

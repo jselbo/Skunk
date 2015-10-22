@@ -44,6 +44,7 @@ class ReceiveFriendsListViewController: UIViewController {
         let sharerRegisteredUserAccount = sharerList[indexPath.row]
         let sharerUid = sharerRegisteredUserAccount.identifier
         sharerSession = sessionManager.sharerInformation[sharerUid]
+        self.presentSessionController()
     }
     
     func tableView(friendsTableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -58,7 +59,7 @@ class ReceiveFriendsListViewController: UIViewController {
         }
         else {
             switch sharerSession.endCondition {
-            case .Location(let location): break
+            case .Location(_): break
             case .Time(let endDate):
                 let currentDate = NSDate()
                 let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
