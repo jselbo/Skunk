@@ -58,9 +58,40 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         request.execute(params) { (response) -> Void in
             switch response {
             case .Success(let response):
-                // TODO do something with the returned session object?
-                // Will it include any new information?
-                let _ = response as! [String: AnyObject]
+                let responseJSON = response as! [String: AnyObject]
+                
+                // Check for receiver session termination responses
+                if let receiversJSON = responseJSON["receivers"] as? [AnyObject] {
+                    for receiverJSON in receiversJSON {
+                        guard let receiverID = receiverJSON["user_id"] as? Int else {
+                            print("Error: Failed to parse receiver ID from JSON: \(responseJSON)")
+                            completion(success: false)
+                            return
+                        }
+                        
+                        guard let receiverInfo = session.findReceiver(Uid(receiverID)) else {
+                            print("Error: Invalid receiver ID: \(receiverID)")
+                            completion(success: false)
+                            return
+                        }
+                        
+                        // Check for a driver's response
+                        if let sharerEnded = receiverJSON["receiver_ended"] as? Bool {
+                            if sharerEnded {
+                                receiverInfo.stopSharingState = .Accepted
+                            }
+                        }
+                    }
+                }
+                
+                // Check for driver acceptance
+                if let driverID = responseJSON["driver_id"] as? Int where session.driverIdentifier == nil {
+                    session.driverIdentifier = Uid(driverID)
+                }
+                
+                // Check for pickup response
+                // TODO
+                
                 completion(success: true)
             
             case .Failure(let failure):
