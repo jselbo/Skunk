@@ -36,11 +36,11 @@ struct Constants {
     // Server endpoints
     struct Endpoints {
         static let baseURLHost = "68.234.146.84"
-        static let baseURLPort = "3800"
+        static let baseURLPort = "3001"
         static let baseURL = NSURL(string: "http://\(baseURLHost):\(baseURLPort)")!
         
         static let usersCreateURL = baseURL.URLByAppendingPathComponent("/users/create")
-        static let usersLoginURL = baseURL.URLByAppendingPathComponent("/users/login/")
+        static let usersLoginURL = baseURL.URLByAppendingPathComponent("/users/login")
         
         static let sessionsURL = baseURL.URLByAppendingPathComponent("/sessions/")
         
