@@ -472,7 +472,7 @@
 				TargetAttributes = {
 					038A400B1BA908FF00E65E1D = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = H5639XUXQB;
+						DevelopmentTeam = J2VAKEVY6P;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -788,7 +788,7 @@
 				INFOPLIST_FILE = Skunk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-D DEBUG $(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = edu.purdue.jselbo.Skunk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jselbo.skunk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -804,7 +804,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Skunk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = edu.purdue.jselbo.Skunk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jselbo.skunk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
