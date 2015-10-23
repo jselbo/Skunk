@@ -90,7 +90,14 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
                 }
                 
                 // Check for pickup response
-                // TODO
+                if let driverETA = responseJSON["driver_eta"] as? String where session.driverIdentifier != nil {
+                    guard let driverETADate = driverETA.parseSQLDate() else {
+                        print("Error: Failed to parse Driver ETA date from string: '\(driverETA)'")
+                        completion(success: false)
+                        return
+                    }
+                    session.driverEstimatedArrival = driverETADate
+                }
                 
                 completion(success: true)
             
@@ -131,7 +138,12 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
                     let account = RegisteredUserAccount.init(userAccount: userAccount, identifier: Uid(userID))
                     let shareSession: ShareSession
                     if(isTimeBased) {
-                        shareSession = ShareSession.init(sharerAccount: account, endCondition: ShareEndCondition.Time(endTime.parseSQLDate()), needsDriver: needsDriver, receivers: [])
+                        guard let endTimeDate = endTime.parseSQLDate() else {
+                            print("Error: Failed to parse end date from string: \(endTime)")
+                            completion(registeredAccounts: nil)
+                            return
+                        }
+                        shareSession = ShareSession.init(sharerAccount: account, endCondition: ShareEndCondition.Time(endTimeDate), needsDriver: needsDriver, receivers: [])
                     } else {
                         let components = destination.componentsSeparatedByString(",")
                         shareSession = ShareSession.init(sharerAccount: account, endCondition: ShareEndCondition.Location(CLLocation(latitude: Double(components[0])!, longitude: Double(components[1])!)) , needsDriver: needsDriver, receivers: [])
