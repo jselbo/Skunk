@@ -58,6 +58,28 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
     //MARK: - IBAction
     
     @IBAction func pickupRequestPressed(sender: AnyObject) {
+        pickUpButton.enabled = false
+        pickUpButton.backgroundColor = UIColor.grayColor()
+        
+        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+        spinner.center = pickUpButton.center
+        pickUpButton.addSubview(spinner)
+        
+        session.needsPickup = true
+        sessionManager.sessionPickUpRequest(session) { (success) -> () in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                spinner.removeFromSuperview()
+                
+                if success {
+                    self.pickUpButton.backgroundColor = UIColor.greenColor()
+                    self.pickUpButton.setTitle("Pickup Requested", forState: .Normal)
+                } else {
+                    self.presentErrorAlert("Failed to request pickup")
+                    self.pickUpButton.enabled = true
+                    self.pickUpButton.backgroundColor = UIColor.blueColor()
+                }
+            })
+        }
     }
     
     //MARK: - UITableViewDataSource

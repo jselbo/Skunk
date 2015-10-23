@@ -57,9 +57,16 @@ class MainTabBarController: UITabBarController {
         })
         
         // This session ID must match the ID given in session_create.json
-        stub(isPath(Constants.Endpoints.sessionsURL.URLByAppendingPathComponent("555").path!), response: { _ in
+        let sessionsURL = Constants.Endpoints.sessionsURL.URLByAppendingPathComponent("555")
+        
+        stub(isPath(sessionsURL.path!), response: { _ in
             let path = OHPathForFile("session_heartbeat.json", self.dynamicType)
             return fixture(path!, status: 200, headers: ["Content-Type": "application/json"])
+        })
+        
+        let pickupRequestURL = sessionsURL.URLByAppendingPathComponent(Constants.Endpoints.sessionsPickupRequestPath)
+        stub(isPath(pickupRequestURL.path!), response: { _ in
+            return OHHTTPStubsResponse(data: NSData(), statusCode: 204, headers: nil)
         })
     }
 }

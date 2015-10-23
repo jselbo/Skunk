@@ -168,7 +168,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         let params = [
             "receivers": [NSNumber(unsignedLongLong: receiver.account.identifier)],
         ]
-        let url = replaceIdURL(Constants.Endpoints.sessionTermRequest, id: session.identifier )
+        let url = replaceIdURL(Constants.Endpoints.sessionTermRequest, id: session.identifier! )
         let request = ServerRequest(type: .POST, url: NSURL(fileURLWithPath: url))
         request.expectedStatusCode = Constants.nilContent
         request.execute(params) { (response) -> Void in
@@ -189,7 +189,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         let params = [
             "response": true
         ]
-        let url = replaceIdURL(Constants.Endpoints.sessionTermResponse, id: session.identifier )
+        let url = replaceIdURL(Constants.Endpoints.sessionTermResponse, id: session.identifier! )
         let request = ServerRequest(type: .POST, url: NSURL(fileURLWithPath: url))
         request.expectedContentType = .JSON
         request.expectedBodyType = .JSONObject
@@ -207,8 +207,9 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
     
     // Session PickUp Request
     func sessionPickUpRequest(session: ShareSession, completion:(success: Bool)->()) {
-        let url = replaceIdURL(Constants.Endpoints.sessionsPickupRequest, id: session.identifier )
-        let request = ServerRequest(type: .PUT, url: NSURL(fileURLWithPath: url))
+        let url = replaceIdURL(Constants.Endpoints.sessionsPickupRequestPath, id: session.identifier! )
+        let pickupURL = Constants.Endpoints.baseURL.URLByAppendingPathComponent(url)
+        let request = ServerRequest(type: .PUT, url: pickupURL)
         request.expectedStatusCode = Constants.nilContent
         request.execute() { (response) -> Void in
             switch (response) {
@@ -227,7 +228,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
             "response": true,
             "eta": session.driverEstimatedArrival!.serializeISO8601()
         ]
-        let url = replaceIdURL(Constants.Endpoints.sessionsPickupResponse, id: session.identifier )
+        let url = replaceIdURL(Constants.Endpoints.sessionsPickupResponse, id: session.identifier! )
         let request = ServerRequest(type: .POST, url: NSURL(fileURLWithPath: url))
         request.expectedStatusCode = Constants.nilContent
         request.execute(params) { (response) -> Void in
@@ -246,8 +247,9 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         let params = [
             "response": true,
         ]
-        let url = replaceIdURL(Constants.Endpoints.sessionsDriverResponse, id: session.identifier )
-        let request = ServerRequest(type: .POST, url: NSURL(fileURLWithPath: url))
+        let url = replaceIdURL(Constants.Endpoints.sessionsDriverResponse, id: session.identifier! )
+        let responseURL = Constants.Endpoints.baseURL.URLByAppendingPathComponent(url)
+        let request = ServerRequest(type: .POST, url: responseURL)
         request.expectedStatusCode = Constants.nilContent
         request.execute(params) { (response) -> Void in
             switch (response) {
@@ -260,8 +262,9 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         }
     }
     
-    private func replaceIdURL(endPoint: String, id: Uid?) ->String {
+    private func replaceIdURL(endPoint: String, id: Uid) -> String {
+        // TODO (defect) extra slash in URL DOOOOOOOOOOOON
         let sessions = "/sessions/"
-        return sessions + id!.description + "/" + endPoint
+        return sessions + id.description + endPoint
     }
 }
