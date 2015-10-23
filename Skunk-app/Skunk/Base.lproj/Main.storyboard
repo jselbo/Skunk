@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -655,7 +655,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="56" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZSz-cV-uKR">
-                                <rect key="frame" x="0.0" y="64" width="320" height="460"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -687,7 +687,7 @@
                                         </tableViewCellContentView>
                                         <animations/>
                                         <connections>
-                                            <segue destination="HNq-TB-zG9" kind="push" id="76q-rh-Zjf"/>
+                                            <segue destination="HNq-TB-zG9" kind="push" identifier="Session" id="76q-rh-Zjf"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -700,10 +700,10 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="ZSz-cV-uKR" secondAttribute="bottom" constant="44" id="1zJ-wd-vSR"/>
+                            <constraint firstItem="ZSz-cV-uKR" firstAttribute="top" secondItem="7Lk-jF-Lnl" secondAttribute="top" id="CiU-Mq-y2y"/>
                             <constraint firstAttribute="trailing" secondItem="ZSz-cV-uKR" secondAttribute="trailing" id="Ssb-rg-XvY"/>
+                            <constraint firstItem="qtt-sR-oYp" firstAttribute="top" secondItem="ZSz-cV-uKR" secondAttribute="bottom" id="YAK-18-hlx"/>
                             <constraint firstItem="ZSz-cV-uKR" firstAttribute="leading" secondItem="7Lk-jF-Lnl" secondAttribute="leading" id="mCb-9o-Up1"/>
-                            <constraint firstItem="ZSz-cV-uKR" firstAttribute="top" secondItem="dkh-UN-yWf" secondAttribute="bottom" id="zHe-G4-YPY"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Receiver" id="V83-up-2sZ"/>
