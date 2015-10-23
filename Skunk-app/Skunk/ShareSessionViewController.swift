@@ -101,20 +101,17 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
             let receiver = self.receivers[indexPath.row]
             let account = receiver.account.userAccount
             
-            let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
-            dispatch_async(queue, { () -> Void in
-                self.presentDecisionAlert("Are you sure you would like to stop sharing your location with \"\(account.firstName) \(account.lastName)\"? This receiver must approve your request.") { _ in
-                    self.sessionManager.sessionTermRequest(self.session, receiver: receiver, completion: { (success) in
-                        if !success {
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                tableView.reloadData()
-                                self.presentErrorAlert("Server Faulted")
-                            })
-                        }
-                    })
-                    tableView.reloadData()
-                }
-            })
+            self.presentDecisionAlert("Are you sure you would like to stop sharing your location with \"\(account.firstName) \(account.lastName)\"? This receiver must approve your request.") { _ in
+                self.sessionManager.sessionTermRequest(self.session, receiver: receiver, completion: { (success) in
+                    if !success {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            tableView.reloadData()
+                            self.presentErrorAlert("Server Faulted")
+                        })
+                    }
+                })
+                tableView.reloadData()
+            }
         }
         return [action]
     }
