@@ -1,0 +1,19 @@
+[
+    {
+        "sharer": {
+            "user_id": 123,
+            "first_name": "Josh",
+            "last_name": "Slebo",
+            "phone_number": "5552227890"
+        },
+        "id": 1 ,
+        "needs_driver": true,
+        "driver": null,
+        "is_time_based": true,
+        "end_time": "2015-11-11 04:00:00",
+        "destination": null,
+        "last_updated": "2015-10-23 16:00:00",
+        "driver_eta": null,
+        "current_location": "+40.4253634,-86.9192741"
+    }
+]
