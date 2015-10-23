@@ -31,6 +31,8 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
     @IBOutlet weak var broadcastImageView: UIImageView!
     @IBOutlet weak var receiversTableView: UITableView!
     
+    var handledTermination = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -170,7 +172,16 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
             let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)
             dispatch_async(queue, { () -> Void in
                 self.sessionManager.sendLocationHeartbeat(self.session, location: location, completion: { success in
-                    self.handleHeartbeat(location, success: success)
+                    if success {
+                        self.handleHeartbeat(location)
+                    } else {
+                        print("Failed to send heartbeat: \(location)")
+                        dispatch_async(dispatch_get_main_queue()) { _ in
+                            if self.presentedViewController == nil {
+                                self.presentErrorAlert("Failed to send location to server")
+                            }
+                        }
+                    }
                 })
             })
             
@@ -183,18 +194,24 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
     
     //MARK: - Private methods
     
-    // Called off of main thread and not necessarily when application is active
-    private func handleHeartbeat(location: CLLocation, success: Bool) {
-        if success {
-            
-        } else {
-            print("Failed to send heartbeat: \(location)")
-            dispatch_async(dispatch_get_main_queue()) { _ in
-                if self.presentedViewController == nil {
-                    self.presentErrorAlert("Failed to send location to server")
-                }
+    private func handleHeartbeat(location: CLLocation) {
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            if self.session.terminated && !self.handledTermination {
+                self.handledTermination = true
+                
+                self.locationManager.delegate = nil
+                self.locationManager.stopUpdatingLocation()
+                self.presentErrorAlert("Your sharing session has ended.", OKHandler: { (action) -> Void in
+                    let startSharingController =
+                        self.storyboard!.instantiateViewControllerWithIdentifier("beginSharingScreen")
+                        as! ShareMainViewController
+                    startSharingController.accountManager = self.accountManager
+                    startSharingController.locationManager = self.locationManager
+                    self.navigationController!.setViewControllers([startSharingController], animated: true)
+                })
             }
-        }
+            
+            self.receiversTableView.reloadData()
+        })
     }
-    
 }

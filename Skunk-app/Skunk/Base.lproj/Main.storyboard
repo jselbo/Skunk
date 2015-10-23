@@ -151,6 +151,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="doneButtonItem" destination="Ffw-cp-h4U" id="Cwi-kB-J2J"/>
+                        <outlet property="receiversTableView" destination="aTY-ZY-hxU" id="rW5-Od-Wkp"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="faC-7g-z5E" userLabel="First Responder" sceneMemberID="firstResponder"/>

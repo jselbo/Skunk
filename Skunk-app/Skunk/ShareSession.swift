@@ -85,6 +85,9 @@ class ShareSession: NSObject {
     var currentLocation: CLLocation?
     var lastLocationUpdate: NSDate?
     
+    // Set to true if server indicates session has ended
+    var terminated = false
+    
     init(sharerAccount: RegisteredUserAccount,
         endCondition: ShareEndCondition,
         needsDriver: Bool,

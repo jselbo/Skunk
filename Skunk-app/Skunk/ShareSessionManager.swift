@@ -60,8 +60,15 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
             case .Success(let response):
                 let responseJSON = response as! [String: AnyObject]
                 
+                // First, check for termination
+                if let terminated = responseJSON["terminated"] as? Bool {
+                    session.terminated = terminated
+                    completion(success: true)
+                }
+                
                 // Check for receiver session termination responses
                 if let receiversJSON = responseJSON["receivers"] as? [AnyObject] {
+                    // Check for all receivers terminated session
                     for receiverJSON in receiversJSON {
                         guard let receiverID = receiverJSON["user_id"] as? Int else {
                             print("Error: Failed to parse receiver ID from JSON: \(responseJSON)")
