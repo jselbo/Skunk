@@ -51,6 +51,7 @@ enum ShareEndCondition: Serializable {
 class ReceiverInfo: NSObject {
     let account: RegisteredUserAccount
     /// Sharer can request to stop sharing location with individual receivers.
+    // TODO: defect this was a let
     var stopSharingState = RequestState.None
     
     init(account: RegisteredUserAccount) {

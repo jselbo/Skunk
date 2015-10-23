@@ -150,19 +150,22 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         }
     }
     
-    // Session Terminate Request
-    func sessionTermRequest(session: ShareSession, receiver: RegisteredUserAccount, completion:(success: Bool)->()) {
+    //Session Term Request
+    func sessionTermRequest(session: ShareSession, receiver: ReceiverInfo, completion:(success: Bool)->()) {
+        receiver.stopSharingState = .Requested
         let params = [
-            "receivers": [NSNumber(unsignedLongLong: receiver.identifier)],
+            "receivers": [NSNumber(unsignedLongLong: receiver.account.identifier)],
         ]
         let url = replaceIdURL(Constants.Endpoints.sessionTermRequest, id: session.identifier )
         let request = ServerRequest(type: .POST, url: NSURL(fileURLWithPath: url))
         request.expectedStatusCode = Constants.nilContent
         request.execute(params) { (response) -> Void in
+            NSThread.sleepForTimeInterval(5)
             switch (response) {
             case .Success(_):
                 completion(success: true)
             case .Failure(let failure):
+                receiver.stopSharingState = .None
                 request.logResponseFailure(failure)
                 completion(success: false)
             }
