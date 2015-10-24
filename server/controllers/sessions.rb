@@ -21,7 +21,9 @@
 # On success, returns an array of Session objects.
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
-get  '/sessions/' do
+get '/sessions' do
+	@user = User.find(request.env["HTTP_SKUNK_USERID"])
+	return @user.sessions.to_json
 end
 
 
@@ -44,7 +46,20 @@ end
 # If the session exists, but the user is NOT part of the session, returns a
 # 401 Not Authorized.
 # If the session does not exist, returns a 404 Not Found.
-get  '/sessions/:id' do
+get '/sessions/:id' do
+	@session = Session.find(params[:id])
+	@user = User.find(headers["HTTP_SKUNK_USERID"])
+	@session_user = SessionUser.find_by(receiver: @user, session: @session)
+
+	if not @session
+		halt 404
+	end
+
+	if @session_user && SessionUser.active?
+		return @session.to_json(:except => [sharer: [:password]])
+	else
+		halt 401
+	end
 end
 
 
@@ -71,7 +86,29 @@ end
 # already knows the information that is being updated.
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
-put  '/sessions/:id' do
+put '/sessions/:id' do
+  # The amount of time (seconds) that is allowed between updates
+  TIME_BREAK = 15*60
+  # Get the session
+  @session = Session.find(params[:id])
+  # If more than TIME_BREAK time has passed since the last update
+  if DateTime.now > @session.last_updated + TIME_BREAK
+  	# TODO: Send emergency alerts to receivers
+  end
+  # If location string is incorrectly formatted, return error
+  if not Session.check_location(params[:location])
+  	halt 500, 'Invalid location string.'
+  end
+  # Store the new location as the current_location in the database
+	@session.update(current_location: params[:location])
+  # If the location hasn't changed, return an error
+  if @session.destination == params[:location]
+    halt 204
+  # Else, return the session object.
+  else
+  	# Send session object back with new location
+  	return @session.to_json(:except => [sharer: [:password]])
+  end
 end
 
 
@@ -100,4 +137,57 @@ end
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
 post '/sessions/create' do
+  # Initialize a new Session object
+  @session = Session.new(
+    sharer_id: request.env["HTTP_SKUNK_USERID"],
+  	needs_driver: params[:needs_driver],
+    start_time: DateTime.now,
+		last_updated: DateTime.now
+  )
+
+  type = params[:condition][:type]
+
+  # If session is timestamped, set is_time_based to true and store in database
+  if type == 'time'
+  	# Check that timestamp is in iso 8601 format
+  	begin
+  		timestamp = DateTime.iso8601(params[:condition][:data])
+  	rescue
+  		halt 500, 'Improperly formatted timestamp.'
+  	end
+    # Set the fields relevant to time-based sessions
+  	@session.is_time_based = true
+    @session.end_time = timestamp
+  # If session is location-based set _is_time_based to false and store location
+  elsif type == 'location'
+  	# Check if location string is in iso 6709 format
+  	if !Session.check_location(params[:condition][:data])
+  		halt 500, 'Improperly formatted location string.'
+  	end
+    # Set the fields relevant to location-based sessions
+  	@session.is_time_based = false
+  	@session.destination = params[:condition][:data] # should validate type
+  # Else return an error
+  else
+  	halt 500, 'Invalid condition type.'
+  end
+
+  # Save the session to create it in the database with an ID
+  @session.save
+
+  # Get the receivers from the request
+	receivers = params[:receivers]
+
+  # Populate the sessions_users join table with all the receivers
+  receivers.each do |rid|
+  	su = SessionUser.create(
+      session_id: @session.id,
+      receiver_id: rid.to_i,
+      sharer_ended: false,
+      receiver_ended: false
+    )
+  end
+
+  # Return the new session's id
+  return @session.id
 end

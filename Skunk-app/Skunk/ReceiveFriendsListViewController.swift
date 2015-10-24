@@ -12,11 +12,18 @@ import UIKit
 class ReceiveFriendsListViewController: UIViewController {
     
     var accountManager: UserAccountManager!
+    var sessionManager: ShareSessionManager!
+    var sharerSession: ShareSession!
     
     @IBOutlet weak var friendsTableView: UITableView!
+    var sharerList = [RegisteredUserAccount]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.sessionManager.sendServerRequestforReceiver { (registeredAccounts) -> () in
+            self.sharerList = registeredAccounts!
+            self.friendsTableView.reloadData()
+        }
         // Do any additional setup after loading the view.
     }
     
@@ -30,12 +37,41 @@ class ReceiveFriendsListViewController: UIViewController {
     }
     
     func tableView(friendsTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1;
+        return sharerList.count;
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let sharerRegisteredUserAccount = sharerList[indexPath.row]
+        let sharerUid = sharerRegisteredUserAccount.identifier
+        sharerSession = sessionManager.sharerInformation[sharerUid]
+        self.presentSessionController()
     }
     
     func tableView(friendsTableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = friendsTableView.dequeueReusableCellWithIdentifier("Friends Cell", forIndexPath: indexPath)
-        cell.textLabel?.text = "John Smith"
+        let sharerRegisteredUserAccount = sharerList[indexPath.row]
+        let sharerUserAccount = sharerRegisteredUserAccount.userAccount
+        let sharerUid = sharerRegisteredUserAccount.identifier
+        let sharerSession = sessionManager.sharerInformation[sharerUid]!
+        cell.textLabel!.text = sharerUserAccount.firstName + " " + sharerUserAccount.lastName
+        if sharerSession.needsDriver {
+            cell.detailTextLabel!.text = "Needs Driver"
+        }
+        else {
+            switch sharerSession.endCondition {
+            case .Location(_): break
+            case .Time(let endDate):
+                let currentDate = NSDate()
+                let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+                let difference = calendar.components([.Hour], fromDate: currentDate, toDate: endDate, options: [])
+                cell.detailTextLabel?.text = "\(difference.hour) hours till done sharing"
+            }
+        }
         return cell
+    }
+    
+    private func presentSessionController() {
+        let receiverSessionController = self.storyboard!.instantiateViewControllerWithIdentifier("Friends Cell") as! ReceiveMainViewController
+        receiverSessionController.sharerSession = sharerSession
     }
 }

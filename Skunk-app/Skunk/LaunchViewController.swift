@@ -58,6 +58,7 @@ class LaunchViewController: UIViewController {
     @IBAction func debugLoginPressed(sender: AnyObject) {
         let phone = PhoneNumber(text: "9995551234")!
         let account = UserAccount(firstName: "John", lastName: "Smith", phoneNumber: phone, password: "pass")
+        account.debug = true
         let debugAccount = RegisteredUserAccount(userAccount: account, identifier: Constants.debugUserIdentifier)
         saveRegisteredAccountAndPresentMainController(debugAccount, accountManager: accountManager)
     }

@@ -6,6 +6,8 @@ ruby '2.2.1'
 gem 'sinatra'
 # ActiveRecord is just too good.
 gem 'sinatra-activerecord'
+# Enable a configuration file for Sinatra settings
+gem 'sinatra-contrib'
 # Events are what drive 'Merica.
 gem 'thin'
 # MariaDB runs off of the same adapter as MySQL.
@@ -13,5 +15,15 @@ gem 'mysql2', '~> 0.3.20'
 # JSON responses all the way
 gem 'json'
 
+# Push Notifications
+gem 'houston'
+
 # Rake is break?
 gem 'rake'
+
+# Testing models made easy
+gem 'factory_girl'
+gem 'faker'
+
+# Ensure a fresh database between tests
+gem 'database_cleaner'

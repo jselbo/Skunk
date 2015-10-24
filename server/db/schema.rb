@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150923224430) do
+ActiveRecord::Schema.define(version: 20151021182614) do
 
   create_table "sessions", force: :cascade do |t|
     t.integer  "sharer_id",        limit: 4
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20150923224430) do
     t.datetime "last_updated"
     t.boolean  "requested_pickup"
     t.datetime "driver_eta"
+    t.text     "current_location", limit: 65535
   end
 
   create_table "sessions_users", force: :cascade do |t|
@@ -35,8 +36,11 @@ ActiveRecord::Schema.define(version: 20150923224430) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name",  limit: 255
-    t.string "email", limit: 255
+    t.string "phone_number", limit: 255
+    t.string "first_name",   limit: 255
+    t.string "last_name",    limit: 255
+    t.string "password",     limit: 255
+    t.string "device_id",    limit: 255
   end
 
 end

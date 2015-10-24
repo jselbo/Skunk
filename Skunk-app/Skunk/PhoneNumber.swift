@@ -40,4 +40,17 @@ class PhoneNumber: NSObject, CustomDebugStringConvertible {
         return sanitizedText
     }
     
+    func formatForUser() -> String {
+        let areaCode = sanitizedText.substringToIndex(sanitizedText.startIndex.advancedBy(3))
+        let group1 = sanitizedText.substringWithRange(
+            Range<String.Index>(
+                start: sanitizedText.startIndex.advancedBy(3),
+                end: sanitizedText.startIndex.advancedBy(6)))
+        let group2 = sanitizedText.substringWithRange(
+            Range<String.Index>(
+                start: sanitizedText.startIndex.advancedBy(6),
+                end: sanitizedText.startIndex.advancedBy(10)))
+        return String(format: "(%@) %@-%@", areaCode, group1, group2)
+    }
+    
 }

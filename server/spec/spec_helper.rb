@@ -21,6 +21,28 @@ RSpec.configure do |config|
   # Include the Sinatra mixin in each test
   config.include Rack::Test::Methods
 
+# Run all tests in the :test environment
+ENV['RACK_ENV'] = 'test'
+# Rack's HTTP mocking for tests
+require 'rack/test'
+# Database management for testing
+require 'database_cleaner'
+# The Sinatra app
+require File.expand_path '../../server.rb', __FILE__
+# Factory girl generated models nicely
+require 'factory_girl'
+# Faker generates random data nicely
+require 'faker'
+# The factory_girl factories for the app
+require_relative 'factories'
+
+
+# Define an instance of the server for the tests
+def app
+  Sinatra::Application
+end
+
+RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
@@ -80,16 +102,38 @@ RSpec.configure do |config|
   # particularly slow.
   config.profile_examples = 10
 
+=======
+>>>>>>> c47401ddcb38541eaab7f37c4d783e75fd7e0a5b
   # Run specs in random order to surface order dependencies. If you find an
   # order dependency and want to debug it, you can fix the order by providing
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = :random
+<<<<<<< HEAD
 
+=======
+>>>>>>> c47401ddcb38541eaab7f37c4d783e75fd7e0a5b
   # Seed global randomization in this process using the `--seed` CLI option.
   # Setting this allows you to use `--seed` to deterministically reproduce
   # test failures related to randomization by passing the same `--seed` value
   # as the one that triggered the failure.
   Kernel.srand config.seed
+<<<<<<< HEAD
 =end
+
+
+  # Include the Sinatra mixins
+  config.include Rack::Test::Methods
+  # Include the model factory methods
+  config.include FactoryGirl::Syntax::Methods
+
+
+  # Use transactions to make resetting the database easier
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  # Reset the database after every test
+  config.before(:each)  { DatabaseCleaner.start }
+  config.after(:each)   { DatabaseCleaner.clean }
 end

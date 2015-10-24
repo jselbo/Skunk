@@ -90,6 +90,7 @@ class ServerRequest: NSObject {
     var expectedStatusCode = Constants.statusOK
     var expectedBodyType = ResponseBodyType.None
     var expectedContentType = ContentType.HTML
+    var additionalHTTPHeaders = [NSObject: AnyObject]()
     
     private var contentType: ContentType?
     private var JSONParams: AnyObject?
@@ -143,7 +144,8 @@ class ServerRequest: NSObject {
     private func executeQuery(bodyData: NSData?, completion: (ServerResponse) -> Void) -> NSURLSessionTask {
         let config = NSURLSessionConfiguration.defaultSessionConfiguration()
         
-        var HTTPHeaders = ["Accept": self.expectedContentType.rawValue]
+        var HTTPHeaders = additionalHTTPHeaders
+        HTTPHeaders["Accept"] = self.expectedContentType.rawValue
         if let contentType = contentType {
             HTTPHeaders["Content-Type"] = contentType.rawValue
         }
