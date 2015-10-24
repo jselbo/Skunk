@@ -40,9 +40,7 @@ describe "Controllers" do
 
         #same location as last heartbeat
         it "should return a 204 response when location is same for two heartbeats" do
-
             session = FactoryGirl.create(:session)
-            put "sessions/#{session.id}", :location => '+40.427458-86.916857'
             put "sessions/#{session.id}", :location => '+40.427458-86.916857'
 
             expect(last_response).to eq 204
@@ -51,7 +49,7 @@ describe "Controllers" do
         #new location since last heartbeat
         it "should update the location on the server session" do
             session = FactoryGirl.create(:session)
-            put "sessions/#{session.id}", :location => '+40.427458-86.916857'
+            session.current_location = "+40.427458-86.916857"
             put "sessions/#{session.id}", :location => '+40.423895-86.909014'
 
             dbSession = Session.last(1)
@@ -61,7 +59,7 @@ describe "Controllers" do
 		it "should return a successful response to server" do
             session = FactoryGirl.create(:session)
 
-            put "sessions/#{session.id}", :location => '+40.427458-86.916857'
+            session.current_location = "+40.427458-86.916857"
             put "sessions/#{session.id}", :location => '+40.423895-86.909014'
             expect(last_response.body).to include("+40.423895-86.909014")
 		end
@@ -77,25 +75,30 @@ describe "Controllers" do
 
         #one valid receiver
         it "should return a valid session id for one receiver" do
-            post '/sessions/create', :receivers => $valid_receiver,:condition => { :type => 'time', :time => $valid_timestamp}, :needs_driver => 'false'
+            session = FactoryGirl.attributes_for(:session_with_driver)
+
+            post '/sessions/create', :receivers => session.driver_id, :condition => { :type => 'time', :data => session.end_time}, :needs_driver => session.needs_driver
 
             #Lookup newest entry in db
             newest_entry = Session.last(1)
 
             #Check that information was stored in session object properly
-			expect(newest_entry).to_have_attributes(is_time_based: true, end_time: DateTime.iso8601($valid_timestamp), needs_driver: false)
+			expect(newest_entry).to eq session
 
 		end
 
 		it "should check whether sessions-users table was populated" do
-            post '/sessions/create', :receivers => $valid_receiver,:condition => { :type => 'time', :time => $valid_timestamp}, :needs_driver => 'false'
+            session = FactoryGirl.attributes_for(:session_with_driver)
+            post '/sessions/create', :receivers => session.driver_id, :condition => { :type => 'time', :data => session.end_time}, :needs_driver => session.needs_driver
+
             #Check sessions-users table
             su = SessionsUsers.last(1)
-			expect(su).to_have_attributes(session_id: newest_entry.id, receiver_id: $valid_receiver)
+			expect(su).to_have_attributes(session_id: session.id, receiver_id: session.driver_id)
 		end
 
 		it "should return a successful response" do
-            post '/sessions/create', :receivers => $valid_receiver,:condition => { :type => 'time', :time => $valid_timestamp}, :needs_driver => 'false'
+            session = FactoryGirl.create(:session_with_driver)
+            post '/sessions/create', :receivers => session.driver_id, :condition => { :type => 'time', :data => session.end_time}, :needs_driver => session.needs_driver
             su = SessionsUsers.last(1)
             expect(last_response.body).to include("#{newest_entry.id}")
         end
@@ -103,21 +106,29 @@ describe "Controllers" do
         #TODO: check that notifications were sent
 
         #multiple receivers
-        it "should return a valid session id for multiple receivers" do
-			#TODO: add more receivers
+        it "should return a valid session id when multiple recievers are created" do
 			session = FactoryGirl.create(:session)
-            post '/sessions/create', :receivers => session.driver_id, :condition => { :type => 'time', :data=> $valid_timestamp}, :needs_driver => :false
+            created_receivers = FactoryGirl.create_list(:users, 10)
+            receiver_ids = []
+            created_receivers.each do |item |
+                 receiver_ids.add(item.id)
+            end
+            post '/sessions/create', :receivers => receiver_ids, :condition => { :type => 'time', :data=> session.end_time}, :needs_driver => :false
+            expect(last_response).to include("#{session.id}")
 
-            #Lookup newest entry in db
-            newest_entry = Session.last(1)
-
-            #Check that information was stored in session object properly
-			expect(newest_entry).to_have_attributes(is_time_based: true, end_time: DateTime.iso8601($valid_timestamp), needs_driver: false)
 		end
 		
 		it "should succeed if all the receivers were populated in the sessions-users table" do
 
-            post '/sessions/create', :receivers => $valid_receivers, :condition => { :type => 'time', :data=> $valid_timestamp}, :needs_driver => :false
+			session = FactoryGirl.create(:session)
+            created_receivers = FactoryGirl.create_list(:users, 10)
+            receiver_ids = []
+            created_receivers.each do |item |
+                 receiver_ids.add(item.id)
+            end
+
+            post '/sessions/create', :receivers => receiver_ids, :condition => { :type => 'time', :data=> session.end_time}, :needs_driver => :false
+
 			
             #Check sessions-users table
             sus = SessionsUsers.last($valid_receivers.length)
@@ -128,33 +139,33 @@ describe "Controllers" do
 		#TODO: check that notifications were sent
 
 		it "should succeed if a receiver was added to the database correctly" do
+			session = FactoryGirl.create(:session)
+            created_receivers = FactoryGirl.create_list(:users, 10)
+            receiver_ids = []
+            created_receivers.each do |item |
+                 receiver_ids.add(item.id)
+            end
 
-            post '/sessions/create', :receivers => $valid_receivers, :condition => { :type => 'time', :data=> $valid_timestamp}, :needs_driver => :false
+            post '/sessions/create', :receivers => receiver_ids, :condition => { :type => 'time', :data=> session.end_time}, :needs_driver => :false
+
 			sesh = Session.last(1)
-			receiver_index = $valid_receivers[$valid_receivers.length].id
+			receiver_index = receiver_ids[receiver_ids.length]
 			su = SessionsUsers.last(1)
 			expect(su).to_have_attributes(session_id: sesh.id, receiver_id:receiver_index)
 		end
 		
-		it "should return a successful response for multiple valid receivers" do
-			
-            post '/sessions/create', :receivers => $valid_receivers, :condition => { :type => 'time', :data=> $valid_timestamp}, :needs_driver => :false
-
-			newest_entry = Session.last(1)
-            #Check that response is good
-            expect(last_response.body).to include("#{newest_entry.id}")
-        end
-
         #no receivers
         it "should return a 500 error if no receivers given" do
-            post '/sessions/create', :condition => {:type => 'time', :data => $valid_timestamp}, :needs_driver => :false
+			session = FactoryGirl.create(:session)
+            post '/sessions/create', :condition => {:type => 'time', :data => session.end_time}, :needs_driver => session.needs_driver
 
             expect(last_response).to_not be_ok
         end
 
         #invalid receiver
 		it "should return an error for an invalid receiver" do
-            post '/sessions/create', :receivers => -999999, :condition => { :type => 'time', :data=> $valid_timestamp}, :needs_driver => :false
+            session = FactoryGirl.create(:session)
+            post '/sessions/create', receiver:  -20, :condition => { :type => 'time', :data => session.end_time, :needs_driver => session.needs_driver
 			expect(last_response).to_not be_ok
 		end
 
@@ -163,22 +174,22 @@ describe "Controllers" do
 
         #invalid condition type
         it "should return a 500 error if given an invalid condition type" do
-			session = FactoryGirl.create(:session)
-            post '/sessions/create', :receiver => session.driver_id, :condition => {:type => "remember the alamo", :data => $valid_timestamp}, :needs_driver => :false
+			session = FactoryGirl.create(:session_with_driver)
+            post '/sessions/create', :receiver => session.driver_id, :condition => {:type => "remember the alamo", :data => session.end_time}, :needs_driver => :false
             expect(last_response).to_not be_ok
         end
 
         #mismatched time with location
         it "should return a 500 error" do
-			session = FactoryGirl.create(:session)
-            post '/sessions/create', :receiver => session.driver_id, :condition => {:type => :time, :data => $valid_location}, :needs_driver => :false
+			session = FactoryGirl.create(:session_with_driver)
+            post '/sessions/create', :receiver => session.driver_id, :condition => {:type => :time, :data => session.destination}, :needs_driver => :false
             expect(last_response).to_not be_ok
         end
 
         #mismatched location with time
         it "should return a 500 error for mismatched location and time" do
-			session = FactoryGirl.create(:session)
-            post '/sessions/create', :receiver => session.driver_id, :condition => {:type => :location, :data => $valid_timestamp}, :needs_driver => :false
+			session = FactoryGirl.create(:session_with_driver)
+            post '/sessions/create', :receiver => session.driver_id, :condition => {:type => :location, :data => session.end_time}, :needs_driver => :false
             expect(last_response).to_not be_ok
         end
 
@@ -192,7 +203,7 @@ describe "Controllers" do
 
         #invalid location format
         it "should return a 500 error if given an invalid locatoin" do
-			session = FactoryGirl.create(:session)
+			session = FactoryGirl.create(:session_with_driver)
             post '/sessions/create', :receiver => session.driver_id, :condition => {:type => :location, :data => 'Harrys'}, :needs_driver => :false
             expect(last_response).to_not be_ok
         end
@@ -200,7 +211,7 @@ describe "Controllers" do
         #invalid entry for needs_driver
 
         it "should return a 500 error if given invalid needs_driver" do
-			session = FactoryGirl.create(:session)
+			session = FactoryGirl.create(:session_with_driver)
             post '/sessions/create', :receiver => session.driver_id, :condition => {:type => :location, :data => 'Harrys'}, :needs_driver => :1234567
             expect(last_response).to_not be_ok
         end
@@ -212,7 +223,7 @@ describe "Controllers" do
         end
 
         #missing condition param
-		session = FactoryGirl.create(:session)
+		session = FactoryGirl.create(:session_with_driver)
         it "should return a 500 error if missing condition param" do
             post '/sessions/create', :receiver => session.driver_id, :needs_driver => :false
             expect(last_response).to_not be_ok
@@ -220,7 +231,8 @@ describe "Controllers" do
 
         #missing type param
         it "should return a 500 error if missing type param" do
-            post '/sessions/create', :condition => {:data => $valid_location}, :needs_driver => :false
+		    session = FactoryGirl.create(:session_with_driver)
+            post '/sessions/create', :condition => {:data => session.destination}, :needs_driver => :false
             expect(last_response).to_not be_ok
         end
 
@@ -231,9 +243,9 @@ describe "Controllers" do
         end
 
         #missing needs_driver param
-        #TODO: should this err or just default?
         it "should return a 500 error if missing needs_driver param" do
-            post '/sessions/create', :condition => {:type => :location, :data => $valid_location}
+		    session = FactoryGirl.create(:session_with_driver)
+            post '/sessions/create', :condition => {:type => :location, :data => session.destination}
             expect(last_response).to_not be_ok
         end
 
