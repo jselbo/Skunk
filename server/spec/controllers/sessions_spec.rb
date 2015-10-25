@@ -210,7 +210,7 @@ describe "Controllers" do
 
 			it "should return a 500 error if given invalid needs_driver" do
 				session = FactoryGirl.create(:session_with_driver)
-				post '/sessions/create', :receiver => session.driver_id, :condition => {:type => :location, :data => 'Harrys'}, :needs_driver => :1234567
+				post '/sessions/create', :receiver => session.driver_id, :condition => {:type => :location, :data => 'Harrys'}, :needs_driver => 1234567
 				expect(last_response).to_not be_ok
 			end
 
