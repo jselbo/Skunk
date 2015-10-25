@@ -31,8 +31,6 @@ class SharerSelectRecieverViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        sessionManager = ShareSessionManager(account: accountManager.registeredAccount!)
-        
         doneButtonItem.enabled = false
         
         // Show progress overlay and disable table view

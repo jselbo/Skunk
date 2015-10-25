@@ -46,20 +46,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         let category = userInfo["aps"]!["category"] as! String
-        let data = userInfo["custom_data"]
+        let data = userInfo["custom_data"] as? [String: AnyObject]
         
-        switch category {
-        case Constants.Notifications.sessionStart:
-            break
-        case Constants.Notifications.sessionEnd:
-            break
-        case Constants.Notifications.pickupRequest:
-            break
-        case Constants.Notifications.pickupResponse:
-            break
-        default:
-            print("Warning: Unrecognized remote notification category: '\(category)'")
-        }
+        NSNotificationCenter.defaultCenter().postNotificationName(category, object: nil, userInfo: data)
     }
 
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], withResponseInfo responseInfo: [NSObject : AnyObject], completionHandler: () -> Void) {

@@ -13,6 +13,8 @@ class UserAccount: NSObject, CustomDebugStringConvertible {
     let firstName: String
     let lastName: String
     
+    var fullName: String { get { return "\(firstName) \(lastName)" } }
+    
     /// The unique identifier for a user.
     let phoneNumber: PhoneNumber
     /// Used to authenticate user. Only non-nil for the operating user's account.

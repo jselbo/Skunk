@@ -92,8 +92,17 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
         let cell = tableView.dequeueReusableCellWithIdentifier(receiverCellIdentifier, forIndexPath: indexPath)
         
         let receiver = receivers[indexPath.row]
-        let receiverAccount = receiver.account
-        cell.textLabel!.text = "\(receiverAccount.userAccount.firstName) \(receiverAccount.userAccount.lastName)"
+        
+        let attributedNameText = NSMutableAttributedString(string: receiver.account.userAccount.fullName)
+        if session.driverIdentifier == receiver.account.identifier {
+            let attributes = [
+                NSFontAttributeName: UIFont.boldSystemFontOfSize(14.0),
+            ]
+            let driverString = NSAttributedString(string: "DRIVER", attributes: attributes)
+            attributedNameText.appendAttributedString(driverString)
+        }
+        
+        cell.textLabel!.attributedText = attributedNameText
         cell.textLabel!.textColor = UIColor.blackColor()
         cell.detailTextLabel!.textColor = UIColor.blackColor()
         
@@ -188,6 +197,7 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
     //MARK: - Private methods
     
     private func handleHeartbeat(location: CLLocation) {
+        print("driver ID: \(session.driverIdentifier)")
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             if self.session.terminated && !self.handledTermination {
                 self.handledTermination = true

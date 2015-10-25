@@ -21,8 +21,6 @@ class ReceiveFriendsListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        sessionManager = ShareSessionManager(account: accountManager.registeredAccount!)
     }
     
     override func viewDidAppear(animated: Bool) {
