@@ -9,29 +9,30 @@ FactoryGirl.define do
   factory :session do
 	association :sharer, factory: :user, strategy: :build
 
-    needs_driver { False } #TODO: does this need to be randomized?
+    needs_driver { false } 
     driver_id nil
     
     start_time { DateTime.now  }
-    is_time_based { True }
+    is_time_based { true }
     end_time { Faker::Time.backward() }    
     
     destination nil
-    terminated { False }
+    terminated { false }
 
     #TODO: define the time threshold in the session object probably
     last_updated { Faker::Time.between(15.minutes.ago, Time.now) }
-    requested_pickup { False }
+    requested_pickup { false }
     driver_eta { Faker::Time.forward()  }
     current_location "#{ Faker::Address.latitude}#{Faker::Address.longitude }" 
 
     factory :session_with_destination do 
-        is_time_based { False }
+        is_time_based { false }
         destination "#{ Faker::Address.latitude}#{Faker::Address.longitude }" 
     end
 
     factory :session_with_driver do
         association :driver, factory: :user, strategy: :build
+        needs_driver { true } 
     end
   end
 end

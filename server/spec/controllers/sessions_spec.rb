@@ -7,7 +7,7 @@ describe "Controllers" do
 
     context "Sessions" do
         valid_receivers = [1,2,3,4]
-        $valid_location = '40.427458-86.916857'
+        $valid_location = '40.427458,-86.916857'
 		context "put sessions/id" do
 			#TEST PUT /sessions/:id
 
@@ -19,14 +19,15 @@ describe "Controllers" do
 			#valid sesssion id and location
 			it "should update server and return success" do
 				session = FactoryGirl.create(:session)
-				put "/sessions/#{session.id}", :location => '+40.427458-86.916857'
+				put "/sessions/#{session.id}", location: session.current_location
 				expect(last_response).to be_ok
 			end
 
 			#invalid session id
 			it "should return a 500 error when passed an invalid session id" do
+				session = FactoryGirl.create(:session)
 				invalidId = -2
-				put "/sessions/#{invalidId}", :location => "+40.427458-86.916857"
+				put "/sessions/#{invalidId}", :location => session.current_location
 				expect(last_response).to_not be_ok
 			end
 
@@ -41,7 +42,7 @@ describe "Controllers" do
 			#same location as last heartbeat
 			it "should return a 204 response when location is same for two heartbeats" do
 				session = FactoryGirl.create(:session)
-				put "sessions/#{session.id}", :location => '+40.427458-86.916857'
+				put "sessions/#{session.id}", :location => session.current_location
 
 				expect(last_response).to eq 204
 			end
@@ -49,19 +50,20 @@ describe "Controllers" do
 			#new location since last heartbeat
 			it "should update the location on the server session" do
 				session = FactoryGirl.create(:session)
-				session.current_location = "+40.427458-86.916857"
-				put "sessions/#{session.id}", :location => '+40.423895-86.909014'
+				session.current_location = "+40.427458,-86.916857"
+                session.save
+				put "sessions/#{session.id}", :location => '+40.423895,-86.909014'
 
 				dbSession = Session.last(1)
-				expect(dbSession.current_location).to eq "+40.423895-86.909014"
+				expect(dbSession.current_location).to eq '+40.423895,-86.909014'
 			end
 
 			it "should return a successful response to server" do
 				session = FactoryGirl.create(:session)
 
-				session.current_location = "+40.427458-86.916857"
-				put "sessions/#{session.id}", :location => '+40.423895-86.909014'
-				expect(last_response.body).to include("+40.423895-86.909014")
+				session.current_location = "+40.427458,-86.916857"
+				put "sessions/#{session.id}", :location => '+40.423895,-86.909014'
+				expect(last_response.body).to include("+40.423895,-86.909014")
 			end
 		end
 
@@ -108,7 +110,7 @@ describe "Controllers" do
 			#multiple receivers
 			it "should return a valid session id when multiple recievers are created" do
 				session = FactoryGirl.create(:session)
-				created_receivers = FactoryGirl.create_list(:users, 10)
+				created_receivers = FactoryGirl.create_list(:driver, 10)
 				receiver_ids = []
 				created_receivers.each do |item |
 					 receiver_ids.add(item.id)
@@ -120,7 +122,7 @@ describe "Controllers" do
 			
 			it "should succeed if all the receivers were populated in the sessions-users table" do
 				session = FactoryGirl.create(:session)
-				created_receivers = FactoryGirl.create_list(:users, 10)
+				created_receivers = FactoryGirl.create_list(:driver, 10)
 				receiver_ids = []
 				created_receivers.each do | item |
 					 receiver_ids.add(item.id)
@@ -138,7 +140,7 @@ describe "Controllers" do
 
 			it "should succeed if a receiver was added to the database correctly" do
 				session = FactoryGirl.create(:session)
-				created_receivers = FactoryGirl.create_list(:users, 10)
+				created_receivers = FactoryGirl.create_list(:driver, 10)
 				receiver_ids = []
 				created_receivers.each do | item |
 					 receiver_ids.add(item.id)
