@@ -15,7 +15,7 @@ enum RequestState {
     /// The request has been made but no user has accepted yet.
     case Requested
     /// The given user has accepted the request.
-    case Accepted(Uid)
+    case Accepted
 }
 
 enum ShareEndCondition: Serializable {
@@ -51,7 +51,8 @@ enum ShareEndCondition: Serializable {
 class ReceiverInfo: NSObject {
     let account: RegisteredUserAccount
     /// Sharer can request to stop sharing location with individual receivers.
-    let stopSharingState = RequestState.None
+    // TODO: defect this was a let
+    var stopSharingState = RequestState.None
     
     init(account: RegisteredUserAccount) {
         self.account = account
@@ -70,8 +71,10 @@ class ShareSession: NSObject {
     /// Set of users with whom this user's location is being shared
     var receivers: Set<ReceiverInfo>
     
-    /// Current state of the driver request. Only changed if `needsDriver` is `true`.
-    var currentDriverState = RequestState.None
+    /// User ID of the driver who has accepted the driver request.
+    /// Only non-nil if `needsDriver` is `true` and a driver has accepted.
+    // TODO document defect (used to be RequestState but no ==)
+    var driverIdentifier: Uid?
     
     /// ETA given by the accepting driver. Only set if a pickup request has been made and accepted.
     var driverEstimatedArrival: NSDate?
@@ -88,10 +91,15 @@ class ShareSession: NSObject {
         self.endCondition = endCondition
         self.needsDriver = needsDriver
         self.receivers = Set(receivers.map { account in ReceiverInfo(account: account) })
-        
-        if needsDriver {
-            currentDriverState = .Requested
+    }
+    
+    func findReceiver(identifier: Uid) -> ReceiverInfo? {
+        for receiver in receivers {
+            if receiver.account.identifier == identifier {
+                return receiver
+            }
         }
+        return nil
     }
     
     // On create, we haven't been assigned an identifier yet.

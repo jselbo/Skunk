@@ -10,26 +10,30 @@ import Foundation
 import UIKit
 
 class ReceiveFriendsListViewController: UIViewController {
+    let sessionIdentifier = "Session"
     
     var accountManager: UserAccountManager!
     var sessionManager: ShareSessionManager!
-    var sharerSession: ShareSession!
+    var selectedSharerSession: ShareSession!
     
     @IBOutlet weak var friendsTableView: UITableView!
     var sharerList = [RegisteredUserAccount]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.sessionManager.sendServerRequestforReceiver { (registeredAccounts) -> () in
-            self.sharerList = registeredAccounts!
-            self.friendsTableView.reloadData()
+        sessionManager = ShareSessionManager(account: accountManager.registeredAccount!)
+        sessionManager.sendServerRequestforReceiver { (registeredAccounts) -> () in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if let registeredAccounts = registeredAccounts {
+                    self.sharerList = registeredAccounts
+                    self.friendsTableView.reloadData()
+                } else {
+                    self.presentErrorAlert("Failed to Request All Sessions")
+                }
+            })
+
         }
         // Do any additional setup after loading the view.
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func numberOfSectionsInTableView(friendsTableView: UITableView) -> Int {
@@ -43,8 +47,9 @@ class ReceiveFriendsListViewController: UIViewController {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let sharerRegisteredUserAccount = sharerList[indexPath.row]
         let sharerUid = sharerRegisteredUserAccount.identifier
-        sharerSession = sessionManager.sharerInformation[sharerUid]
-        self.presentSessionController()
+        selectedSharerSession = sessionManager.sharerInformation[sharerUid]
+        
+        performSegueWithIdentifier(sessionIdentifier, sender: self)
     }
     
     func tableView(friendsTableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -54,10 +59,10 @@ class ReceiveFriendsListViewController: UIViewController {
         let sharerUid = sharerRegisteredUserAccount.identifier
         let sharerSession = sessionManager.sharerInformation[sharerUid]!
         cell.textLabel!.text = sharerUserAccount.firstName + " " + sharerUserAccount.lastName
+        
         if sharerSession.needsDriver {
             cell.detailTextLabel!.text = "Needs Driver"
-        }
-        else {
+        } else {
             switch sharerSession.endCondition {
             case .Location(_): break
             case .Time(let endDate):
@@ -70,8 +75,15 @@ class ReceiveFriendsListViewController: UIViewController {
         return cell
     }
     
-    private func presentSessionController() {
-        let receiverSessionController = self.storyboard!.instantiateViewControllerWithIdentifier("Friends Cell") as! ReceiveMainViewController
-        receiverSessionController.sharerSession = sharerSession
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        switch segue.identifier {
+        case sessionIdentifier?:
+            let sessionController = segue.destinationViewController as! ReceiveMainViewController
+            sessionController.accountManager = accountManager
+            sessionController.sessionManager = sessionManager
+            sessionController.sharerSession = selectedSharerSession
+        default:
+            break
+        }
     }
 }

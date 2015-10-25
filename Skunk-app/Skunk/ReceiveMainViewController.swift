@@ -20,16 +20,11 @@ class ReceiveMainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let currentLocation = sharerSession.currentLocation
         let center = CLLocationCoordinate2D(latitude: (currentLocation?.coordinate.latitude)!, longitude: (currentLocation?.coordinate.longitude)!)
         let region = MKCoordinateRegionMake(center, MKCoordinateSpanMake(0.01, 0.01))
         mapView.setRegion(region, animated: true)
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     @IBAction func canPickUpButton(sender: AnyObject) {

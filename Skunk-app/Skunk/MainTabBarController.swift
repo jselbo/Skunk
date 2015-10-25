@@ -61,5 +61,10 @@ class MainTabBarController: UITabBarController {
             let path = OHPathForFile("session_heartbeat.json", self.dynamicType)
             return fixture(path!, status: 200, headers: ["Content-Type": "application/json"])
         })
+        
+        stub(isPath(Constants.Endpoints.sessionsURL.path!), response: { _ in
+            let path = OHPathForFile("session_return.json", self.dynamicType)
+            return fixture(path!, status: 200, headers: ["Content-Type": "application/json"])
+        })
     }
 }

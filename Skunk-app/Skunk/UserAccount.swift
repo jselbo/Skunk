@@ -18,7 +18,7 @@ class UserAccount: NSObject, CustomDebugStringConvertible {
     /// Used to authenticate user. Only non-nil for the operating user's account.
     let password: String?
     
-    var debug = false
+    var debug = true
     
     override var debugDescription: String {
         get {

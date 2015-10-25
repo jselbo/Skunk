@@ -58,9 +58,40 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         request.execute(params) { (response) -> Void in
             switch response {
             case .Success(let response):
-                // TODO do something with the returned session object?
-                // Will it include any new information?
-                let _ = response as! [String: AnyObject]
+                let responseJSON = response as! [String: AnyObject]
+                
+                // Check for receiver session termination responses
+                if let receiversJSON = responseJSON["receivers"] as? [AnyObject] {
+                    for receiverJSON in receiversJSON {
+                        guard let receiverID = receiverJSON["user_id"] as? Int else {
+                            print("Error: Failed to parse receiver ID from JSON: \(responseJSON)")
+                            completion(success: false)
+                            return
+                        }
+                        
+                        guard let receiverInfo = session.findReceiver(Uid(receiverID)) else {
+                            print("Error: Invalid receiver ID: \(receiverID)")
+                            completion(success: false)
+                            return
+                        }
+                        
+                        // Check for a driver's response
+                        if let sharerEnded = receiverJSON["receiver_ended"] as? Bool {
+                            if sharerEnded {
+                                receiverInfo.stopSharingState = .Accepted
+                            }
+                        }
+                    }
+                }
+                
+                // Check for driver acceptance
+                if let driverID = responseJSON["driver_id"] as? Int where session.driverIdentifier == nil {
+                    session.driverIdentifier = Uid(driverID)
+                }
+                
+                // Check for pickup response
+                // TODO
+                
                 completion(success: true)
             
             case .Failure(let failure):
@@ -70,7 +101,9 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         }
     }
     
-    func sendServerRequestforReceiver(completion: (registeredAccounts : [RegisteredUserAccount]?) -> ()) {
+    func sendServerRequestforReceiver(completion: (registeredAccounts : [RegisteredUserAccount]!) -> ()) {
+        self.sharerInformation.removeAll()
+        
         var sharerList = [RegisteredUserAccount]()
         let request = ServerRequest(type: .GET, url: Constants.Endpoints.sessionsURL)
         request.expectedContentType = .JSON
@@ -80,58 +113,76 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
             case .Success(let response):
                 let JSONResponse = response as! [AnyObject]
                 for responseData in JSONResponse {
-                    guard let sharerSession = responseData["sharer_id"] as? [String:AnyObject],
-                        firstName = sharerSession["first_name"] as? String,
-                        lastName = sharerSession["last_name"] as? String,
-                        phoneNum = sharerSession["phone_number"] as? PhoneNumber,
-                        userID = sharerSession["UID"] as? UInt64 ,
-                        needsDriver = responseData["needs_driver"] as? Bool,
-                        isTimeBased = responseData["is_time_based"] as? Bool,
-                        endTime = responseData["end_time"] as? String,
-                        destination = responseData["destination"] as? String,
-                        lastUpdated = responseData["last_updated"] as? String,
-                        driverETA = responseData["driver_eta"] as? String,
-                        currentLocation = responseData["current_location"] as? String else {
-                            print("Error: Failed to parse values from JSON: \(JSONResponse)")
-                            completion(registeredAccounts : nil)
-                            return
+                    guard let sharerSession = responseData as? [String: AnyObject],
+                        needsDriver = sharerSession["needs_driver"] as? Bool,
+                        isTimeBased = sharerSession["is_time_based"] as? Bool,
+                        sessionIdentifier = sharerSession["id"] as? Int,
+                        sharer = sharerSession["sharer"] as? [String: AnyObject],
+                        firstName = sharer["first_name"] as? String,
+                        lastName = sharer["last_name"] as? String,
+                        phoneNumberString = sharer["phone_number"] as? String,
+                        phoneNumber = PhoneNumber(text: phoneNumberString),
+                        userID = sharer["user_id"] as? Int
+                    else {
+                        print("Error: Failed to parse values from JSON: \(JSONResponse)")
+                        completion(registeredAccounts : nil)
+                        return
                     }
-                    let userAccount = UserAccount.init(firstName: firstName, lastName: lastName, phoneNumber: phoneNum)
+                    
+                    let userAccount = UserAccount.init(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber)
                     let account = RegisteredUserAccount.init(userAccount: userAccount, identifier: Uid(userID))
                     let shareSession: ShareSession
-                    if(isTimeBased) {
-                        shareSession = ShareSession.init(sharerAccount: account, endCondition: ShareEndCondition.Time(endTime.parseSQLDate()), needsDriver: needsDriver, receivers: [])
+                    if isTimeBased {
+                        let endTime = sharerSession["end_time"] as! String
+                        shareSession = ShareSession.init(sharerAccount: account, endCondition: .Time(endTime.parseSQLDate()), needsDriver: needsDriver, receivers: [])
+                        shareSession.identifier = Sid(sessionIdentifier)
                     } else {
+                        let destination = sharerSession["destination"] as! String
                         let components = destination.componentsSeparatedByString(",")
-                        shareSession = ShareSession.init(sharerAccount: account, endCondition: ShareEndCondition.Location(CLLocation(latitude: Double(components[0])!, longitude: Double(components[1])!)) , needsDriver: needsDriver, receivers: [])
+                        shareSession = ShareSession.init(sharerAccount: account, endCondition: .Location(CLLocation(latitude: Double(components[0])!, longitude: Double(components[1])!)) , needsDriver: needsDriver, receivers: [])
                     }
                     sharerList.append(account)
-                    shareSession.driverEstimatedArrival = driverETA.parseSQLDate()
-                    let components = currentLocation.componentsSeparatedByString(",")
-                    shareSession.currentLocation = CLLocation(latitude: Double(components[0])!, longitude: Double(components[1])!)
-                    shareSession.lastLocationUpdate = lastUpdated.parseSQLDate()
+                    
+                    if let driverAccount = sharerSession["driver"] as? [String: AnyObject],
+                        driverIdentifier = driverAccount["user_id"] as? Int {
+                        shareSession.driverIdentifier = Sid(driverIdentifier)
+                    }
+                    
+                    let driverETA = sharerSession["driver_eta"] as? String
+                    shareSession.driverEstimatedArrival = driverETA?.parseSQLDate()
+                    
+                    if let currentLocation = sharerSession["current_location"] as? String {
+                        let components = currentLocation.componentsSeparatedByString(",")
+                        shareSession.currentLocation = CLLocation(latitude: Double(components[0])!, longitude: Double(components[1])!)
+                    }
+                    
+                    let lastUpdated = sharerSession["last_updated"] as? String
+                    shareSession.lastLocationUpdate = lastUpdated?.parseSQLDate()
                     self.sharerInformation[Uid(userID)] = shareSession
                 }
+                completion(registeredAccounts: sharerList)
             case .Failure(let failure):
                 request.logResponseFailure(failure)
-                break
             }
         }
     }
     
-    // Session Terminate Request
-    func sessionTermRequest(session: ShareSession, receiver: RegisteredUserAccount, completion:(success: Bool)->()) {
+    //Session Term Request
+    func sessionTermRequest(session: ShareSession, receiver: ReceiverInfo, completion:(success: Bool)->()) {
+        receiver.stopSharingState = .Requested
         let params = [
-            "receivers": [NSNumber(unsignedLongLong: receiver.identifier)],
+            "receivers": [NSNumber(unsignedLongLong: receiver.account.identifier)],
         ]
         let url = replaceIdURL(Constants.Endpoints.sessionTermRequest, id: session.identifier )
         let request = ServerRequest(type: .POST, url: NSURL(fileURLWithPath: url))
         request.expectedStatusCode = Constants.nilContent
         request.execute(params) { (response) -> Void in
+            NSThread.sleepForTimeInterval(5)
             switch (response) {
             case .Success(_):
                 completion(success: true)
             case .Failure(let failure):
+                receiver.stopSharingState = .None
                 request.logResponseFailure(failure)
                 completion(success: false)
             }
