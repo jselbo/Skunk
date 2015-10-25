@@ -18,8 +18,8 @@ class User < ActiveRecord::Base
     self.password = User.encrypt(self.password)
   end
 
-  def as_json
-    to_json(except: :password)
+  def to_json
+    as_json(except: :password)
   end
 
   def full_name
