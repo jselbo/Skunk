@@ -8,7 +8,6 @@ FactoryGirl.define do
 	
   factory :session do
 	association :sharer, factory: :user, strategy: :build
-    sharer
 
     needs_driver { False } #TODO: does this need to be randomized?
     driver_id nil
@@ -27,13 +26,12 @@ FactoryGirl.define do
     current_location "#{ Faker::Address.latitude}#{Faker::Address.longitude }" 
 
     factory :session_with_destination do 
-        is_time_based { True }
+        is_time_based { False }
         destination "#{ Faker::Address.latitude}#{Faker::Address.longitude }" 
     end
 
     factory :session_with_driver do
         association :driver, factory: :user, strategy: :build
-        driver
     end
   end
 end
