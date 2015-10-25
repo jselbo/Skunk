@@ -83,8 +83,8 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
                         }
                         
                         // Check for a driver's response
-                        if let sharerEnded = receiverJSON["receiver_ended"] as? Bool {
-                            if sharerEnded {
+                        if let receiverEnded = receiverJSON["receiver_ended"] as? Bool {
+                            if receiverEnded {
                                 receiverInfo.stopSharingState = .Accepted
                             }
                         }

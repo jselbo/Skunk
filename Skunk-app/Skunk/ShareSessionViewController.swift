@@ -106,11 +106,11 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
         switch receiver.stopSharingState {
         case .None:
             cell.detailTextLabel!.text = ""
-            break
+            
         case .Requested:
             cell.detailTextLabel!.text = "Requested to end sharing"
             
-        case .Accepted(_):
+        case .Accepted:
             cell.textLabel!.textColor = UIColor.grayColor()
             cell.detailTextLabel!.textColor = UIColor.grayColor()
             cell.detailTextLabel!.text = "Sharing Ended"
@@ -142,11 +142,10 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
     
     func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
         let receiver = receivers[indexPath.row]
-        if ( receiver.stopSharingState == .Requested ){
-            return .None
-        }
-        else{
+        if receiver.stopSharingState == .None {
             return .Delete
+        } else {
+            return .None
         }
     }
     
