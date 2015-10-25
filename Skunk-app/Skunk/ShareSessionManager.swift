@@ -53,7 +53,8 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         let request = ServerRequest(type: .PUT, url: sessionURL)
         request.expectedContentType = .JSON
         request.expectedBodyType = .JSONObject
-        request.additionalHTTPHeaders = ["Skunk-UserID": 234]
+        request.additionalHTTPHeaders =
+            [Constants.userIDHeader: "\(session.sharerAccount.identifier)"]
         let params = [
             "location": location.serializeISO6709(),
         ]
@@ -117,13 +118,17 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         }
     }
     
-    func sendServerRequestforReceiver(completion: (registeredAccounts : [RegisteredUserAccount]!) -> ()) {
+    func sendServerRequestforReceiver(
+        account: RegisteredUserAccount,
+        completion: (registeredAccounts : [RegisteredUserAccount]!) -> ()) {
         self.sharerInformation.removeAll()
         
         var sharerList = [RegisteredUserAccount]()
         let request = ServerRequest(type: .GET, url: Constants.Endpoints.sessionsURL)
         request.expectedContentType = .JSON
         request.expectedBodyType = .JSONArray
+        request.additionalHTTPHeaders =
+            [Constants.userIDHeader: "\(account.identifier)"]
         request.execute() { (response) -> Void in
             switch (response) {
             case .Success(let response):
@@ -197,6 +202,8 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         let url = replaceIdURL(Constants.Endpoints.sessionTermRequest, id: session.identifier! )
         let request = ServerRequest(type: .POST, url: NSURL(fileURLWithPath: url))
         request.expectedStatusCode = Constants.nilContent
+        request.additionalHTTPHeaders =
+            [Constants.userIDHeader: "\(session.sharerAccount.identifier)"]
         request.execute(params) { (response) -> Void in
             NSThread.sleepForTimeInterval(5)
             switch (response) {
@@ -220,6 +227,8 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         request.expectedContentType = .JSON
         request.expectedBodyType = .JSONObject
         request.expectedStatusCode = Constants.nilContent
+        request.additionalHTTPHeaders =
+            [Constants.userIDHeader: "\(session.sharerAccount.identifier)"]
         request.execute(params) { (response) -> Void in
             switch (response) {
             case .Success(_):
@@ -237,6 +246,8 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         let pickupURL = Constants.Endpoints.baseURL.URLByAppendingPathComponent(url)
         let request = ServerRequest(type: .PUT, url: pickupURL)
         request.expectedStatusCode = Constants.nilContent
+        request.additionalHTTPHeaders =
+            [Constants.userIDHeader: "\(session.sharerAccount.identifier)"]
         request.execute() { (response) -> Void in
             switch (response) {
             case .Success(_):
@@ -257,6 +268,8 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         let url = replaceIdURL(Constants.Endpoints.sessionsPickupResponse, id: session.identifier! )
         let request = ServerRequest(type: .POST, url: NSURL(fileURLWithPath: url))
         request.expectedStatusCode = Constants.nilContent
+        request.additionalHTTPHeaders =
+            [Constants.userIDHeader: "\(session.sharerAccount.identifier)"]
         request.execute(params) { (response) -> Void in
             switch (response) {
             case .Success(_):
@@ -277,6 +290,8 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         let responseURL = Constants.Endpoints.baseURL.URLByAppendingPathComponent(url)
         let request = ServerRequest(type: .POST, url: responseURL)
         request.expectedStatusCode = Constants.nilContent
+        request.additionalHTTPHeaders =
+            [Constants.userIDHeader: "\(session.sharerAccount.identifier)"]
         request.execute(params) { (response) -> Void in
             switch (response) {
             case .Success(_):
