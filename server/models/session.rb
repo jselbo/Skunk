@@ -9,6 +9,10 @@ class Session < ActiveRecord::Base
   def as_json opts={}
     json = super(include: [:sharer, :driver])
     json['receiver_info'] = session_users.inject({}) { |h, su| h[su.receiver_id] = su.receiver_ended; h }
+    json['start_time'] = end_time.iso8601 rescue nil
+    json['end_time'] = end_time.iso8601 rescue nil
+    json['last_updated'] = last_updated.iso8601 rescue nil
+    json['driver_eta'] = driver_eta.iso8601 rescue nil
     json
   end
 

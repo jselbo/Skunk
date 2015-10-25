@@ -47,8 +47,8 @@ end
 # 401 Not Authorized.
 # If the session does not exist, returns a 404 Not Found.
 get '/sessions/:id' do
-	@session = Session.find(params[:id])
-	@user = User.find(headers["HTTP_SKUNK_USERID"])
+	@session = Session.find(params['id'])
+	@user = User.find(request.env['HTTP_SKUNK_USERID'])
 	@session_user = SessionUser.find_by(receiver: @user, session: @session)
 
 	halt(404) unless @session
@@ -60,8 +60,8 @@ get '/sessions/:id' do
     # Send emergency alerts to receivers
   end
 
-	if @session_user && SessionUser.active?
-		return @session.to_json(:except => [sharer: [:password]])
+	if @session_user && @session_user.active?
+		@session.to_json
 	else
 		halt 401
 	end

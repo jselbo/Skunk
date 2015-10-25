@@ -3,7 +3,7 @@ require 'digest'
 
 class User < ActiveRecord::Base
   has_many :sessions, through: :session_users
-  has_many :session_users, as: :receiver
+  has_many :session_users, foreign_key: :receiver_id
 
   before_create :encrypt_password
 
