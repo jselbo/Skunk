@@ -60,8 +60,15 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
             case .Success(let response):
                 let responseJSON = response as! [String: AnyObject]
                 
+                // First, check for termination
+                if let terminated = responseJSON["terminated"] as? Bool {
+                    session.terminated = terminated
+                    completion(success: true)
+                }
+                
                 // Check for receiver session termination responses
                 if let receiversJSON = responseJSON["receivers"] as? [AnyObject] {
+                    // Check for all receivers terminated session
                     for receiverJSON in receiversJSON {
                         guard let receiverID = receiverJSON["user_id"] as? Int else {
                             print("Error: Failed to parse receiver ID from JSON: \(responseJSON)")
@@ -76,8 +83,8 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
                         }
                         
                         // Check for a driver's response
-                        if let sharerEnded = receiverJSON["receiver_ended"] as? Bool {
-                            if sharerEnded {
+                        if let receiverEnded = receiverJSON["receiver_ended"] as? Bool {
+                            if receiverEnded {
                                 receiverInfo.stopSharingState = .Accepted
                             }
                         }
@@ -90,7 +97,14 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
                 }
                 
                 // Check for pickup response
-                // TODO
+                if let driverETA = responseJSON["driver_eta"] as? String where session.driverIdentifier != nil {
+                    guard let driverETADate = driverETA.parseSQLDate() else {
+                        print("Error: Failed to parse Driver ETA date from string: '\(driverETA)'")
+                        completion(success: false)
+                        return
+                    }
+                    session.driverEstimatedArrival = driverETADate
+                }
                 
                 completion(success: true)
             
@@ -133,7 +147,12 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
                     let account = RegisteredUserAccount.init(userAccount: userAccount, identifier: Uid(userID))
                     let shareSession: ShareSession
                     if isTimeBased {
-                        let endTime = sharerSession["end_time"] as! String
+                        let endTime = sharerSession["end_time"] as? String
+                        guard let endTimeDate = endTime?.parseSQLDate() else {
+                            print("Error: Failed to parse end date from string: \(endTime)")
+                            completion(registeredAccounts: nil)
+                            return
+                        }
                         shareSession = ShareSession.init(sharerAccount: account, endCondition: .Time(endTime.parseSQLDate()), needsDriver: needsDriver, receivers: [])
                         shareSession.identifier = Sid(sessionIdentifier)
                     } else {
@@ -173,7 +192,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         let params = [
             "receivers": [NSNumber(unsignedLongLong: receiver.account.identifier)],
         ]
-        let url = replaceIdURL(Constants.Endpoints.sessionTermRequest, id: session.identifier )
+        let url = replaceIdURL(Constants.Endpoints.sessionTermRequest, id: session.identifier! )
         let request = ServerRequest(type: .POST, url: NSURL(fileURLWithPath: url))
         request.expectedStatusCode = Constants.nilContent
         request.execute(params) { (response) -> Void in
@@ -194,7 +213,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         let params = [
             "response": true
         ]
-        let url = replaceIdURL(Constants.Endpoints.sessionTermResponse, id: session.identifier )
+        let url = replaceIdURL(Constants.Endpoints.sessionTermResponse, id: session.identifier! )
         let request = ServerRequest(type: .POST, url: NSURL(fileURLWithPath: url))
         request.expectedContentType = .JSON
         request.expectedBodyType = .JSONObject
@@ -212,8 +231,9 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
     
     // Session PickUp Request
     func sessionPickUpRequest(session: ShareSession, completion:(success: Bool)->()) {
-        let url = replaceIdURL(Constants.Endpoints.sessionsPickupRequest, id: session.identifier )
-        let request = ServerRequest(type: .PUT, url: NSURL(fileURLWithPath: url))
+        let url = replaceIdURL(Constants.Endpoints.sessionsPickupRequestPath, id: session.identifier! )
+        let pickupURL = Constants.Endpoints.baseURL.URLByAppendingPathComponent(url)
+        let request = ServerRequest(type: .PUT, url: pickupURL)
         request.expectedStatusCode = Constants.nilContent
         request.execute() { (response) -> Void in
             switch (response) {
@@ -232,7 +252,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
             "response": true,
             "eta": session.driverEstimatedArrival!.serializeISO8601()
         ]
-        let url = replaceIdURL(Constants.Endpoints.sessionsPickupResponse, id: session.identifier )
+        let url = replaceIdURL(Constants.Endpoints.sessionsPickupResponse, id: session.identifier! )
         let request = ServerRequest(type: .POST, url: NSURL(fileURLWithPath: url))
         request.expectedStatusCode = Constants.nilContent
         request.execute(params) { (response) -> Void in
@@ -251,8 +271,9 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         let params = [
             "response": true,
         ]
-        let url = replaceIdURL(Constants.Endpoints.sessionsDriverResponse, id: session.identifier )
-        let request = ServerRequest(type: .POST, url: NSURL(fileURLWithPath: url))
+        let url = replaceIdURL(Constants.Endpoints.sessionsDriverResponse, id: session.identifier! )
+        let responseURL = Constants.Endpoints.baseURL.URLByAppendingPathComponent(url)
+        let request = ServerRequest(type: .POST, url: responseURL)
         request.expectedStatusCode = Constants.nilContent
         request.execute(params) { (response) -> Void in
             switch (response) {
@@ -265,8 +286,9 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         }
     }
     
-    private func replaceIdURL(endPoint: String, id: Uid?) ->String {
+    private func replaceIdURL(endPoint: String, id: Uid) -> String {
+        // TODO (defect) extra slash in URL DOOOOOOOOOOOON
         let sessions = "/sessions/"
-        return sessions + id!.description + "/" + endPoint
+        return sessions + id.description + endPoint
     }
 }

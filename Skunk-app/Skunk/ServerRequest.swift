@@ -89,7 +89,7 @@ class ServerRequest: NSObject {
     
     var expectedStatusCode = Constants.statusOK
     var expectedBodyType = ResponseBodyType.None
-    var expectedContentType = ContentType.HTML
+    var expectedContentType: ContentType?
     var additionalHTTPHeaders = [NSObject: AnyObject]()
     
     private var contentType: ContentType?
@@ -130,7 +130,7 @@ class ServerRequest: NSObject {
             message = "Unexpected status code: \(statusCode), expected \(expectedStatusCode)"
             break
         case .UnexpectedContentType(let type):
-            message = "Unexpected content type: \(type), expected \(expectedContentType.rawValue)"
+            message = "Unexpected content type: \(type), expected \(expectedContentType?.rawValue)"
             break
         case .DeserializeJSONError(let data):
             message = "JSON deserialization error for data: \(data)"
@@ -145,7 +145,9 @@ class ServerRequest: NSObject {
         let config = NSURLSessionConfiguration.defaultSessionConfiguration()
         
         var HTTPHeaders = additionalHTTPHeaders
-        HTTPHeaders["Accept"] = self.expectedContentType.rawValue
+        if let expectedContentType = expectedContentType {
+            HTTPHeaders["Accept"] = expectedContentType.rawValue
+        }
         if let contentType = contentType {
             HTTPHeaders["Content-Type"] = contentType.rawValue
         }
@@ -184,7 +186,7 @@ class ServerRequest: NSObject {
         
         // Verify declared content type
         let contentType = httpResponse.allHeaderFields["Content-Type"]
-        guard contentType as? String == expectedContentType.rawValue else {
+        guard contentType as? String == expectedContentType?.rawValue else {
             return .Failure(.UnexpectedContentType(contentType))
         }
         
