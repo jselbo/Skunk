@@ -153,7 +153,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
                             completion(registeredAccounts: nil)
                             return
                         }
-                        shareSession = ShareSession.init(sharerAccount: account, endCondition: .Time(endTime.parseSQLDate()), needsDriver: needsDriver, receivers: [])
+                        shareSession = ShareSession.init(sharerAccount: account, endCondition: .Time(endTimeDate), needsDriver: needsDriver, receivers: [])
                         shareSession.identifier = Sid(sessionIdentifier)
                     } else {
                         let destination = sharerSession["destination"] as! String
