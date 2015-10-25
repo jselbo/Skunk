@@ -21,8 +21,14 @@ class ReceiveFriendsListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         sessionManager = ShareSessionManager(account: accountManager.registeredAccount!)
-        sessionManager.sendServerRequestforReceiver(accountManager.registeredAccount!) { (registeredAccounts) -> () in
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        sessionManager.fetchShareSessions(accountManager.registeredAccount!) { (registeredAccounts) -> () in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if let registeredAccounts = registeredAccounts {
                     self.sharerList = registeredAccounts
@@ -31,9 +37,7 @@ class ReceiveFriendsListViewController: UIViewController {
                     self.presentErrorAlert("Failed to Request All Sessions")
                 }
             })
-
         }
-        // Do any additional setup after loading the view.
     }
     
     func numberOfSectionsInTableView(friendsTableView: UITableView) -> Int {

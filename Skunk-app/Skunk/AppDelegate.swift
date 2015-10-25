@@ -45,16 +45,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        print("LITTLE RECEIVE NOTIFICATION")
-        print("userInfo: \(userInfo)")
+        let category = userInfo["aps"]!["category"] as! String
+        let data = userInfo["custom_data"]
+        
+        switch category {
+        case Constants.Notifications.sessionStart:
+            break
+        case Constants.Notifications.sessionEnd:
+            break
+        case Constants.Notifications.pickupRequest:
+            break
+        case Constants.Notifications.pickupResponse:
+            break
+        default:
+            print("Warning: Unrecognized remote notification category: '\(category)'")
+        }
     }
-    
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-        print("BIGGER RECEIVE NOTIFICATION")
-        print("userInfo: \(userInfo)")
-        print("completion handler: \(completionHandler)")
-    }
-    
+
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], withResponseInfo responseInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
         // TODO replace with actual logic once we start receiving notifications
         print("BIGGER NOTIFICATION HANDLER")

@@ -46,6 +46,7 @@ struct Constants {
         static let usersLoginURL = baseURL.URLByAppendingPathComponent("/users/login")
         static let usersFindURL = baseURL.URLByAppendingPathComponent("/users/find")
         
+        static let sessionsBaseURL = baseURL.URLByAppendingPathComponent("/sessions")
         static let sessionsURL = baseURL.URLByAppendingPathComponent("/sessions/")
         static let sessionsCreateURL = baseURL.URLByAppendingPathComponent("/sessions/create")
         
@@ -56,8 +57,12 @@ struct Constants {
         static let sessionsPickupResponsePath = "/pickup/response"
         static let sessionsDriverResponsePath = "/driver/response"
         
-        static func createSessionURL(identifier: Uid, path: String) -> NSURL {
-            return baseURL.URLByAppendingPathComponent(identifier.description).URLByAppendingPathComponent(path)
+        static func createSessionURL(identifier: Uid, path: String?) -> NSURL {
+            let url = sessionsBaseURL.URLByAppendingPathComponent(identifier.description)
+            if let path = path {
+                return url.URLByAppendingPathComponent(path)
+            }
+            return url
         }
     }
     

@@ -49,7 +49,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
     }
 
     func sendLocationHeartbeat(session: ShareSession, location: CLLocation, completion: (success: Bool) -> ()) {
-        let sessionURL = Constants.Endpoints.createSessionURL(session.identifier!, path: "")
+        let sessionURL = Constants.Endpoints.createSessionURL(session.identifier!, path: nil)
         let request = ServerRequest(type: .PUT, url: sessionURL)
         request.expectedContentType = .JSON
         request.expectedBodyType = .JSONObject
@@ -192,13 +192,13 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         }
     }
     
-    func sendServerRequestforReceiver(
+    func fetchShareSessions(
         account: RegisteredUserAccount,
         completion: (registeredAccounts : [RegisteredUserAccount]!) -> ()) {
         self.sharerInformation.removeAll()
         
         var sharerList = [RegisteredUserAccount]()
-        let request = ServerRequest(type: .GET, url: Constants.Endpoints.sessionsURL)
+        let request = ServerRequest(type: .GET, url: Constants.Endpoints.sessionsBaseURL)
         request.expectedContentType = .JSON
         request.expectedBodyType = .JSONArray
         request.additionalHTTPHeaders =
@@ -217,7 +217,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
                         lastName = sharer["last_name"] as? String,
                         phoneNumberString = sharer["phone_number"] as? String,
                         phoneNumber = PhoneNumber(text: phoneNumberString),
-                        userID = sharer["user_id"] as? Int
+                        userID = sharer["id"] as? Int
                     else {
                         print("Error: Failed to parse values from JSON: \(JSONResponse)")
                         completion(registeredAccounts : nil)
