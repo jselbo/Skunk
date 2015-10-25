@@ -20,6 +20,7 @@ require File.expand_path '../../server.rb', __FILE__
 RSpec.configure do |config|
   # Include the Sinatra mixin in each test
   config.include Rack::Test::Methods
+end
 
 # Run all tests in the :test environment
 ENV['RACK_ENV'] = 'test'
