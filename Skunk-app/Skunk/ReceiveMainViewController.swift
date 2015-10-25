@@ -15,8 +15,9 @@ class ReceiveMainViewController: UIViewController {
     var sessionManager: ShareSessionManager!
     var sharerSession: ShareSession!
     
-    @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var optionsViewPanel: UIView!
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var canPickUpButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,17 +28,17 @@ class ReceiveMainViewController: UIViewController {
         mapView.setRegion(region, animated: true)
     }
 
-    @IBAction func canPickUpButton(sender: AnyObject) {
+    @IBAction func canPickUp(sender: AnyObject) {
         sessionManager.sessionDriverResponse(sharerSession) { (success) -> () in
             if(success) {
-                
+
             } else {
                 self.presentErrorAlert("Can't Submit Repsonse Currently")
             }
         }
     }
 
-    @IBAction func StopReceivingUpdatesButton(sender: AnyObject) {
+    @IBAction func stopRecievingUpdates(sender: AnyObject) {
         sessionManager.sessionTermResponse(sharerSession) { (success) -> () in
             if(success) {
                 
@@ -46,4 +47,5 @@ class ReceiveMainViewController: UIViewController {
             }
         }
     }
+
 }
