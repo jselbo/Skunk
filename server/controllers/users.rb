@@ -64,11 +64,20 @@ end
 post '/users/login' do
   # Try to find the user by their credentials
   @user = User.find_by_credentials params
-  @user.update(device_id: params[:device_id]) if @user
+  # If the user exists, save the ID of the device they logged in with and
+  # return their information.
+  if @user
+    @user.device_id = params[:device_id]
+    @user.save
+    return {
+      user_id: @user.id,
+      first_name: @user.first_name,
+      last_name: @user.last_name
+    }.to_json
   # If the user does not exist, return a 404
-  halt(404) unless @user
-  # If they do exist, return their ID.
-  { user_id: @user.id }.to_json
+  else
+    halt(404)
+  end
 end
 
 # POST /users/find
