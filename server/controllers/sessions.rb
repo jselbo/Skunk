@@ -23,7 +23,7 @@
 # wrong.
 get '/sessions' do
 	@user = User.find(request.env["HTTP_SKUNK_USERID"])
-	return @user.sessions.to_json
+	@user.sessions.to_json
 end
 
 
@@ -51,9 +51,14 @@ get '/sessions/:id' do
 	@user = User.find(headers["HTTP_SKUNK_USERID"])
 	@session_user = SessionUser.find_by(receiver: @user, session: @session)
 
-	if not @session
-		halt 404
-	end
+	halt(404) unless @session
+
+  # The amount of time (seconds) that is allowed between updates
+  TIME_BREAK = 15*60
+  # If more than TIME_BREAK seconds have passed since the last update
+  if DateTime.now > @session.last_updated + TIME_BREAK
+    # Send emergency alerts to receivers
+  end
 
 	if @session_user && SessionUser.active?
 		return @session.to_json(:except => [sharer: [:password]])
@@ -68,7 +73,6 @@ end
 #   "location": <location_json>
 # }
 # -> 200 OK
-# -> 204 No Content
 # -> 500 Internal Server Error
 #
 # This endpoint is used by the sharer to update the session with their current
@@ -82,33 +86,19 @@ end
 #
 # On success, if the session has changed on the server, returns that session
 # object, updated with the sharer's new location.
-# If the session has not changed, returns a 204 No Content, since the sharer
-# already knows the information that is being updated.
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
 put '/sessions/:id' do
-  # The amount of time (seconds) that is allowed between updates
-  TIME_BREAK = 15*60
   # Get the session
-  @session = Session.find(params[:id])
-  # If more than TIME_BREAK time has passed since the last update
-  if DateTime.now > @session.last_updated + TIME_BREAK
-  	# TODO: Send emergency alerts to receivers
-  end
+  @session = Session.find(params['id'])
   # If location string is incorrectly formatted, return error
-  if not Session.check_location(params[:location])
+  if not Session.check_location(params['location'])
   	halt 500, 'Invalid location string.'
   end
   # Store the new location as the current_location in the database
-	@session.update(current_location: params[:location])
-  # If the location hasn't changed, return a 204 No Content
-  if @session.destination == params[:location]
-    halt 204
-  # Else, return the session object.
-  else
-  	# Send session object back with new location
-  	return @session.to_json(:except => [sharer: [:password]])
-  end
+	@session.update(current_location: params['location'])
+	# Send session object back with new location
+  @session.to_json
 end
 
 
@@ -139,7 +129,7 @@ end
 post '/sessions/create' do
   # Initialize a new Session object
   @session = Session.new(
-    sharer_id: request.env['HTTP_SKUNK_USERID'],
+    sharer: User.find(request.env['HTTP_SKUNK_USERID']),
   	needs_driver: params['needs_driver'],
     start_time: DateTime.now,
 		last_updated: DateTime.now
@@ -176,6 +166,8 @@ post '/sessions/create' do
   @session.receivers = User.where(id: params['receivers'])
   # Save the session to create it in the database with an ID
   @session.save
+  # Send notifications to each of the receivers
+  PushNotification.session_starting @session
   # Return the new session's id
   { id: @session.id }.to_json
 end

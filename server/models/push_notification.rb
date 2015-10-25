@@ -13,27 +13,31 @@ class PushNotification
   APN.passphrase = Sinatra::Application.settings.apn_cert_passphrase
 
   class << self
-    # Notify the receiver that the sharer is now sharing their location with them
+    # Notify the receivers that the sharer is now sharing their location with them
     def session_starting session
       message = "#{session.sharer.full_name} is now sharing their location with you."
-      send(
-        device_id: session.receiver.device_id,
-        category: 'SESSION_START',
-        message: message,
-        session: session
-      )
+      session.receivers.each do |receiver|
+        send(
+          device_id: receiver.device_id,
+          category: 'SESSION_START',
+          message: message,
+          session: session
+        )
+      end
     end
 
-    # Notify the receiver that the sharer is trying to stop sharing their
+    # Notify the receivers that the sharer is trying to stop sharing their
     # location with them
     def session_ending session
       message = "#{session.sharer.full_name} wants to stop sharing their location with you."
-      send(
-        device_id: session.receiver.device_id,
-        category: 'SESSION_END',
-        message: message,
-        session: session
-      )
+      session.receivers.each do |receiver|
+        send(
+          device_id: receiver.device_id,
+          category: 'SESSION_END',
+          message: message,
+          session: session
+        )
+      end
     end
 
     # Notify the driver for the session that the sharer has requested to be
@@ -41,7 +45,7 @@ class PushNotification
     def pickup_request session
       message = "#{session.sharer.full_name} has requested to be picked up."
       send(
-        device_id: session.receiver.device_id,
+        device_id: session.driver.device_id,
         category: 'PICKUP_REQUEST',
         message: message,
         session: session
@@ -50,7 +54,7 @@ class PushNotification
 
     # Notify the sharer of the drivers response to the pickup request
     def pickup_response session
-      message = "#{session.driver.full_name} says they can pick you up at #{session.driver_eta.to_s}"
+      message = "#{session.driver.full_name} says they can pick you up at #{session.driver_eta.to_s}."
       send(
         device_id: session.sharer.device_id,
         category: 'PICKUP_RESPONSE',
