@@ -95,6 +95,8 @@ class ServerRequest: NSObject {
     private var contentType: ContentType?
     private var JSONParams: AnyObject?
     
+    private var currentTask: NSURLSessionTask!
+    
     init(type: RequestType, url: NSURL) {
         self.type = type
         self.url = url
@@ -137,7 +139,7 @@ class ServerRequest: NSObject {
             break
         }
         
-        let fullMessage = "\(message),\n\tfor \(type.rawValue) request to \(url.absoluteString) with params: \(JSONParams)"
+        let fullMessage = "\(message),\n\tfor \(type.rawValue) request to \(url.absoluteString) with params: \(JSONParams), HTTP headers: \(currentTask.currentRequest?.allHTTPHeaderFields)"
         print(fullMessage)
     }
     
@@ -165,6 +167,7 @@ class ServerRequest: NSObject {
             let handledResponse = self.handleServerResponse(data, response: response, error: error)
             completion(handledResponse)
         }
+        currentTask = task
         task.resume()
         return task
     }

@@ -13,26 +13,26 @@
 
 ActiveRecord::Schema.define(version: 20151021182614) do
 
-  create_table "sessions", force: :cascade do |t|
-    t.integer  "sharer_id",        limit: 4
-    t.boolean  "needs_driver"
-    t.integer  "driver_id",        limit: 4
-    t.datetime "start_time"
-    t.boolean  "is_time_based"
-    t.datetime "end_time"
-    t.text     "destination",      limit: 65535
-    t.boolean  "terminated"
-    t.datetime "last_updated"
-    t.boolean  "requested_pickup"
-    t.datetime "driver_eta"
-    t.text     "current_location", limit: 65535
-  end
-
-  create_table "sessions_users", force: :cascade do |t|
+  create_table "session_users", force: :cascade do |t|
     t.integer "session_id",     limit: 4
     t.integer "receiver_id",    limit: 4
-    t.boolean "sharer_ended"
-    t.boolean "receiver_ended"
+    t.boolean "sharer_ended",             default: false
+    t.boolean "receiver_ended",           default: false
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.integer  "sharer_id",        limit: 4
+    t.boolean  "needs_driver",                   default: false
+    t.integer  "driver_id",        limit: 4
+    t.datetime "start_time"
+    t.boolean  "is_time_based",                  default: true
+    t.datetime "end_time"
+    t.text     "destination",      limit: 65535
+    t.boolean  "terminated",                     default: false
+    t.datetime "last_updated"
+    t.boolean  "requested_pickup",               default: false
+    t.datetime "driver_eta"
+    t.text     "current_location", limit: 65535
   end
 
   create_table "users", force: :cascade do |t|

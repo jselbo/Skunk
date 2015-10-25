@@ -50,16 +50,16 @@ describe 'User' do
     end
   end
 
-  describe '#as_json' do
+  describe '#to_json' do
     it 'creates a valid JSON object' do
       @user = FactoryGirl.create(:user)
-      json = @user.as_json
+      json = @user.to_json
       expect(JSON.parse(json)).to be_truty
     end
 
     it 'does not include password in the result' do
       @user = FactoryGirl.create(:user)
-      json = @user.as_json
+      json = @user.to_json
       expect(json).not_to include(@user.password)
     end
   end

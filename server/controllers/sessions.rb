@@ -101,7 +101,7 @@ put '/sessions/:id' do
   end
   # Store the new location as the current_location in the database
 	@session.update(current_location: params[:location])
-  # If the location hasn't changed, return an error
+  # If the location hasn't changed, return a 204 No Content
   if @session.destination == params[:location]
     halt 204
   # Else, return the session object.
@@ -139,55 +139,43 @@ end
 post '/sessions/create' do
   # Initialize a new Session object
   @session = Session.new(
-    sharer_id: request.env["HTTP_SKUNK_USERID"],
-  	needs_driver: params[:needs_driver],
+    sharer_id: request.env['HTTP_SKUNK_USERID'],
+  	needs_driver: params['needs_driver'],
     start_time: DateTime.now,
 		last_updated: DateTime.now
   )
 
-  type = params[:condition][:type]
-
+  case params['condition']['type']
   # If session is timestamped, set is_time_based to true and store in database
-  if type == 'time'
+  when 'time'
+    puts "\n> Time-type session"
   	# Check that timestamp is in iso 8601 format
   	begin
-  		timestamp = DateTime.iso8601(params[:condition][:data])
-  	rescue
-  		halt 500, 'Improperly formatted timestamp.'
-  	end
-    # Set the fields relevant to time-based sessions
-  	@session.is_time_based = true
-    @session.end_time = timestamp
+      # Set the fields relevant to time-based sessions
+    	@session.is_time_based = true
+      @session.end_time = DateTime.iso8601(params['condition']['data'])
+    rescue
+      halt 500, 'Improperly formatted timestamp.'
+    end
   # If session is location-based set _is_time_based to false and store location
-  elsif type == 'location'
+  when 'location'
+    puts "\n> Location-type session"
   	# Check if location string is in iso 6709 format
-  	if !Session.check_location(params[:condition][:data])
+  	if Session.check_location(params['condition']['data'])
+      # Set the fields relevant to location-based sessions
+      @session.is_time_based = false
+      @session.destination = params['condition']['data'] # should validate type
+    else
   		halt 500, 'Improperly formatted location string.'
-  	end
-    # Set the fields relevant to location-based sessions
-  	@session.is_time_based = false
-  	@session.destination = params[:condition][:data] # should validate type
+    end
   # Else return an error
   else
   	halt 500, 'Invalid condition type.'
   end
-
+  # Populate the sessions_users join table with all the receivers
+  @session.receivers = User.where(id: params['receivers'])
   # Save the session to create it in the database with an ID
   @session.save
-
-  # Get the receivers from the request
-	receivers = params[:receivers]
-
-  # Populate the sessions_users join table with all the receivers
-  receivers.each do |rid|
-  	su = SessionUser.create(
-      session_id: @session.id,
-      receiver_id: rid.to_i,
-      sharer_ended: false,
-      receiver_ended: false
-    )
-  end
-
   # Return the new session's id
-  return @session.id
+  { id: @session.id }.to_json
 end

@@ -22,7 +22,7 @@ class ReceiveFriendsListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         sessionManager = ShareSessionManager(account: accountManager.registeredAccount!)
-        sessionManager.sendServerRequestforReceiver { (registeredAccounts) -> () in
+        sessionManager.sendServerRequestforReceiver(accountManager.registeredAccount!) { (registeredAccounts) -> () in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if let registeredAccounts = registeredAccounts {
                     self.sharerList = registeredAccounts

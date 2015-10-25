@@ -24,9 +24,14 @@ class PhoneNumber: NSObject, CustomDebugStringConvertible {
             return nil
         }
         
+        var parseableText = text
+        if text.hasPrefix("+1") {
+            parseableText = text.substringFromIndex(text.startIndex.advancedBy(2))
+        }
+        
         // Extract only number characters
         let nonDigitCharacters = NSCharacterSet.decimalDigitCharacterSet().invertedSet
-        let digitsOnly = text.componentsSeparatedByCharactersInSet(nonDigitCharacters).joinWithSeparator("")
+        let digitsOnly = parseableText.componentsSeparatedByCharactersInSet(nonDigitCharacters).joinWithSeparator("")
         
         // Ensure number of digits is what we expect
         guard digitsOnly.characters.count == expectedDigits else {
