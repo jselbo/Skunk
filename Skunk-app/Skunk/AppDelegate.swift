@@ -14,6 +14,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        if let remoteNotification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? NSDictionary {
+            print("launched with notification: \(remoteNotification)")
+        }
+        
         // If no device token saved, request one
         let defaults = NSUserDefaults.standardUserDefaults()
         let deviceToken = defaults.objectForKey(Constants.keyDeviceToken) as? NSData
@@ -40,15 +44,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        print("LITTLE RECEIVE NOTIFICATION")
+        print("userInfo: \(userInfo)")
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        print("BIGGER RECEIVE NOTIFICATION")
+        print("userInfo: \(userInfo)")
+        print("completion handler: \(completionHandler)")
+    }
+    
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], withResponseInfo responseInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
         // TODO replace with actual logic once we start receiving notifications
-        print("NOTIFICATION HANDLER")
+        print("BIGGER NOTIFICATION HANDLER")
         print("handle action: id \(identifier), userinfo: \(userInfo), responseInfo: \(responseInfo)")
         print("completion handler: \(completionHandler)")
     }
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
-        print("other notif method")
+        print("LITTLE NOTIFICATION HANDLER")
+        print("handle action: id \(identifier), userinfo: \(userInfo)")
+        print("completion handler: \(completionHandler)")
     }
     
     func applicationWillResignActive(application: UIApplication) {

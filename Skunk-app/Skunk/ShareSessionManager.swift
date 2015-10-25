@@ -49,7 +49,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
     }
 
     func sendLocationHeartbeat(session: ShareSession, location: CLLocation, completion: (success: Bool) -> ()) {
-        let sessionURL = Constants.Endpoints.sessionsURL.URLByAppendingPathComponent("\(session.identifier!)")
+        let sessionURL = Constants.Endpoints.createSessionURL(session.identifier!, path: "")
         let request = ServerRequest(type: .PUT, url: sessionURL)
         request.expectedContentType = .JSON
         request.expectedBodyType = .JSONObject
@@ -63,34 +63,41 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
             case .Success(let response):
                 let responseJSON = response as! [String: AnyObject]
                 
+                guard let
+                    terminated = responseJSON["terminated"] as? Bool,
+                    receiverInfoJSON = responseJSON["receiver_info"] as? [String: AnyObject]
+                else {
+                    print("Error: Failed to parse session from JSON: \(responseJSON)")
+                    completion(success: false)
+                    return
+                }
+                
                 // First, check for termination
-                if let terminated = responseJSON["terminated"] as? Bool {
-                    session.terminated = terminated
+                if terminated {
+                    session.terminated = true
                     completion(success: true)
                 }
                 
                 // Check for receiver session termination responses
-                if let receiversJSON = responseJSON["receivers"] as? [AnyObject] {
-                    // Check for all receivers terminated session
-                    for receiverJSON in receiversJSON {
-                        guard let receiverID = receiverJSON["user_id"] as? Int else {
-                            print("Error: Failed to parse receiver ID from JSON: \(responseJSON)")
-                            completion(success: false)
-                            return
-                        }
-                        
-                        guard let receiverInfo = session.findReceiver(Uid(receiverID)) else {
-                            print("Error: Invalid receiver ID: \(receiverID)")
-                            completion(success: false)
-                            return
-                        }
-                        
-                        // Check for a driver's response
-                        if let receiverEnded = receiverJSON["receiver_ended"] as? Bool {
-                            if receiverEnded {
-                                receiverInfo.stopSharingState = .Accepted
-                            }
-                        }
+                for receiverInfo in receiverInfoJSON {
+                    guard let receiverID = Uid(receiverInfo.0) else {
+                        print("Error: Failed to parse receiver ID from JSON: \(responseJSON)")
+                        completion(success: false)
+                        return
+                    }
+                    guard let receiverEnded = receiverInfo.1 as? Bool else {
+                        print("Error: Failed to parse receiver ended flag from JSON: \(responseJSON)")
+                        completion(success: false)
+                        return
+                    }
+                    guard let receiverInfo = session.findReceiver(receiverID) else {
+                        print("Error: Invalid receiver ID: \(receiverID)")
+                        completion(success: false)
+                        return
+                    }
+                    
+                    if receiverEnded {
+                        receiverInfo.stopSharingState = .Accepted
                     }
                 }
                 
@@ -266,8 +273,9 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         let params = [
             "receivers": [NSNumber(unsignedLongLong: receiver.account.identifier)],
         ]
-        let url = replaceIdURL(Constants.Endpoints.sessionTermRequest, id: session.identifier! )
-        let request = ServerRequest(type: .POST, url: NSURL(fileURLWithPath: url))
+        let sessionURL = Constants.Endpoints.createSessionURL(session.identifier!,
+            path: Constants.Endpoints.sessionsTerminateRequestPath)
+        let request = ServerRequest(type: .POST, url: sessionURL)
         request.expectedStatusCode = Constants.nilContent
         request.additionalHTTPHeaders =
             [Constants.userIDHeader: "\(session.sharerAccount.identifier)"]
@@ -289,8 +297,9 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         let params = [
             "response": true
         ]
-        let url = replaceIdURL(Constants.Endpoints.sessionTermResponse, id: session.identifier! )
-        let request = ServerRequest(type: .POST, url: NSURL(fileURLWithPath: url))
+        let sessionURL = Constants.Endpoints.createSessionURL(session.identifier!,
+            path: Constants.Endpoints.sessionsTerminateResponsePath)
+        let request = ServerRequest(type: .POST, url: sessionURL)
         request.expectedContentType = .JSON
         request.expectedBodyType = .JSONObject
         request.expectedStatusCode = Constants.nilContent
@@ -309,9 +318,9 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
     
     // Session PickUp Request
     func sessionPickUpRequest(session: ShareSession, completion:(success: Bool)->()) {
-        let url = replaceIdURL(Constants.Endpoints.sessionsPickupRequestPath, id: session.identifier! )
-        let pickupURL = Constants.Endpoints.baseURL.URLByAppendingPathComponent(url)
-        let request = ServerRequest(type: .PUT, url: pickupURL)
+        let sessionURL = Constants.Endpoints.createSessionURL(session.identifier!,
+            path: Constants.Endpoints.sessionsPickupRequestPath)
+        let request = ServerRequest(type: .PUT, url: sessionURL)
         request.expectedStatusCode = Constants.nilContent
         request.additionalHTTPHeaders =
             [Constants.userIDHeader: "\(session.sharerAccount.identifier)"]
@@ -332,8 +341,9 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
             "response": true,
             "eta": session.driverEstimatedArrival!.serializeISO8601()
         ]
-        let url = replaceIdURL(Constants.Endpoints.sessionsPickupResponse, id: session.identifier! )
-        let request = ServerRequest(type: .POST, url: NSURL(fileURLWithPath: url))
+        let sessionURL = Constants.Endpoints.createSessionURL(session.identifier!,
+            path: Constants.Endpoints.sessionsPickupResponsePath)
+        let request = ServerRequest(type: .POST, url: sessionURL)
         request.expectedStatusCode = Constants.nilContent
         request.additionalHTTPHeaders =
             [Constants.userIDHeader: "\(session.sharerAccount.identifier)"]
@@ -353,9 +363,9 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         let params = [
             "response": true,
         ]
-        let url = replaceIdURL(Constants.Endpoints.sessionsDriverResponse, id: session.identifier! )
-        let responseURL = Constants.Endpoints.baseURL.URLByAppendingPathComponent(url)
-        let request = ServerRequest(type: .POST, url: responseURL)
+        let sessionURL = Constants.Endpoints.createSessionURL(session.identifier!,
+            path: Constants.Endpoints.sessionsDriverResponsePath)
+        let request = ServerRequest(type: .POST, url: sessionURL)
         request.expectedStatusCode = Constants.nilContent
         request.additionalHTTPHeaders =
             [Constants.userIDHeader: "\(session.sharerAccount.identifier)"]
@@ -368,11 +378,5 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
                 completion(success: false)
             }
         }
-    }
-    
-    private func replaceIdURL(endPoint: String, id: Uid) -> String {
-        // TODO (defect) extra slash in URL DOOOOOOOOOOOON
-        let sessions = "/sessions/"
-        return sessions + id.description + endPoint
     }
 }

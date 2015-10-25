@@ -44,26 +44,29 @@ struct Constants {
         
         static let usersCreateURL = baseURL.URLByAppendingPathComponent("/users/create")
         static let usersLoginURL = baseURL.URLByAppendingPathComponent("/users/login")
+        static let usersFindURL = baseURL.URLByAppendingPathComponent("/users/find")
         
         static let sessionsURL = baseURL.URLByAppendingPathComponent("/sessions/")
-        
         static let sessionsCreateURL = baseURL.URLByAppendingPathComponent("/sessions/create")
+        
+        // Session handshakes
         static let sessionsTerminateRequestPath = "/terminate/request"
         static let sessionsTerminateResponsePath = "/terminate/response"
         static let sessionsPickupRequestPath = "/pickup/request"
         static let sessionsPickupResponsePath = "/pickup/response"
         static let sessionsDriverResponsePath = "/driver/response"
         
-        static let usersFindURL = baseURL.URLByAppendingPathComponent("/users/find")
-        
-        //handshakes
-        static let sessionTermRequest = "/terminate/request"
-        static let sessionTermResponse = "/terminate/response"
-        static let sessionsPickupRequest = "/pickup/request"
-        static let sessionsPickupResponse = "/pickup/response"
-        static let sessionsDriverResponse = "/driver/response"
-
-        
+        static func createSessionURL(identifier: Uid, path: String) -> NSURL {
+            return baseURL.URLByAppendingPathComponent(identifier.description).URLByAppendingPathComponent(path)
+        }
+    }
+    
+    // Notification categories
+    struct Notifications {
+        static let sessionStart = "SESSION_START"
+        static let sessionEnd = "SESSION_END"
+        static let pickupRequest = "PICKUP_REQUEST"
+        static let pickupResponse = "PICKUP_RESPONSE"
     }
     
     // In seconds
