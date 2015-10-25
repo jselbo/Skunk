@@ -76,12 +76,17 @@ class ShareSession: NSObject {
     // TODO document defect (used to be RequestState but no ==)
     var driverIdentifier: Uid?
     
+    var needsPickup = false
+    
     /// ETA given by the accepting driver. Only set if a pickup request has been made and accepted.
     var driverEstimatedArrival: NSDate?
     
     /// This device's last recorded location.
     var currentLocation: CLLocation?
     var lastLocationUpdate: NSDate?
+    
+    // Set to true if server indicates session has ended
+    var terminated = false
     
     init(sharerAccount: RegisteredUserAccount,
         endCondition: ShareEndCondition,
