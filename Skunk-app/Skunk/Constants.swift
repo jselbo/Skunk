@@ -77,6 +77,7 @@ struct Constants {
     // In seconds
     static let serverTimeout = NSTimeInterval(30.0)
     static let heartbeatFrequency = CFTimeInterval(5.0)
+    static let receiverSessionRefreshInterval = CFTimeInterval(5.0)
     
     // HTTP Response Codes
     static let statusOK = 200

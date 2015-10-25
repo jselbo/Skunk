@@ -51,12 +51,6 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
         receiversTableView.editing = true
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        locationManager.stopUpdatingLocation()
-    }
-    
     //MARK: - IBAction
     
     @IBAction func pickupRequestPressed(sender: AnyObject) {

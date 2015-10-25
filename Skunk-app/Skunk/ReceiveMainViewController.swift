@@ -15,19 +15,29 @@ class ReceiveMainViewController: UIViewController {
     var sessionManager: ShareSessionManager!
     var sharerSession: ShareSession!
     
+    var refreshTimer: NSTimer!
+    
     @IBOutlet weak var optionsViewPanel: UIView!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var canPickUpButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let currentLocation = sharerSession.currentLocation
-        let center = CLLocationCoordinate2D(latitude: (currentLocation?.coordinate.latitude)!, longitude: (currentLocation?.coordinate.longitude)!)
-        let region = MKCoordinateRegionMake(center, MKCoordinateSpanMake(0.01, 0.01))
-        mapView.setRegion(region, animated: true)
     }
-
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        refreshTimer = NSTimer.scheduledTimerWithTimeInterval(Constants.receiverSessionRefreshInterval, target: self, selector: "sessionRefresh:", userInfo: nil, repeats: true)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        refreshTimer.invalidate()
+        refreshTimer = nil
+    }
+    
     @IBAction func canPickUp(sender: AnyObject) {
         sessionManager.sessionDriverResponse(sharerSession) { (success) -> () in
             if(success) {
@@ -45,6 +55,21 @@ class ReceiveMainViewController: UIViewController {
             } else {
                 self.presentErrorAlert("Can't Submit Response Currently")
             }
+        }
+    }
+    
+    func sessionRefresh(sender: AnyObject) {
+        sessionManager.fetchShareSession(accountManager.registeredAccount!,
+            identifier: sharerSession.identifier!) { (session) -> () in
+            self.sharerSession = session
+                
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if let session = session {
+                    print("location: \(session.currentLocation)")
+                } else {
+                    self.presentErrorAlert("Failed to fetch updated session")
+                }
+            })
         }
     }
 }
