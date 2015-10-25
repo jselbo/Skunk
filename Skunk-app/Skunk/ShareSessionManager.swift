@@ -118,6 +118,73 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         }
     }
     
+    
+    func recieverHeartbeat(account: RegisteredUserAccount, completion:(registeredUserAccounts: RegisteredUserAccount!) -> ()) {
+        let url = Constants.Endpoints.sessionsURL.URLByAppendingPathComponent("\(account.identifier)")
+        let request = ServerRequest(type: .GET, url: url)
+        request.expectedContentType = .JSON
+        request.expectedBodyType = .JSONObject
+        request.additionalHTTPHeaders =
+            [Constants.userIDHeader: "\(account.identifier)"]
+        request.execute() { (response) -> Void in
+            switch (response) {
+            case .Success(let response):
+                let sharerSession = response as! [String: AnyObject]
+                guard let needsDriver = sharerSession["needs_driver"] as? Bool,
+                isTimeBased = sharerSession["is_time_based"] as? Bool,
+                sessionIdentifier = sharerSession["id"] as? Int,
+                sharer = sharerSession["sharer"] as? [String: AnyObject],
+                firstName = sharer["first_name"] as? String,
+                lastName = sharer["last_name"] as? String,
+                phoneNumberString = sharer["phone_number"] as? String,
+                phoneNumber = PhoneNumber(text: phoneNumberString),
+                userID = sharer["user_id"] as? Int
+                else {
+                    print("Error: Failed to parse values from JSON: \(sharerSession)")
+                    completion(registeredUserAccounts : nil)
+                    return
+                }
+                let userAccount = UserAccount.init(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber)
+                let account = RegisteredUserAccount.init(userAccount: userAccount, identifier: Uid(userID))
+                let shareSession: ShareSession
+                if isTimeBased {
+                    let endTime = sharerSession["end_time"] as? String
+                    guard let endTimeDate = endTime?.parseSQLDate() else {
+                        print("Error: Failed to parse end date from string: \(endTime)")
+                        completion(registeredUserAccounts: nil)
+                        return
+                    }
+                    shareSession = ShareSession.init(sharerAccount: account, endCondition: .Time(endTimeDate), needsDriver: needsDriver, receivers: [])
+                    shareSession.identifier = Sid(sessionIdentifier)
+                } else {
+                    let destination = sharerSession["destination"] as! String
+                    let components = destination.componentsSeparatedByString(",")
+                    shareSession = ShareSession.init(sharerAccount: account, endCondition: .Location(CLLocation(latitude: Double(components[0])!, longitude: Double(components[1])!)) , needsDriver: needsDriver, receivers: [])
+                }
+                if let driverAccount = sharerSession["driver"] as? [String: AnyObject],
+                    driverIdentifier = driverAccount["user_id"] as? Int {
+                        shareSession.driverIdentifier = Sid(driverIdentifier)
+                }
+                
+                let driverETA = sharerSession["driver_eta"] as? String
+                shareSession.driverEstimatedArrival = driverETA?.parseSQLDate()
+                
+                if let currentLocation = sharerSession["current_location"] as? String {
+                    let components = currentLocation.componentsSeparatedByString(",")
+                    shareSession.currentLocation = CLLocation(latitude: Double(components[0])!, longitude: Double(components[1])!)
+                }
+                
+                let lastUpdated = sharerSession["last_updated"] as? String
+                shareSession.lastLocationUpdate = lastUpdated?.parseSQLDate()
+
+                completion(registeredUserAccounts: account)
+
+            case .Failure(let failure):
+                request.logResponseFailure(failure)
+            }
+        }
+    }
+    
     func sendServerRequestforReceiver(
         account: RegisteredUserAccount,
         completion: (registeredAccounts : [RegisteredUserAccount]!) -> ()) {
