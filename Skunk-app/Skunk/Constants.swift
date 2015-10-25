@@ -35,6 +35,8 @@ struct Constants {
     static let debugUserIdentifier = Uid(12345)
     
     // Server endpoints
+    static let userIDHeader = "Skunk-UserID"
+    
     struct Endpoints {
         static let baseURLHost = "68.234.146.84"
         static let baseURLPort = "3001"

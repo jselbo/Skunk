@@ -26,15 +26,17 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         let request = ServerRequest(type: .POST, url: Constants.Endpoints.sessionsCreateURL)
         request.expectedContentType = .JSON
         request.expectedBodyType = .JSONObject
+        request.additionalHTTPHeaders =
+            [Constants.userIDHeader: "\(session.sharerAccount.identifier)"]
         request.execute(params) { (response) -> Void in
             switch (response) {
             case .Success(let response):
                 let JSONResponse = response as! [String: AnyObject]
                 
                 guard let identifier = JSONResponse["id"] as? Int else {
-                        print("Error: Failed to parse values from JSON: \(JSONResponse)")
-                        completion(success: false)
-                        break
+                    print("Error: Failed to parse values from JSON: \(JSONResponse)")
+                    completion(success: false)
+                    break
                 }
                 session.identifier = Sid(identifier)
                 completion(success: true)
