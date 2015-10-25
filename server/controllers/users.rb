@@ -96,6 +96,6 @@ end
 # and phone_number) which match the filtering criteria.
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
-post 'users/find' do
+post '/users/find' do
   User.where(params).to_json
 end
