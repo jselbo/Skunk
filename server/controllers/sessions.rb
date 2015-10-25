@@ -142,7 +142,7 @@ post '/sessions/create' do
     sharer_id: request.env["HTTP_SKUNK_USERID"],
   	needs_driver: params[:needs_driver],
     start_time: DateTime.now,
-		last_updated: DateTime.now
+	last_updated: DateTime.now
   )
 
   type = params[:condition][:type]
