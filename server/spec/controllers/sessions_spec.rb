@@ -54,7 +54,7 @@ describe "Controllers" do
                 session.save
 				put "sessions/#{session.id}", :location => '+40.423895,-86.909014'
 
-				dbSession = Session.last(1)
+				dbSession = Session.last
 				expect(dbSession.current_location).to eq '+40.423895,-86.909014'
 			end
 
@@ -82,7 +82,7 @@ describe "Controllers" do
 				post '/sessions/create', :receivers => session.driver_id, :condition => { :type => 'time', :data => session.end_time}, :needs_driver => session.needs_driver
 
 				#Lookup newest entry in db
-				newest_entry = Session.last(1)
+				newest_entry = Session.last
 
 				#Check that information was stored in session object properly
 				expect(newest_entry).to eq session
@@ -94,14 +94,14 @@ describe "Controllers" do
 				post '/sessions/create', :receivers => session.driver_id, :condition => { :type => 'time', :data => session.end_time}, :needs_driver => session.needs_driver
 
 				#Check sessions-users table
-				su = SessionsUsers.last(1)
+				su = SessionsUsers.last
 				expect(su).to_have_attributes(session_id: session.id, receiver_id: session.driver_id)
 			end
 
 			it "should return a successful response" do
 				session = FactoryGirl.create(:session_with_driver)
 				post '/sessions/create', :receivers => session.driver_id, :condition => { :type => 'time', :data => session.end_time}, :needs_driver => session.needs_driver
-				su = SessionsUsers.last(1)
+				su = SessionsUsers.last
 				expect(last_response.body).to include("#{newest_entry.id}")
 			end
 
@@ -110,7 +110,7 @@ describe "Controllers" do
 			#multiple receivers
 			it "should return a valid session id when multiple recievers are created" do
 				session = FactoryGirl.create(:session)
-				created_receivers = FactoryGirl.create_list(:driver, 10)
+				created_receivers = FactoryGirl.create_list(:user, 10)
 				receiver_ids = []
 				created_receivers.each do |item |
 					 receiver_ids.add(item.id)
@@ -122,7 +122,7 @@ describe "Controllers" do
 			
 			it "should succeed if all the receivers were populated in the sessions-users table" do
 				session = FactoryGirl.create(:session)
-				created_receivers = FactoryGirl.create_list(:driver, 10)
+				created_receivers = FactoryGirl.create_list(:user, 10)
 				receiver_ids = []
 				created_receivers.each do | item |
 					 receiver_ids.add(item.id)
@@ -140,7 +140,7 @@ describe "Controllers" do
 
 			it "should succeed if a receiver was added to the database correctly" do
 				session = FactoryGirl.create(:session)
-				created_receivers = FactoryGirl.create_list(:driver, 10)
+				created_receivers = FactoryGirl.create_list(:user, 10)
 				receiver_ids = []
 				created_receivers.each do | item |
 					 receiver_ids.add(item.id)
@@ -148,9 +148,9 @@ describe "Controllers" do
 
 				post '/sessions/create', :receivers => receiver_ids, :condition => { :type => 'time', :data => session.end_time }, :needs_driver => :false
 
-				sesh = Session.last(1)
+				sesh = Session.last
 				receiver_index = receiver_ids[receiver_ids.length]
-				su = SessionsUsers.last(1)
+				su = SessionsUsers.last
 				expect(su).to_have_attributes(session_id: sesh.id, receiver_id: receiver_index)
 			end
 			
