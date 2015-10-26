@@ -76,7 +76,7 @@ post '/sessions/:id/terminate/response' do
 	# If response is true, then mark receiver ended as true
 	# If not keep it false
 	if response
-		@session_user.receiver_ended = true
+		@session_user.update(receiver_ended: true)
 	end
 
 	return 204
