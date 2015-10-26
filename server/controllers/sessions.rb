@@ -68,7 +68,7 @@ get '/sessions/:id' do
 end
 
 
-# PUT /sessions/:id
+# POST /sessions/:id
 # {
 #   "location": <location_json>
 # }
@@ -88,7 +88,7 @@ end
 # object, updated with the sharer's new location.
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
-put '/sessions/:id' do
+post '/sessions/:id' do
   # Get the session
   @session = Session.find(params['id'])
   # If location string is incorrectly formatted, return error
