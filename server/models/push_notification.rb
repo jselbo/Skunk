@@ -28,9 +28,9 @@ class PushNotification
 
     # Notify the receivers that the sharer is trying to stop sharing their
     # location with them
-    def session_ending session
+    def session_ending session, receivers
       message = "#{session.sharer.full_name} wants to stop sharing their location with you."
-      session.receivers.each do |receiver|
+      receivers.each do |receiver|
         send(
           device_id: receiver.device_id,
           category: 'SESSION_END',
