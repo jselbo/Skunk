@@ -132,7 +132,7 @@ post '/sessions/create' do
     sharer: User.find(request.env['HTTP_SKUNK_USERID']),
   	needs_driver: params['needs_driver'],
     start_time: DateTime.now,
-		last_updated: DateTime.now
+	last_updated: DateTime.now
   )
 
   case params['condition']['type']
