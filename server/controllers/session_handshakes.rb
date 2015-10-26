@@ -66,7 +66,7 @@ end
 # wrong.
 post '/sessions/:id/terminate/response' do
 	# Get user id for the receiver
-	@user = User.find(headers["HTTP_SKUNK_USERID"])
+	@user = User.find(request.env["HTTP_SKUNK_USERID"])
   # Get the response from the request
 	response = params[:response]
 	# Get the session
