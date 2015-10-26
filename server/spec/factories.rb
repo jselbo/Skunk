@@ -23,11 +23,11 @@ FactoryGirl.define do
     last_updated { Faker::Time.between(15.minutes.ago, Time.now) }
     requested_pickup { false }
     driver_eta { Faker::Time.forward()  }
-    current_location "#{ Faker::Address.latitude}#{Faker::Address.longitude }" 
+    current_location "#{ Faker::Address.latitude},#{Faker::Address.longitude }" 
 
     factory :session_with_destination do 
         is_time_based { false }
-        destination "#{ Faker::Address.latitude}#{Faker::Address.longitude }" 
+        destination "#{ Faker::Address.latitude},#{Faker::Address.longitude }" 
     end
 
     factory :session_with_driver do
