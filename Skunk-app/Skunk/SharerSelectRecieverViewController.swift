@@ -26,11 +26,10 @@ class SharerSelectRecieverViewController: UITableViewController {
     var registeredAccounts: [RegisteredUserAccount]?
     
     @IBOutlet weak var doneButtonItem: UIBarButtonItem!
+    @IBOutlet var receiversTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        sessionManager = ShareSessionManager(account: accountManager.registeredAccount!)
         
         doneButtonItem.enabled = false
         

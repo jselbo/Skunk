@@ -7,11 +7,13 @@
 //
 
 import Foundation
+
 extension String {
-    func parseSQLDate() -> NSDate {
+    func parseSQLDate() -> NSDate? {
+        let dateLocale = NSLocale(localeIdentifier: "en_US_POSIX")
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let date = dateFormatter.dateFromString(self)
-        return date!
+        dateFormatter.locale = dateLocale
+        dateFormatter.dateFormat = ISO8601DateFormat
+        return dateFormatter.dateFromString(self)
     }
 }

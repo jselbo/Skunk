@@ -66,7 +66,10 @@
 		4B18D352DA71E7918A3597E2 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 415C7F2891D02584B84E1204 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		B23369DC1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23369DB1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		B252126C1BD1818200664470 /* StringUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B252126B1BD1818200664470 /* StringUtilities.swift */; settings = {ASSET_TAGS = (); }; };
+		B2936B481BD812CE00D9C3E4 /* ReceiverPickUpSharerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2936B471BD812CE00D9C3E4 /* ReceiverPickUpSharerViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		E56A142B1BAF4BA600985CC7 /* SharerOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A142A1BAF4BA600985CC7 /* SharerOptionsViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		E5743ADC1BDD99F300ED7230 /* shareSessionHeartbeat.json in Resources */ = {isa = PBXBuildFile; fileRef = E5743ADB1BDD99F300ED7230 /* shareSessionHeartbeat.json */; settings = {ASSET_TAGS = (); }; };
+		E59F6B8F1BD9BF8C0017FEBA /* session_return.json in Resources */ = {isa = PBXBuildFile; fileRef = E59F6B8E1BD9BF8C0017FEBA /* session_return.json */; settings = {ASSET_TAGS = (); }; };
 		E5F2F9F91BB311000082CF84 /* SharerSelectRecieverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F2F9F81BB311000082CF84 /* SharerSelectRecieverViewController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
@@ -146,7 +149,10 @@
 		4B0AE1F0ED9F4AD39FAE7CC7 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		B23369DB1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiveFriendsListViewController.swift; sourceTree = "<group>"; };
 		B252126B1BD1818200664470 /* StringUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtilities.swift; sourceTree = "<group>"; };
+		B2936B471BD812CE00D9C3E4 /* ReceiverPickUpSharerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiverPickUpSharerViewController.swift; sourceTree = "<group>"; };
 		E56A142A1BAF4BA600985CC7 /* SharerOptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharerOptionsViewController.swift; sourceTree = "<group>"; };
+		E5743ADB1BDD99F300ED7230 /* shareSessionHeartbeat.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = shareSessionHeartbeat.json; sourceTree = "<group>"; };
+		E59F6B8E1BD9BF8C0017FEBA /* session_return.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = session_return.json; sourceTree = "<group>"; };
 		E5F2F9F81BB311000082CF84 /* SharerSelectRecieverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharerSelectRecieverViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -363,6 +369,7 @@
 		03D7E3C61BCC1655009AC7A8 /* Receiver */ = {
 			isa = PBXGroup;
 			children = (
+				B2936B471BD812CE00D9C3E4 /* ReceiverPickUpSharerViewController.swift */,
 				B23369DB1BB30FD9002722A4 /* ReceiveFriendsListViewController.swift */,
 				038A40441BA9185000E65E1D /* ReceiveMainViewController.swift */,
 			);
@@ -372,6 +379,8 @@
 		03E0096C1BCFE744003E6135 /* Server Responses */ = {
 			isa = PBXGroup;
 			children = (
+				E59F6B8E1BD9BF8C0017FEBA /* session_return.json */,
+				E5743ADB1BDD99F300ED7230 /* shareSessionHeartbeat.json */,
 				034F23D41BD1FE7600CD4A60 /* find.json */,
 				03E0096D1BCFE770003E6135 /* login.json */,
 				03E0096F1BCFE83A003E6135 /* register.json */,
@@ -469,7 +478,7 @@
 				TargetAttributes = {
 					038A400B1BA908FF00E65E1D = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = H5639XUXQB;
+						DevelopmentTeam = J2VAKEVY6P;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -512,10 +521,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				0345D9F11BCF1146003544FC /* broadcast2.png in Resources */,
+				E5743ADC1BDD99F300ED7230 /* shareSessionHeartbeat.json in Resources */,
 				03C649CC1BD2F07600979846 /* session_heartbeat.json in Resources */,
 				034F23D01BD1851F00CD4A60 /* array.json in Resources */,
 				034F23D81BD2014700CD4A60 /* session_create.json in Resources */,
 				034F23D31BD1851F00CD4A60 /* object.json in Resources */,
+				E59F6B8F1BD9BF8C0017FEBA /* session_return.json in Resources */,
 				034F23D11BD1851F00CD4A60 /* empty.json in Resources */,
 				0345D9F21BCF1146003544FC /* broadcast3.png in Resources */,
 				033B15FC1BB34B3700A945FD /* Login.storyboard in Resources */,
@@ -620,6 +631,7 @@
 				03AB65F91BB18C770094B9CC /* Serializable.swift in Sources */,
 				E56A142B1BAF4BA600985CC7 /* SharerOptionsViewController.swift in Sources */,
 				E5F2F9F91BB311000082CF84 /* SharerSelectRecieverViewController.swift in Sources */,
+				B2936B481BD812CE00D9C3E4 /* ReceiverPickUpSharerViewController.swift in Sources */,
 				033B16031BB34F9A00A945FD /* RegisterViewController.swift in Sources */,
 				038A40101BA908FF00E65E1D /* AppDelegate.swift in Sources */,
 				03AB65FB1BB193E20094B9CC /* NSDateUtilities.swift in Sources */,
@@ -784,7 +796,7 @@
 				INFOPLIST_FILE = Skunk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-D DEBUG $(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = edu.purdue.jselbo.Skunk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jselbo.skunk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -800,7 +812,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Skunk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = edu.purdue.jselbo.Skunk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jselbo.skunk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

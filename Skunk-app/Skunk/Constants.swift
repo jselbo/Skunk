@@ -20,6 +20,7 @@ struct Constants {
     static let keyLastName = "last_name"
     static let keyPhoneNumber = "phone_number"
     static let keyDebug = "debug"
+    static let keyDeviceToken = "device_token"
     
     // For Keychain access
     static let userIdentifierService = "SkunkUserIdentifier"
@@ -34,38 +35,49 @@ struct Constants {
     static let debugUserIdentifier = Uid(12345)
     
     // Server endpoints
+    static let userIDHeader = "Skunk-UserID"
+    
     struct Endpoints {
         static let baseURLHost = "68.234.146.84"
-        static let baseURLPort = "3001"
+        static let baseURLPort = "3003"
         static let baseURL = NSURL(string: "http://\(baseURLHost):\(baseURLPort)")!
         
         static let usersCreateURL = baseURL.URLByAppendingPathComponent("/users/create")
         static let usersLoginURL = baseURL.URLByAppendingPathComponent("/users/login")
+        static let usersFindURL = baseURL.URLByAppendingPathComponent("/users/find")
         
+        static let sessionsBaseURL = baseURL.URLByAppendingPathComponent("/sessions")
         static let sessionsURL = baseURL.URLByAppendingPathComponent("/sessions/")
-        
         static let sessionsCreateURL = baseURL.URLByAppendingPathComponent("/sessions/create")
+        
+        // Session handshakes
         static let sessionsTerminateRequestPath = "/terminate/request"
         static let sessionsTerminateResponsePath = "/terminate/response"
         static let sessionsPickupRequestPath = "/pickup/request"
         static let sessionsPickupResponsePath = "/pickup/response"
         static let sessionsDriverResponsePath = "/driver/response"
         
-        static let usersFindURL = baseURL.URLByAppendingPathComponent("/users/find")
-        
-        //handshakes
-        static let sessionTermRequest = "/terminate/request"
-        static let sessionTermResponse = "/terminate/response"
-        static let sessionsPickupRequest = "/pickup/request"
-        static let sessionsPickupResponse = "/pickup/response"
-        static let sessionsDriverResponse = "/driver/response"
-
-        
+        static func createSessionURL(identifier: Uid, path: String?) -> NSURL {
+            let url = sessionsBaseURL.URLByAppendingPathComponent(identifier.description)
+            if let path = path {
+                return url.URLByAppendingPathComponent(path)
+            }
+            return url
+        }
+    }
+    
+    // Notification categories
+    struct Notifications {
+        static let sessionStart = "SESSION_START"
+        static let sessionEnd = "SESSION_END"
+        static let pickupRequest = "PICKUP_REQUEST"
+        static let pickupResponse = "PICKUP_RESPONSE"
     }
     
     // In seconds
     static let serverTimeout = NSTimeInterval(30.0)
-    static let heartbeatFrequency = CFTimeInterval(30.0)
+    static let heartbeatFrequency = CFTimeInterval(5.0)
+    static let receiverSessionRefreshInterval = CFTimeInterval(5.0)
     
     // HTTP Response Codes
     static let statusOK = 200

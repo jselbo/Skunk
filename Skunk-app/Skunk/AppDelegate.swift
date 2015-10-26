@@ -13,12 +13,57 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        if let remoteNotification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? NSDictionary {
+            print("launched with notification: \(remoteNotification)")
+        }
+        
+        // If no device token saved, request one
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let deviceToken = defaults.objectForKey(Constants.keyDeviceToken) as? NSData
+        if deviceToken == nil {
+            let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+            application.registerUserNotificationSettings(notificationSettings)
+        }
+        
         return true
     }
+    
+    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+        if notificationSettings.types != .None {
+            application.registerForRemoteNotifications()
+        }
+    }
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(deviceToken, forKey: Constants.keyDeviceToken)
+        guard defaults.synchronize() else {
+            NSException(name: "NSUserDefaults synchronize", reason: "Failed to synchronize device token", userInfo: nil).raise()
+            return
+        }
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        let category = userInfo["aps"]!["category"] as! String
+        let data = userInfo["custom_data"] as? [String: AnyObject]
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(category, object: nil, userInfo: data)
+    }
 
+    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], withResponseInfo responseInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
+        // TODO replace with actual logic once we start receiving notifications
+        print("BIGGER NOTIFICATION HANDLER")
+        print("handle action: id \(identifier), userinfo: \(userInfo), responseInfo: \(responseInfo)")
+        print("completion handler: \(completionHandler)")
+    }
+    
+    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
+        print("LITTLE NOTIFICATION HANDLER")
+        print("handle action: id \(identifier), userinfo: \(userInfo)")
+        print("completion handler: \(completionHandler)")
+    }
+    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

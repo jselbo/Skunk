@@ -14,34 +14,89 @@ class ReceiveMainViewController: UIViewController {
     var accountManager: UserAccountManager!
     var sessionManager: ShareSessionManager!
     var sharerSession: ShareSession!
+    var locationManager: LocationManager!
+
+    var refreshTimer: NSTimer!
     
-    @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var canPickUp: UIButton!
-    @IBOutlet weak var stopReceivingUpdates: UIButton!
     @IBOutlet weak var optionsViewPanel: UIView!
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var canPickUpButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let currentLocation = sharerSession.currentLocation
-        let center = CLLocationCoordinate2D(latitude: (currentLocation?.coordinate.latitude)!, longitude: (currentLocation?.coordinate.longitude)!)
-        let region = MKCoordinateRegionMake(center, MKCoordinateSpanMake(0.01, 0.01))
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        refreshTimer = NSTimer.scheduledTimerWithTimeInterval(Constants.receiverSessionRefreshInterval, target: self, selector: "sessionRefresh:", userInfo: nil, repeats: true)
+        
+        self.getLocation(sharerSession.currentLocation!)
+
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        refreshTimer.invalidate()
+        refreshTimer = nil
+    }
+    
+    @IBAction func canPickUp(sender: AnyObject) {
+        sessionManager.sessionDriverResponse(sharerSession) { (success) -> () in
+            if(success) {
+
+            } else {
+                self.presentErrorAlert("Can't Submit Repsonse Currently")
+            }
+        }
+    }
+
+    @IBAction func stopRecievingUpdates(sender: AnyObject) {
+        sessionManager.sessionTermResponse(sharerSession) { (success) -> () in
+            if(success) {
+                
+            } else {
+                self.presentErrorAlert("Can't Submit Response Currently")
+            }
+        }
+    }
+    
+    func sessionRefresh(sender: AnyObject) {
+        sessionManager.fetchShareSession(accountManager.registeredAccount!,
+            identifier: sharerSession.identifier!) { (session) -> () in
+            self.sharerSession = session
+                
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if let session = session {
+                    self.getLocation(session.currentLocation!)
+                } else {
+                    self.presentErrorAlert("Failed to fetch updated session")
+                }
+            })
+        }
+    }
+    
+    func getLocation(location: CLLocation) {
+        mapView.removeAnnotations(mapView.annotations)
+        
+        let latDelta:CLLocationDegrees = 0.01
+        let longDelta:CLLocationDegrees = 0.01
+        
+        let initialLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        
+        let theSpan:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, longDelta)
+        let pointLocation:CLLocationCoordinate2D = initialLocation
+        
+        let region:MKCoordinateRegion = MKCoordinateRegionMake(pointLocation, theSpan)
         mapView.setRegion(region, animated: true)
-        // Do any additional setup after loading the view.
+        
+        let pinLocation : CLLocationCoordinate2D = initialLocation
+        let objectAnnotation = MKPointAnnotation()
+        objectAnnotation.coordinate = pinLocation
+        objectAnnotation.title = "Friend in Need"
+        self.mapView.addAnnotation(objectAnnotation)
+        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }

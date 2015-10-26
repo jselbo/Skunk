@@ -18,6 +18,7 @@ class SharerOptionsViewController: UITableViewController, ShareSelectLocationVie
 
     var accountManager: UserAccountManager!
     var locationManager: LocationManager!
+    var sessionManager: ShareSessionManager!
     
     var endCondition: ShareEndCondition?
     
@@ -60,6 +61,7 @@ class SharerOptionsViewController: UITableViewController, ShareSelectLocationVie
             receiversController.needsDriver = requestRideOption.on
             receiversController.accountManager = accountManager
             receiversController.locationManager = locationManager
+            receiversController.sessionManager = sessionManager
         default:
             break
         }

@@ -30,9 +30,10 @@
 # wrong.
 post '/sessions/:id/terminate/request' do
   # Get the receivers from the request
-	receivers = params[:receivers]
-	# Get the session
-	@session = Session.find(params[:id])
+  receiver_ids = params[:receivers]
+  # Get the session
+  @session = Session.find(params[:id])
+
   # Cycle through session_users to mark if the sharer ended the session
   # receivers.each do |rid|
   #   @session_user = SessionUser.find_by(receiver: rid, session: @session)
@@ -40,8 +41,10 @@ post '/sessions/:id/terminate/request' do
   # end
   #
   # NOTE: #update_all is a nice method to handle this.
-  SessionUser.where(receiver_id: receivers).update_all(sharer_ended: true)
-	#TODO Push notification to notify receivers of sharer termination
+  SessionUser.where(receiver_id: receiver_ids).update_all(sharer_ended: true)
+
+  receivers = User.where(id: receiver_ids)
+  PushNotification.session_ending @session, receivers
 
 	return 204
 end
@@ -63,7 +66,7 @@ end
 # wrong.
 post '/sessions/:id/terminate/response' do
 	# Get user id for the receiver
-	@user = User.find(headers["HTTP_SKUNK_USERID"])
+	@user = User.find(request.env["HTTP_SKUNK_USERID"])
   # Get the response from the request
 	response = params[:response]
 	# Get the session

@@ -15,6 +15,7 @@ class ShareMainViewController: UIViewController {
     
     var accountManager: UserAccountManager!
     var locationManager: LocationManager!
+    var sessionManager: ShareSessionManager!
     var authorized = false
     
     @IBOutlet weak var personalMapView: MKMapView!
@@ -47,6 +48,7 @@ class ShareMainViewController: UIViewController {
             let optionsController = segue.destinationViewController as! SharerOptionsViewController
             optionsController.accountManager = accountManager
             optionsController.locationManager = locationManager
+            optionsController.sessionManager = sessionManager
         default:
             break
         }

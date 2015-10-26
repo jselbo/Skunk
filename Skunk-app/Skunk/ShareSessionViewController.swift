@@ -31,6 +31,8 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
     @IBOutlet weak var broadcastImageView: UIImageView!
     @IBOutlet weak var receiversTableView: UITableView!
     
+    var handledTermination = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,15 +51,31 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
         receiversTableView.editing = true
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        locationManager.stopUpdatingLocation()
-    }
-    
     //MARK: - IBAction
     
     @IBAction func pickupRequestPressed(sender: AnyObject) {
+        pickUpButton.enabled = false
+        pickUpButton.backgroundColor = UIColor.grayColor()
+        
+        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+        spinner.center = pickUpButton.center
+        pickUpButton.addSubview(spinner)
+        
+        session.needsPickup = true
+        sessionManager.sessionPickUpRequest(session) { (success) -> () in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                spinner.removeFromSuperview()
+                
+                if success {
+                    self.pickUpButton.backgroundColor = UIColor.greenColor()
+                    self.pickUpButton.setTitle("Pickup Requested", forState: .Normal)
+                } else {
+                    self.presentErrorAlert("Failed to request pickup")
+                    self.pickUpButton.enabled = true
+                    self.pickUpButton.backgroundColor = UIColor.blueColor()
+                }
+            })
+        }
     }
     
     //MARK: - UITableViewDataSource
@@ -74,18 +92,28 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
         let cell = tableView.dequeueReusableCellWithIdentifier(receiverCellIdentifier, forIndexPath: indexPath)
         
         let receiver = receivers[indexPath.row]
-        let receiverAccount = receiver.account
-        cell.textLabel!.text = "\(receiverAccount.userAccount.firstName) \(receiverAccount.userAccount.lastName)"
+        
+        let attributedNameText = NSMutableAttributedString(string: receiver.account.userAccount.fullName)
+        if session.driverIdentifier == receiver.account.identifier {
+            let attributes = [
+                NSFontAttributeName: UIFont.boldSystemFontOfSize(14.0),
+            ]
+            let driverString = NSAttributedString(string: " (DRIVER)", attributes: attributes)
+            attributedNameText.appendAttributedString(driverString)
+        }
+        
+        cell.textLabel!.attributedText = attributedNameText
         cell.textLabel!.textColor = UIColor.blackColor()
         cell.detailTextLabel!.textColor = UIColor.blackColor()
         
         switch receiver.stopSharingState {
         case .None:
             cell.detailTextLabel!.text = ""
-            break
+            
         case .Requested:
             cell.detailTextLabel!.text = "Requested to end sharing"
-        case .Accepted(_):
+            
+        case .Accepted:
             cell.textLabel!.textColor = UIColor.grayColor()
             cell.detailTextLabel!.textColor = UIColor.grayColor()
             cell.detailTextLabel!.text = "Sharing Ended"
@@ -99,17 +127,29 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
         let action = UITableViewRowAction(style: UITableViewRowActionStyle.Destructive, title: "End Sharing") { (action, indexPath) -> Void in
             let receiver = self.receivers[indexPath.row]
             let account = receiver.account.userAccount
+            
             self.presentDecisionAlert("Are you sure you would like to stop sharing your location with \"\(account.firstName) \(account.lastName)\"? This receiver must approve your request.") { _ in
-                self.sessionManager.sessionTermRequest(self.session, receiver: receiver.account, completion: { (success) in
-                    
+                self.sessionManager.sessionTermRequest(self.session, receiver: receiver, completion: { (success) in
+                    if !success {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            tableView.reloadData()
+                            self.presentErrorAlert("Server Faulted")
+                        })
+                    }
                 })
+                tableView.reloadData()
             }
         }
         return [action]
     }
     
     func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return .Delete
+        let receiver = receivers[indexPath.row]
+        if receiver.stopSharingState == .None {
+            return .Delete
+        } else {
+            return .None
+        }
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -134,7 +174,16 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
             let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)
             dispatch_async(queue, { () -> Void in
                 self.sessionManager.sendLocationHeartbeat(self.session, location: location, completion: { success in
-                    self.handleHeartbeat(location, success: success)
+                    if success {
+                        self.handleHeartbeat(location)
+                    } else {
+                        print("Failed to send heartbeat: \(location)")
+                        dispatch_async(dispatch_get_main_queue()) { _ in
+                            if self.presentedViewController == nil {
+                                self.presentErrorAlert("Failed to send location to server")
+                            }
+                        }
+                    }
                 })
             })
             
@@ -147,18 +196,24 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
     
     //MARK: - Private methods
     
-    // Called off of main thread and not necessarily when application is active
-    private func handleHeartbeat(location: CLLocation, success: Bool) {
-        if success {
-            
-        } else {
-            print("Failed to send heartbeat: \(location)")
-            dispatch_async(dispatch_get_main_queue()) { _ in
-                if self.presentedViewController == nil {
-                    self.presentErrorAlert("Failed to send location to server")
-                }
+    private func handleHeartbeat(location: CLLocation) {
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            if self.session.terminated && !self.handledTermination {
+                self.handledTermination = true
+                
+                self.locationManager.delegate = nil
+                self.locationManager.stopUpdatingLocation()
+                self.presentErrorAlert("Your sharing session has ended.", OKHandler: { (action) -> Void in
+                    let startSharingController =
+                        self.storyboard!.instantiateViewControllerWithIdentifier("beginSharingScreen")
+                        as! ShareMainViewController
+                    startSharingController.accountManager = self.accountManager
+                    startSharingController.locationManager = self.locationManager
+                    self.navigationController!.setViewControllers([startSharingController], animated: true)
+                })
             }
-        }
+            
+            self.receiversTableView.reloadData()
+        })
     }
-    
 }
