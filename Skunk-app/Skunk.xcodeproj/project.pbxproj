@@ -68,6 +68,7 @@
 		B252126C1BD1818200664470 /* StringUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B252126B1BD1818200664470 /* StringUtilities.swift */; settings = {ASSET_TAGS = (); }; };
 		B2936B481BD812CE00D9C3E4 /* ReceiverPickUpSharerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2936B471BD812CE00D9C3E4 /* ReceiverPickUpSharerViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		E56A142B1BAF4BA600985CC7 /* SharerOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56A142A1BAF4BA600985CC7 /* SharerOptionsViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		E5743ADC1BDD99F300ED7230 /* shareSessionHeartbeat.json in Resources */ = {isa = PBXBuildFile; fileRef = E5743ADB1BDD99F300ED7230 /* shareSessionHeartbeat.json */; settings = {ASSET_TAGS = (); }; };
 		E59F6B8F1BD9BF8C0017FEBA /* session_return.json in Resources */ = {isa = PBXBuildFile; fileRef = E59F6B8E1BD9BF8C0017FEBA /* session_return.json */; settings = {ASSET_TAGS = (); }; };
 		E5F2F9F91BB311000082CF84 /* SharerSelectRecieverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F2F9F81BB311000082CF84 /* SharerSelectRecieverViewController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
@@ -150,6 +151,7 @@
 		B252126B1BD1818200664470 /* StringUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtilities.swift; sourceTree = "<group>"; };
 		B2936B471BD812CE00D9C3E4 /* ReceiverPickUpSharerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiverPickUpSharerViewController.swift; sourceTree = "<group>"; };
 		E56A142A1BAF4BA600985CC7 /* SharerOptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharerOptionsViewController.swift; sourceTree = "<group>"; };
+		E5743ADB1BDD99F300ED7230 /* shareSessionHeartbeat.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = shareSessionHeartbeat.json; sourceTree = "<group>"; };
 		E59F6B8E1BD9BF8C0017FEBA /* session_return.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = session_return.json; sourceTree = "<group>"; };
 		E5F2F9F81BB311000082CF84 /* SharerSelectRecieverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharerSelectRecieverViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -378,6 +380,7 @@
 			isa = PBXGroup;
 			children = (
 				E59F6B8E1BD9BF8C0017FEBA /* session_return.json */,
+				E5743ADB1BDD99F300ED7230 /* shareSessionHeartbeat.json */,
 				034F23D41BD1FE7600CD4A60 /* find.json */,
 				03E0096D1BCFE770003E6135 /* login.json */,
 				03E0096F1BCFE83A003E6135 /* register.json */,
@@ -518,6 +521,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0345D9F11BCF1146003544FC /* broadcast2.png in Resources */,
+				E5743ADC1BDD99F300ED7230 /* shareSessionHeartbeat.json in Resources */,
 				03C649CC1BD2F07600979846 /* session_heartbeat.json in Resources */,
 				034F23D01BD1851F00CD4A60 /* array.json in Resources */,
 				034F23D81BD2014700CD4A60 /* session_create.json in Resources */,

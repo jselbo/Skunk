@@ -112,5 +112,13 @@ class MainTabBarController: UITabBarController {
         stub(isPath(pickupRequestURL.path!), response: { _ in
             return OHHTTPStubsResponse(data: NSData(), statusCode: 204, headers: nil)
         })
+        
+        let getSessionID = Constants.Endpoints.createSessionURL(1, path: nil);
+        
+        stub(isPath( getSessionID.path! ), response: { _ in
+            let path = OHPathForFile("shareSessionHeartbeat.json", self.dynamicType)
+            return fixture(path!, status: 200, headers: ["Content-Type": "application/json"])
+        })
+
     }
 }
