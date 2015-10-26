@@ -50,7 +50,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
 
     func sendLocationHeartbeat(session: ShareSession, location: CLLocation, completion: (success: Bool) -> ()) {
         let sessionURL = Constants.Endpoints.createSessionURL(session.identifier!, path: nil)
-        let request = ServerRequest(type: .PUT, url: sessionURL)
+        let request = ServerRequest(type: .POST, url: sessionURL)
         request.expectedContentType = .JSON
         request.expectedBodyType = .JSONObject
         request.additionalHTTPHeaders =
@@ -244,7 +244,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
     func sessionPickUpRequest(session: ShareSession, completion:(success: Bool)->()) {
         let sessionURL = Constants.Endpoints.createSessionURL(session.identifier!,
             path: Constants.Endpoints.sessionsPickupRequestPath)
-        let request = ServerRequest(type: .PUT, url: sessionURL)
+        let request = ServerRequest(type: .POST, url: sessionURL)
         request.expectedStatusCode = Constants.nilContent
         request.additionalHTTPHeaders =
             [Constants.userIDHeader: "\(session.sharerAccount.identifier)"]
