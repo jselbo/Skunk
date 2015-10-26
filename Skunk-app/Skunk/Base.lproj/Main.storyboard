@@ -531,7 +531,7 @@
                                             <action selector="stopRecievingUpdates:" destination="HNq-TB-zG9" eventType="touchUpInside" id="8ii-xu-dcX"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sharing until ..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Wi-Gj-nj2">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sharing until ..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Wi-Gj-nj2">
                                         <rect key="frame" x="8" y="0.0" width="304" height="20"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" weight="thin" pointSize="16"/>
@@ -562,7 +562,7 @@
                                 </constraints>
                             </view>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="QeM-ze-Lvt">
-                                <rect key="frame" x="0.0" y="64" width="320" height="292"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="304"/>
                                 <animations/>
                                 <connections>
                                     <outlet property="delegate" destination="HNq-TB-zG9" id="hOK-3L-EML"/>
@@ -574,7 +574,7 @@
                         <constraints>
                             <constraint firstItem="nKw-d0-eLd" firstAttribute="top" secondItem="Toq-ay-FMR" secondAttribute="bottom" id="AJs-2N-Wnc"/>
                             <constraint firstAttribute="trailing" secondItem="Toq-ay-FMR" secondAttribute="trailing" id="HPD-YK-G1n"/>
-                            <constraint firstItem="Toq-ay-FMR" firstAttribute="top" secondItem="QeM-ze-Lvt" secondAttribute="bottom" constant="16" id="PWK-Ds-VWl"/>
+                            <constraint firstItem="Toq-ay-FMR" firstAttribute="top" secondItem="QeM-ze-Lvt" secondAttribute="bottom" constant="4" id="PWK-Ds-VWl"/>
                             <constraint firstItem="QeM-ze-Lvt" firstAttribute="top" secondItem="bg7-BC-nqg" secondAttribute="bottom" id="Wuy-f7-4e4"/>
                             <constraint firstItem="QeM-ze-Lvt" firstAttribute="leading" secondItem="5Ni-wH-3Bt" secondAttribute="leading" id="kbv-5I-fOM"/>
                             <constraint firstAttribute="trailing" secondItem="QeM-ze-Lvt" secondAttribute="trailing" id="oIS-FP-omr"/>

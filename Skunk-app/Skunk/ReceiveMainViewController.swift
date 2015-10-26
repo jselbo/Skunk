@@ -11,6 +11,9 @@ import MapKit
 
 class ReceiveMainViewController: UIViewController, MKMapViewDelegate {
     
+    let destinationPinIdentifier = "DestinationPin"
+    let sharerPinIdentifier = "SharerPin"
+    
     var accountManager: UserAccountManager!
     var sessionManager: ShareSessionManager!
     var sharerSession: ShareSession!
@@ -19,6 +22,7 @@ class ReceiveMainViewController: UIViewController, MKMapViewDelegate {
     var refreshTimer: NSTimer!
     
     var sharerAnnotation: MKAnnotation?
+    var destinationAnnotation: MKAnnotation?
     
     @IBOutlet weak var optionsViewPanel: UIView!
     @IBOutlet weak var mapView: MKMapView!
@@ -29,9 +33,28 @@ class ReceiveMainViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if sharerSession.endCondition.isLocation {
+        self.title = sharerSession.sharerAccount.userAccount.fullName
+        
+        switch sharerSession.endCondition {
+        case .Location(let location):
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = location.coordinate
+            annotation.title = "Destination"
+            let sharerName = sharerSession.sharerAccount.userAccount.fullName
+            annotation.subtitle = "Sharing will end when \(sharerName) reaches this location."
             
+            mapView.addAnnotation(annotation)
+            destinationAnnotation = annotation
+            
+            conditionLabel.text = "Sharing until destination"
+        case .Time(let date):
+            let text = "Sharing until \(date.humanizedString())"
+            let atIndex = text.rangeOfString("at")!.endIndex
+            conditionLabel.text =
+                text.substringToIndex(atIndex) + "\n" + text.substringFromIndex(atIndex.advancedBy(1))
         }
+        
+        driverLabel.hidden = sharerSession.driverIdentifier != accountManager.registeredAccount!.identifier
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -40,7 +63,7 @@ class ReceiveMainViewController: UIViewController, MKMapViewDelegate {
         refreshTimer = NSTimer.scheduledTimerWithTimeInterval(Constants.receiverSessionRefreshInterval, target: self, selector: "sessionRefresh:", userInfo: nil, repeats: true)
         
         if let currentLocation = sharerSession.currentLocation {
-            self.showSharerLocationInMap(currentLocation)
+            self.showSharerLocationInMap(currentLocation, updateTime: sharerSession.lastLocationUpdate!)
         }
     }
     
@@ -87,8 +110,11 @@ class ReceiveMainViewController: UIViewController, MKMapViewDelegate {
                     self.sharerSession = session
                     
                     if let currentLocation = session.currentLocation {
-                        self.showSharerLocationInMap(currentLocation)
+                        self.showSharerLocationInMap(currentLocation, updateTime: session.lastLocationUpdate!)
                     }
+                    
+                    self.driverLabel.hidden =
+                        self.sharerSession.driverIdentifier != self.accountManager.registeredAccount!.identifier
                 } else {
                     self.presentErrorAlert("Failed to fetch updated session")
                 }
@@ -96,38 +122,49 @@ class ReceiveMainViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    func showSharerLocationInMap(location: CLLocation) {
+    func showSharerLocationInMap(location: CLLocation, updateTime: NSDate) {
         if let sharerAnnotation = sharerAnnotation {
+            // Location hasn't changed, so don't update the map
+            if sharerAnnotation.coordinate == location.coordinate {
+                return
+            }
+            
             mapView.removeAnnotation(sharerAnnotation)
         }
         
         let latDelta = CLLocationDegrees(0.01)
         let longDelta = CLLocationDegrees(0.01)
         
-        let initialLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-        
         let span = MKCoordinateSpanMake(latDelta, longDelta)
-        let pointLocation = initialLocation
-        
-        let region = MKCoordinateRegionMake(pointLocation, span)
+        let region = MKCoordinateRegionMake(location.coordinate, span)
         mapView.setRegion(region, animated: true)
         
-        let pinLocation = initialLocation
+        let secondDifference = NSDate().timeIntervalSince1970 - updateTime.timeIntervalSince1970
+        let minuteDifference = Int(secondDifference / 60)
         
         let annotation = MKPointAnnotation()
-        annotation.coordinate = pinLocation
-        annotation.title = "Friend in Need"
+        annotation.coordinate = location.coordinate
+        annotation.title = "\(sharerSession.sharerAccount.userAccount.fullName)'s Location"
+        annotation.subtitle = "Last updated \(minuteDifference) minutes ago"
         self.mapView.addAnnotation(annotation)
         
         sharerAnnotation = annotation
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        if let _ = annotation as? MKUserLocation {
-            // Default to blue dot
-            return nil
+        if let destinationAnnotation = destinationAnnotation where annotation.coordinate == destinationAnnotation.coordinate {
+            let pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: destinationPinIdentifier)
+            pinAnnotationView.pinTintColor = UIColor.orangeColor()
+            pinAnnotationView.canShowCallout = true
+            return pinAnnotationView
         }
-        
+        if let sharerAnnotation = sharerAnnotation where annotation.coordinate == sharerAnnotation.coordinate {
+            let pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: sharerPinIdentifier)
+            pinAnnotationView.pinTintColor = UIColor.greenColor()
+            pinAnnotationView.animatesDrop = true
+            pinAnnotationView.canShowCallout = true
+            return pinAnnotationView
+        }
         return nil
     }
     
