@@ -1,3 +1,5 @@
+# Run all tests in the :test environment
+ENV['RACK_ENV'] = 'test'
 require 'rack/test'
 require File.expand_path '../../server.rb', __FILE__
 
@@ -22,10 +24,8 @@ RSpec.configure do |config|
   config.include Rack::Test::Methods
 end
 
-# Run all tests in the :test environment
-ENV['RACK_ENV'] = 'test'
 # Rack's HTTP mocking for tests
-require 'rack/test'
+#require 'rack/test'
 # Database management for testing
 require 'database_cleaner'
 # The Sinatra app
