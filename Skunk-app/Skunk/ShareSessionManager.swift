@@ -226,8 +226,6 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         let sessionURL = Constants.Endpoints.createSessionURL(session.identifier!,
             path: Constants.Endpoints.sessionsTerminateResponsePath)
         let request = ServerRequest(type: .POST, url: sessionURL)
-        request.expectedContentType = .JSON
-        request.expectedBodyType = .JSONObject
         request.expectedStatusCode = Constants.nilContent
         request.additionalHTTPHeaders =
             [Constants.userIDHeader: "\(session.sharerAccount.identifier)"]

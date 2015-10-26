@@ -48,39 +48,58 @@ class MainTabBarController: UITabBarController {
             self.mockDebugRequests()
         }
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "driverRequested:", name: Constants.Notifications.sessionStart, object: nil)
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.addObserver(self, selector: "sessionStarted:", name: Constants.Notifications.sessionStart, object: nil)
+        notificationCenter.addObserver(self, selector: "sessionEnded:", name: Constants.Notifications.sessionEnd, object: nil)
+        notificationCenter.addObserver(self, selector: "pickupRequested:", name: Constants.Notifications.pickupRequest, object: nil)
+        notificationCenter.addObserver(self, selector: "pickupResponded:", name: Constants.Notifications.pickupResponse, object: nil)
     }
     
-    func driverRequested(notification: NSNotification) {
-        switch notification.name {
-        case Constants.Notifications.sessionStart:
-            let json = notification.userInfo as! [String: AnyObject]
-            let sessionJSON = json["session"] as! [String: AnyObject]
-            guard let shareSession = ShareSessionManager.parseShareSession(sessionJSON) else {
-                return
-            }
-            
-            if shareSession.needsDriver {
-                self.presentDecisionAlert("Can you be a driver for this sharer?", OKHandler: { (action) -> Void in
-                    self.sessionManager.sessionDriverResponse(shareSession, completion: { (success) -> () in
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            let sharerAccount = shareSession.sharerAccount.userAccount
-                            let sharerName = "\(sharerAccount.firstName) \(sharerAccount.lastName)"
-                            let message = success ? "You have been marked as the driver for \(sharerName)." : "Failed to respond as driver"
-                            self.presentErrorAlert(message)
-                        })
+    func sessionStarted(notification: NSNotification) {
+        let json = notification.userInfo as! [String: AnyObject]
+        let sessionJSON = json["session"] as! [String: AnyObject]
+        guard let shareSession = ShareSessionManager.parseShareSession(sessionJSON) else {
+            return
+        }
+        
+        if shareSession.needsDriver {
+            let sharerName = shareSession.sharerAccount.userAccount.fullName
+            self.presentDecisionAlert("\(sharerName) has shared their location with you and needs a driver. Would you like to accept the driver request?", OKHandler: { (action) -> Void in
+                self.sessionManager.sessionDriverResponse(shareSession, completion: { (success) -> () in
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        let message = success ? "You have been marked as the driver for \(sharerName)." : "Failed to respond as driver"
+                        self.presentErrorAlert(message)
                     })
                 })
-            }
-        case Constants.Notifications.sessionEnd:
-            break
-        case Constants.Notifications.pickupRequest:
-            break
-        case Constants.Notifications.pickupResponse:
-            break
-        default:
-            print("Warning: Unrecognized remote notification category: '\(notification.name)'")
+            })
         }
+    }
+    
+    func sessionEnded(notification: NSNotification) {
+        let json = notification.userInfo as! [String: AnyObject]
+        let sessionJSON = json["session"] as! [String: AnyObject]
+        guard let shareSession = ShareSessionManager.parseShareSession(sessionJSON) else {
+            return
+        }
+        
+        let sharerName = shareSession.sharerAccount.userAccount.fullName
+        let message = "Allow \(sharerName) to stop sharing their location with you?"
+        self.presentDecisionAlert(message, OKHandler: { (action) -> Void in
+            self.sessionManager.sessionTermResponse(shareSession, completion: { (success) -> () in
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    let message = success ? "You have stopped sharing your location with \(sharerName)." : "Failed to accept location termination request"
+                    self.presentErrorAlert(message)
+                })
+            })
+        })
+    }
+    
+    func pickupRequested(notification: NSNotification) {
+        
+    }
+    
+    func pickupResponded(notification: NSNotification) {
+        
     }
     
     private func mockDebugRequests() {

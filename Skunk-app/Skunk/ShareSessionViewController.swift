@@ -98,7 +98,7 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
             let attributes = [
                 NSFontAttributeName: UIFont.boldSystemFontOfSize(14.0),
             ]
-            let driverString = NSAttributedString(string: "DRIVER", attributes: attributes)
+            let driverString = NSAttributedString(string: " (DRIVER)", attributes: attributes)
             attributedNameText.appendAttributedString(driverString)
         }
         
@@ -197,7 +197,6 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
     //MARK: - Private methods
     
     private func handleHeartbeat(location: CLLocation) {
-        print("driver ID: \(session.driverIdentifier)")
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             if self.session.terminated && !self.handledTermination {
                 self.handledTermination = true
