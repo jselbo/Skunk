@@ -58,7 +58,8 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
         pickUpButton.backgroundColor = UIColor.grayColor()
         
         let spinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
-        spinner.center = pickUpButton.center
+        spinner.startAnimating()
+        spinner.center = pickUpButton.center - pickUpButton.frame.origin
         pickUpButton.addSubview(spinner)
         
         session.needsPickup = true

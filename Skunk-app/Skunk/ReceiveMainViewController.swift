@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class ReceiveMainViewController: UIViewController {
+class ReceiveMainViewController: UIViewController, MKMapViewDelegate {
     
     var accountManager: UserAccountManager!
     var sessionManager: ShareSessionManager!
@@ -18,12 +18,20 @@ class ReceiveMainViewController: UIViewController {
 
     var refreshTimer: NSTimer!
     
+    var sharerAnnotation: MKAnnotation?
+    
     @IBOutlet weak var optionsViewPanel: UIView!
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var canPickUpButton: UIButton!
+    @IBOutlet weak var conditionLabel: UILabel!
+    @IBOutlet weak var driverLabel: UILabel!
+    @IBOutlet weak var stopReceivingButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if sharerSession.endCondition.isLocation {
+            
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -31,8 +39,9 @@ class ReceiveMainViewController: UIViewController {
         
         refreshTimer = NSTimer.scheduledTimerWithTimeInterval(Constants.receiverSessionRefreshInterval, target: self, selector: "sessionRefresh:", userInfo: nil, repeats: true)
         
-        self.getLocation(sharerSession.currentLocation!)
-
+        if let currentLocation = sharerSession.currentLocation {
+            self.showSharerLocationInMap(currentLocation)
+        }
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -41,35 +50,45 @@ class ReceiveMainViewController: UIViewController {
         refreshTimer.invalidate()
         refreshTimer = nil
     }
-    
-    @IBAction func canPickUp(sender: AnyObject) {
-        sessionManager.sessionDriverResponse(sharerSession) { (success) -> () in
-            if(success) {
-
-            } else {
-                self.presentErrorAlert("Can't Submit Repsonse Currently")
-            }
-        }
-    }
 
     @IBAction func stopRecievingUpdates(sender: AnyObject) {
+        stopReceivingButton.enabled = false
+        stopReceivingButton.backgroundColor = UIColor.grayColor()
+        
+        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+        spinner.startAnimating()
+        spinner.center = stopReceivingButton.center - stopReceivingButton.frame.origin
+        stopReceivingButton.addSubview(spinner)
+        
         sessionManager.sessionTermResponse(sharerSession) { (success) -> () in
-            if(success) {
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                spinner.removeFromSuperview()
                 
-            } else {
-                self.presentErrorAlert("Can't Submit Response Currently")
-            }
+                if success {
+                    let userIdentifier = self.accountManager.registeredAccount!.identifier
+                    let receiverInfo = self.sharerSession.findReceiver(userIdentifier)!
+                    receiverInfo.stopSharingState = .Accepted
+                    
+                    self.navigationController!.popViewControllerAnimated(true)
+                } else {
+                    self.presentErrorAlert("Failed to submit request to stop receiving updates")
+                    self.stopReceivingButton.enabled = true
+                    self.stopReceivingButton.backgroundColor = UIColor.redColor()
+                }
+            })
         }
     }
     
     func sessionRefresh(sender: AnyObject) {
         sessionManager.fetchShareSession(accountManager.registeredAccount!,
             identifier: sharerSession.identifier!) { (session) -> () in
-            self.sharerSession = session
-                
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if let session = session {
-                    self.getLocation(session.currentLocation!)
+                    self.sharerSession = session
+                    
+                    if let currentLocation = session.currentLocation {
+                        self.showSharerLocationInMap(currentLocation)
+                    }
                 } else {
                     self.presentErrorAlert("Failed to fetch updated session")
                 }
@@ -77,26 +96,39 @@ class ReceiveMainViewController: UIViewController {
         }
     }
     
-    func getLocation(location: CLLocation) {
-        mapView.removeAnnotations(mapView.annotations)
+    func showSharerLocationInMap(location: CLLocation) {
+        if let sharerAnnotation = sharerAnnotation {
+            mapView.removeAnnotation(sharerAnnotation)
+        }
         
-        let latDelta:CLLocationDegrees = 0.01
-        let longDelta:CLLocationDegrees = 0.01
+        let latDelta = CLLocationDegrees(0.01)
+        let longDelta = CLLocationDegrees(0.01)
         
         let initialLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         
-        let theSpan:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, longDelta)
-        let pointLocation:CLLocationCoordinate2D = initialLocation
+        let span = MKCoordinateSpanMake(latDelta, longDelta)
+        let pointLocation = initialLocation
         
-        let region:MKCoordinateRegion = MKCoordinateRegionMake(pointLocation, theSpan)
+        let region = MKCoordinateRegionMake(pointLocation, span)
         mapView.setRegion(region, animated: true)
         
-        let pinLocation : CLLocationCoordinate2D = initialLocation
-        let objectAnnotation = MKPointAnnotation()
-        objectAnnotation.coordinate = pinLocation
-        objectAnnotation.title = "Friend in Need"
-        self.mapView.addAnnotation(objectAnnotation)
+        let pinLocation = initialLocation
         
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = pinLocation
+        annotation.title = "Friend in Need"
+        self.mapView.addAnnotation(annotation)
+        
+        sharerAnnotation = annotation
+    }
+    
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        if let _ = annotation as? MKUserLocation {
+            // Default to blue dot
+            return nil
+        }
+        
+        return nil
     }
     
 }

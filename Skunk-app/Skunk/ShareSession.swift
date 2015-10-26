@@ -22,8 +22,17 @@ enum ShareEndCondition: Serializable {
     case Location(CLLocation)
     case Time(NSDate)
     
+    var isLocation: Bool {
+        switch self {
+        case .Location(_):
+            return true
+        default:
+            return false
+        }
+    }
+    
     func name() -> String {
-        switch (self) {
+        switch self {
         case .Location(_):
             return "location"
         case .Time(_):

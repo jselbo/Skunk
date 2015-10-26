@@ -53,12 +53,13 @@ class MainTabBarController: UITabBarController {
         notificationCenter.addObserver(self, selector: "sessionEnded:", name: Constants.Notifications.sessionEnd, object: nil)
         notificationCenter.addObserver(self, selector: "pickupRequested:", name: Constants.Notifications.pickupRequest, object: nil)
         notificationCenter.addObserver(self, selector: "pickupResponded:", name: Constants.Notifications.pickupResponse, object: nil)
+        
+        let appDelegate = UIApplication.sharedApplication().delegate! as! AppDelegate
+        appDelegate.fireNotificationFromLaunch()
     }
     
     func sessionStarted(notification: NSNotification) {
-        let json = notification.userInfo as! [String: AnyObject]
-        let sessionJSON = json["session"] as! [String: AnyObject]
-        guard let shareSession = ShareSessionManager.parseShareSession(sessionJSON) else {
+        guard let shareSession = parseSessionFromNotification(notification) else {
             return
         }
         
@@ -76,9 +77,7 @@ class MainTabBarController: UITabBarController {
     }
     
     func sessionEnded(notification: NSNotification) {
-        let json = notification.userInfo as! [String: AnyObject]
-        let sessionJSON = json["session"] as! [String: AnyObject]
-        guard let shareSession = ShareSessionManager.parseShareSession(sessionJSON) else {
+        guard let shareSession = parseSessionFromNotification(notification) else {
             return
         }
         
@@ -95,11 +94,23 @@ class MainTabBarController: UITabBarController {
     }
     
     func pickupRequested(notification: NSNotification) {
+        guard let shareSession = parseSessionFromNotification(notification) else {
+            return
+        }
+        
         
     }
     
     func pickupResponded(notification: NSNotification) {
-        
+        guard let shareSession = parseSessionFromNotification(notification) else {
+            return
+        }
+    }
+    
+    private func parseSessionFromNotification(notification: NSNotification) -> ShareSession? {
+        let json = notification.userInfo as! [String: AnyObject]
+        let sessionJSON = json["session"] as! [String: AnyObject]
+        return ShareSessionManager.parseShareSession(sessionJSON)
     }
     
     private func mockDebugRequests() {
