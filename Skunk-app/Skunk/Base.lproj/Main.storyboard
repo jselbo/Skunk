@@ -659,7 +659,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="datePicked" destination="Nu4-YI-wKD" id="6ig-LD-0QJ"/>
+                        <outlet property="datePicker" destination="Nu4-YI-wKD" id="u5Z-7C-pVp"/>
                         <outlet property="submitButton" destination="Lo0-Pl-fOx" id="IL1-W4-ZWS"/>
                     </connections>
                 </viewController>
