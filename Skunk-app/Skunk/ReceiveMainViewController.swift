@@ -69,9 +69,7 @@ class ReceiveMainViewController: UIViewController {
                 
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if let session = session {
-                    print("location: \(session.currentLocation)")
                     self.getLocation(session.currentLocation!)
-                    
                 } else {
                     self.presentErrorAlert("Failed to fetch updated session")
                 }
