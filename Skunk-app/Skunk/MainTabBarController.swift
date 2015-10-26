@@ -98,13 +98,27 @@ class MainTabBarController: UITabBarController {
             return
         }
         
-        
+        let selectETAController = self.storyboard!.instantiateViewControllerWithIdentifier("PickupResponse") as! ReceiverPickUpSharerViewController
+        selectETAController.accountManager = accountManager
+        selectETAController.sharerSession = shareSession
+        self.presentViewController(selectETAController, animated: true, completion: nil)
     }
     
     func pickupResponded(notification: NSNotification) {
         guard let shareSession = parseSessionFromNotification(notification) else {
             return
         }
+        
+        guard let
+            driverIdentifier = shareSession.driverIdentifier,
+            driverReceiver = shareSession.findReceiver(driverIdentifier)
+        else {
+            print("Error: Expected valid driver identifier")
+            return
+        }
+        
+        let driverName = driverReceiver.account.userAccount.fullName
+        self.presentErrorAlert("\(driverName) has agreed to be your driver when you are ready.")
     }
     
     private func parseSessionFromNotification(notification: NSNotification) -> ShareSession? {

@@ -624,21 +624,34 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lo0-Pl-fOx">
                                 <rect key="frame" x="0.0" y="480" width="320" height="88"/>
                                 <animations/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="88" id="W9g-7Z-7pu"/>
                                     <constraint firstAttribute="height" constant="88" id="lbj-66-DWT"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
-                                <state key="normal" title="Submit"/>
+                                <state key="normal" title="Submit">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="submitButton:" destination="pRT-YQ-TBo" eventType="touchUpInside" id="iAQ-ev-fQf"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose an approximate ETA to pick up the sharer." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m1S-xA-Aif">
+                                <rect key="frame" x="16" y="308" width="288" height="43"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="18"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="m1S-xA-Aif" firstAttribute="leading" secondItem="T96-oD-aCn" secondAttribute="leadingMargin" id="0nX-xP-CEU"/>
                             <constraint firstItem="Nu4-YI-wKD" firstAttribute="leading" secondItem="Lo0-Pl-fOx" secondAttribute="leading" id="5SE-5I-7BD"/>
+                            <constraint firstItem="m1S-xA-Aif" firstAttribute="top" secondItem="Nu4-YI-wKD" secondAttribute="bottom" constant="8" id="A02-mX-iT5"/>
+                            <constraint firstItem="m1S-xA-Aif" firstAttribute="trailing" secondItem="T96-oD-aCn" secondAttribute="trailingMargin" id="BvF-Eh-Tgj"/>
                             <constraint firstItem="Nu4-YI-wKD" firstAttribute="leading" secondItem="T96-oD-aCn" secondAttribute="leading" id="TjJ-ML-z9d"/>
                             <constraint firstItem="Nu4-YI-wKD" firstAttribute="top" secondItem="T96-oD-aCn" secondAttribute="top" id="ZLJ-ih-QcM"/>
                             <constraint firstItem="Lo0-Pl-fOx" firstAttribute="bottom" secondItem="43u-pr-oc4" secondAttribute="top" id="aVl-Ne-Gt9"/>
@@ -647,6 +660,7 @@
                     </view>
                     <connections>
                         <outlet property="datePicked" destination="Nu4-YI-wKD" id="6ig-LD-0QJ"/>
+                        <outlet property="submitButton" destination="Lo0-Pl-fOx" id="IL1-W4-ZWS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hpd-er-uxd" userLabel="First Responder" sceneMemberID="firstResponder"/>
