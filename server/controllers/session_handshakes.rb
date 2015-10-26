@@ -33,17 +33,10 @@ post '/sessions/:id/terminate/request' do
 	receiver_ids = params['receivers']
 	# Get the session
 	@session = Session.find(params['id'])
-  # Cycle through session_users to mark if the sharer ended the session
-  # receivers.each do |rid|
-  #   @session_user = SessionUser.find_by(receiver: rid, session: @session)
-  #   @session_user.sharer_ended = true
-  # end
-  #
-  # NOTE: #update_all is a nice method to handle this.
+  # Mark that the sharer has ended the session
   SessionUser.where(session: @session, receiver_id: receiver_ids).update_all(sharer_ended: true)
-
-  receivers = User.where(id: receiver_ids)
-  PushNotification.session_ending @session, receivers
+  # Notify the given receivers that the sharer wants to stop sharing with them.
+  PushNotification.session_ending @session, User.where(id: receiver_ids)
 
 	return 204
 end
@@ -72,13 +65,18 @@ post '/sessions/:id/terminate/response' do
 	@session = Session.find(params['id'])
 	# Get the session_user to mark if the receiver approved
   @session_user = SessionUser.find_by(receiver: @user, session: @session)
-	# If response is true, then mark receiver ended as true
-	@session_user.update(receiver_ended: true) if response
+  # If response is true, then mark receiver ended as true
+  @session_user.update(receiver_ended: true) if response
+  # If all of the receivers for the session have approved termination, mark
+  # it as terminated.
+  if @session.session_users.all?{ |su| su.receiver_ended }
+    @session.update(terminated: true)
+  end
 
 	return 204
 end
 
-# PUT /sessions/:id/pickup/request
+# POST /sessions/:id/pickup/request
 # { }
 # -> 204 No Content
 # -> 500 Internal Server Error
@@ -91,26 +89,16 @@ end
 # information that is being updated.
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
-put '/sessions/:id/pickup/request' do
+post '/sessions/:id/pickup/request' do
   # Get the session
   @session = Session.find(params['id'])
-  # If the driver has been specified for this session, send notification to the driver
-  if @session.driver
-  	# TODO: will drivers be stored as users like this?
-  	# Ensure that driver actually exists in the database
-  	begin
-  		driver = Users.find(@session.driver_id)
-  	rescue
-  		halt 500, 'Invalid driver_id for this session.'
-  	end
-
-  	# TODO: Send notification to receiver.
-
-  # No driver was specified for this session
-  else
-  	halt 500, 'No driver exists for this session.'
+  # If the session does not have a driver,
+  if not @session.driver
+    halt(500)
   end
 
+  # Notify the driver for the session that the sharer has requested a pickup.
+  PushNotification.pickup_request @session
   # Remember that the user has requested a pickup
   @session.update(requested_pickup: true)
 
@@ -128,9 +116,9 @@ end
 # This endpoint is used by the driver for the session to indicate that they
 # have acknowledged the pickup request and provide the sharer with an
 # estimated pickup time. "eta" is optional, depending on the value of
-# "reponse"; if it is provided, it should represent the amount of time
-# (following ISO 8601 for duration values) that the driver anticipates will be
-# required for them to pick up the sharer.
+# "reponse"; if it is provided, it should represent the time (following ISO
+# 8601 standard) at which the driver anticipates they will be able to pick up
+# the sharer.
 #
 # On success, returns a 204 No Content, since the driver already knows the
 # information that is being updated.
@@ -139,17 +127,12 @@ end
 post '/sessions/:id/pickup/response' do
   # Get the session
   @session = Session.find(params['id'])
-  # If an ETA is provided, update session with the eta
-  if params['response'] # TODO: how will ruby handle invalid input
-  	# Ensure ETA is in correct format
-  	begin
-  		# Update ETA on session object
-  		@session.driver_eta = DateTime.now + DateTime.iso8601(params['eta'])
-  	# ETA is not in proper format.
-  	rescue
-  		# Do nothing.
-  		# TODO: Should we send a message that eta failed?
-  	end
+  # If the user accepted the request,
+  if params['response']
+    # set their ETA,
+		@session.update(driver_eta: DateTime.iso8601(params['eta']))
+    # and notify the sharer.
+    PushNotification.pickup_response @session
   end
 
   return 204
