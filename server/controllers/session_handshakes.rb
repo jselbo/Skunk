@@ -30,10 +30,9 @@
 # wrong.
 post '/sessions/:id/terminate/request' do
   # Get the receivers from the request
-  receiver_ids = params[:receivers]
-  # Get the session
-  @session = Session.find(params[:id])
-
+	receiver_ids = params['receivers']
+	# Get the session
+	@session = Session.find(params['id'])
   # Cycle through session_users to mark if the sharer ended the session
   # receivers.each do |rid|
   #   @session_user = SessionUser.find_by(receiver: rid, session: @session)
@@ -41,7 +40,7 @@ post '/sessions/:id/terminate/request' do
   # end
   #
   # NOTE: #update_all is a nice method to handle this.
-  SessionUser.where(receiver_id: receiver_ids).update_all(sharer_ended: true)
+  SessionUser.where(session: @session, receiver_id: receiver_ids).update_all(sharer_ended: true)
 
   receivers = User.where(id: receiver_ids)
   PushNotification.session_ending @session, receivers
@@ -66,18 +65,15 @@ end
 # wrong.
 post '/sessions/:id/terminate/response' do
 	# Get user id for the receiver
-	@user = User.find(request.env["HTTP_SKUNK_USERID"])
+	@user = User.find(request.env['HTTP_SKUNK_USERID'])
   # Get the response from the request
-	response = params[:response]
+	response = params['response']
 	# Get the session
-	@session = Session.find(params[:id])
+	@session = Session.find(params['id'])
 	# Get the session_user to mark if the receiver approved
   @session_user = SessionUser.find_by(receiver: @user, session: @session)
 	# If response is true, then mark receiver ended as true
-	# If not keep it false
-	if response
-		@session_user.update(receiver_ended: true)
-	end
+	@session_user.update(receiver_ended: true) if response
 
 	return 204
 end
@@ -97,7 +93,7 @@ end
 # wrong.
 put '/sessions/:id/pickup/request' do
   # Get the session
-  @session = Session.find(params[:id])
+  @session = Session.find(params['id'])
   # If the driver has been specified for this session, send notification to the driver
   if @session.driver
   	# TODO: will drivers be stored as users like this?
@@ -142,17 +138,13 @@ end
 # wrong.
 post '/sessions/:id/pickup/response' do
   # Get the session
-  session = Session.find(params[:id])
+  @session = Session.find(params['id'])
   # If an ETA is provided, update session with the eta
-  if params[:response] # TODO: how will ruby handle invalid input
+  if params['response'] # TODO: how will ruby handle invalid input
   	# Ensure ETA is in correct format
   	begin
-  		# Try parsing eta parameter
-  		duration = DateTime.iso8601(params[:eta])
-  		# Convert from duration to concrete time
-  		eta = DateTime.now + duration
   		# Update ETA on session object
-  		session.driver_eta = eta
+  		@session.driver_eta = DateTime.now + DateTime.iso8601(params['eta'])
   	# ETA is not in proper format.
   	rescue
   		# Do nothing.
@@ -182,9 +174,9 @@ end
 # wrong.
 post '/sessions/:id/driver/response' do
   # If the receiver indicated that they want to be the driver...
-  if params[:response]
+  if params['response']
     # find the session they are responding to,
-    session = Session.find(params[:id])
+    session = Session.find(params['id'])
     # and update it with their response.
     session.update(driver_id: request.env['HTTP_SKUNK_USERID'])
     # Then, return a 204 indicating that they request has suceeded
