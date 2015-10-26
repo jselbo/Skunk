@@ -52,14 +52,13 @@ class MainTabBarController: UITabBarController {
         notificationCenter.addObserver(self, selector: "sessionStarted:", name: Constants.Notifications.sessionStart, object: nil)
         notificationCenter.addObserver(self, selector: "sessionEnded:", name: Constants.Notifications.sessionEnd, object: nil)
         notificationCenter.addObserver(self, selector: "pickupRequested:", name: Constants.Notifications.pickupRequest, object: nil)
-        notificationCenter.addObserver(self, selector: "pickupResponded:", name: Constants.Notifications.pickupResponse, object: nil)
         
         let appDelegate = UIApplication.sharedApplication().delegate! as! AppDelegate
         appDelegate.fireNotificationFromLaunch()
     }
     
     func sessionStarted(notification: NSNotification) {
-        guard let shareSession = parseSessionFromNotification(notification) else {
+        guard let shareSession = ShareSessionManager.parseSessionFromNotification(notification) else {
             return
         }
         
@@ -77,7 +76,7 @@ class MainTabBarController: UITabBarController {
     }
     
     func sessionEnded(notification: NSNotification) {
-        guard let shareSession = parseSessionFromNotification(notification) else {
+        guard let shareSession = ShareSessionManager.parseSessionFromNotification(notification) else {
             return
         }
         
@@ -94,37 +93,16 @@ class MainTabBarController: UITabBarController {
     }
     
     func pickupRequested(notification: NSNotification) {
-        guard let shareSession = parseSessionFromNotification(notification) else {
+        guard let shareSession = ShareSessionManager.parseSessionFromNotification(notification) else {
             return
         }
         
-        let selectETAController = self.storyboard!.instantiateViewControllerWithIdentifier("PickupResponse") as! ReceiverPickUpSharerViewController
+        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("PickupResponse") as! UINavigationController
+        let selectETAController = navigationController.topViewController! as! ReceiverPickUpSharerViewController
         selectETAController.accountManager = accountManager
+        selectETAController.sessionManager = sessionManager
         selectETAController.sharerSession = shareSession
         self.presentViewController(selectETAController, animated: true, completion: nil)
-    }
-    
-    func pickupResponded(notification: NSNotification) {
-        guard let shareSession = parseSessionFromNotification(notification) else {
-            return
-        }
-        
-        guard let
-            driverIdentifier = shareSession.driverIdentifier,
-            driverReceiver = shareSession.findReceiver(driverIdentifier)
-        else {
-            print("Error: Expected valid driver identifier")
-            return
-        }
-        
-        let driverName = driverReceiver.account.userAccount.fullName
-        self.presentErrorAlert("\(driverName) has agreed to be your driver when you are ready.")
-    }
-    
-    private func parseSessionFromNotification(notification: NSNotification) -> ShareSession? {
-        let json = notification.userInfo as! [String: AnyObject]
-        let sessionJSON = json["session"] as! [String: AnyObject]
-        return ShareSessionManager.parseShareSession(sessionJSON)
     }
     
     private func mockDebugRequests() {

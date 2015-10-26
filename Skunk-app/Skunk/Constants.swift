@@ -68,9 +68,13 @@ struct Constants {
     
     // Notification categories
     struct Notifications {
+        // Sent to receiver when a sharer creates begins sharing
         static let sessionStart = "SESSION_START"
+        // Sent to a receiver when a sharer requests to stop sharing
         static let sessionEnd = "SESSION_END"
+        // Sent to a receiver when a sharer requests to be picked up
         static let pickupRequest = "PICKUP_REQUEST"
+        // Sent to a sharer when a receiver responds to a pickup request
         static let pickupResponse = "PICKUP_RESPONSE"
     }
     

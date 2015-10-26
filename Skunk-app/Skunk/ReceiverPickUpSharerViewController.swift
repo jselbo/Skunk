@@ -33,6 +33,8 @@ class ReceiverPickUpSharerViewController: UIViewController {
     }
     
     @IBAction func submitButton(sender: AnyObject) {
+        submitButton.enabled = false
+        
         let spinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
         spinner.startAnimating()
         spinner.center = submitButton.center - submitButton.frame.origin
@@ -44,10 +46,6 @@ class ReceiverPickUpSharerViewController: UIViewController {
                 spinner.removeFromSuperview()
                 
                 if success {
-                    let userIdentifier = self.accountManager.registeredAccount!.identifier
-                    let receiverInfo = self.sharerSession.findReceiver(userIdentifier)!
-                    receiverInfo.stopSharingState = .Accepted
-                    
                     self.dismissViewControllerAnimated(true, completion: nil)
                 } else {
                     self.presentErrorAlert("Failed to submit request to stop receiving updates")

@@ -49,6 +49,9 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
         }
         
         receiversTableView.editing = true
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "pickupResponded:",
+            name: Constants.Notifications.pickupResponse, object: nil)
     }
     
     //MARK: - IBAction
@@ -196,6 +199,22 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     //MARK: - Private methods
+    
+    func pickupResponded(notification: NSNotification) {
+        guard let shareSession = ShareSessionManager.parseSessionFromNotification(notification) else {
+            return
+        }
+        guard let
+            driverIdentifier = shareSession.driverIdentifier,
+            driverReceiver = shareSession.findReceiver(driverIdentifier)
+        else {
+            print("Error: Expected valid driver identifier")
+            return
+        }
+        
+        let driverName = driverReceiver.account.userAccount.fullName
+        self.presentErrorAlert("\(driverName) has agreed to be your driver when you are ready.")
+    }
     
     private func handleHeartbeat(location: CLLocation) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in

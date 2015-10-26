@@ -352,4 +352,10 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         shareSession.lastLocationUpdate = lastUpdated?.parseSQLDate()
         return shareSession
     }
+    
+    static func parseSessionFromNotification(notification: NSNotification) -> ShareSession? {
+        let json = notification.userInfo as! [String: AnyObject]
+        let sessionJSON = json["session"] as! [String: AnyObject]
+        return ShareSessionManager.parseShareSession(sessionJSON)
+    }
 }
