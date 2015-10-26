@@ -39,14 +39,6 @@ describe "Controllers" do
 				expect(last_response).to_not be_ok
 			end
 
-			#same location as last heartbeat
-			it "should return a 204 response when location is same for two heartbeats" do
-				session = FactoryGirl.create(:session)
-				post "sessions/#{session.id}", :location => session.current_location
-
-				expect(last_response).to eq 204
-			end
-
 			#new location since last heartbeat
 			it "should update the location on the server session" do
 				session = FactoryGirl.create(:session)
@@ -204,42 +196,6 @@ describe "Controllers" do
 				post '/sessions/create', :receivers => [session.driver_id], :condition => {:type => :location, :data => 'Harrys'}, :needs_driver => 1234567
 				expect(last_response).to_not be_ok
 			end
-
-=begin
-			#missing receivers param
-			it "should return a 500 error if missing receivers param" do
-				post '/sessions/create', :condition => {:type => :location, :data => 'Harrys'}, :needs_driver => :false
-				expect(last_response).to_not be_ok
-			end
-
-			#missing condition param
-			it "should return a 500 error if missing condition param" do
-				session = FactoryGirl.create(:session_with_driver)
-				post '/sessions/create', :receiver => session.driver_id, :needs_driver => :false
-				expect(last_response).to_not be_ok
-			end
-
-			#missing type param
-			it "should return a 500 error if missing type param" do
-				session = FactoryGirl.create(:session_with_driver)
-				post '/sessions/create', :condition => {:data => session.destination}, :needs_driver => :false
-				expect(last_response).to_not be_ok
-			end
-
-			#missing data param
-			it "should return a 500 error if missing data param" do
-				post '/sessions/create', :condition => {:type => :location}, :needs_driver => :false
-				expect(last_response).to_not be_ok
-			end
-
-			#missing needs_driver param
-			it "should return a 500 error if missing needs_driver param" do
-				session = FactoryGirl.create(:session_with_driver)
-				post '/sessions/create', :condition => {:type => :location, :data => session.destination}
-				expect(last_response).to_not be_ok
-			end
-=end
-        #broken JSON -- handled by sinatra??
         end
     end
 end
