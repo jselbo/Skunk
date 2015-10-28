@@ -66,12 +66,22 @@ class ReceiveFriendsListViewController: UIViewController {
             cell.detailTextLabel!.text = "Needs Driver"
         } else {
             switch sharerSession.endCondition {
-            case .Location(_): break
+            case .Location(_):
+                cell.detailTextLabel?.text = "Sharing until Destination"
             case .Time(let endDate):
                 let currentDate = NSDate()
                 let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-                let difference = calendar.components([.Hour], fromDate: currentDate, toDate: endDate, options: [])
-                cell.detailTextLabel?.text = "\(difference.hour) hours till done sharing"
+                let differenceComponents = calendar.components([.Day, .Hour, .Minute], fromDate: currentDate, toDate: endDate, options: [])
+                
+                var hourDifference = Double(differenceComponents.hour)
+                hourDifference += Double(differenceComponents.minute) / 60.0
+                
+                // Round to nearest 0.5
+                hourDifference = round(2.0 * hourDifference) / 2.0
+                
+                let hourText = String(format: "%.1f %@",
+                    hourDifference, (hourDifference > 1.0 ? "hours" : "hour"))
+                cell.detailTextLabel?.text = "\(hourText) hours till done sharing"
             }
         }
         return cell
