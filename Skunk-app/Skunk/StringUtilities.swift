@@ -10,9 +10,8 @@ import Foundation
 
 extension String {
     func parseSQLDate() -> NSDate? {
-        let dateLocale = NSLocale(localeIdentifier: "en_US_POSIX")
         let dateFormatter = NSDateFormatter()
-        dateFormatter.locale = dateLocale
+        dateFormatter.timeZone = NSTimeZone(abbreviation: "EST")!
         dateFormatter.dateFormat = ISO8601DateFormat
         return dateFormatter.dateFromString(self)
     }

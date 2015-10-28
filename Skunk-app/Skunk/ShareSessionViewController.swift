@@ -30,6 +30,7 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var broadcastImageView: UIImageView!
     @IBOutlet weak var receiversTableView: UITableView!
+    @IBOutlet weak var conditionLabel: UILabel!
     
     var handledTermination = false
     
@@ -50,6 +51,12 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
         
         receiversTableView.editing = true
         
+        conditionLabel.text = session.endCondition.humanizedString()
+        
+        pickUpButton.titleLabel!.textAlignment = .Center
+        
+        updateButtonStates()
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "pickupResponded:",
             name: Constants.Notifications.pickupResponse, object: nil)
     }
@@ -57,28 +64,31 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
     //MARK: - IBAction
     
     @IBAction func pickupRequestPressed(sender: AnyObject) {
-        pickUpButton.enabled = false
-        pickUpButton.backgroundColor = UIColor.grayColor()
-        
-        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
-        spinner.startAnimating()
-        spinner.center = pickUpButton.center - pickUpButton.frame.origin
-        pickUpButton.addSubview(spinner)
-        
-        session.needsPickup = true
-        sessionManager.sessionPickUpRequest(session) { (success) -> () in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                spinner.removeFromSuperview()
-                
-                if success {
-                    self.pickUpButton.backgroundColor = UIColor.greenColor()
-                    self.pickUpButton.setTitle("Pickup Requested", forState: .Normal)
-                } else {
-                    self.presentErrorAlert("Failed to request pickup")
-                    self.pickUpButton.enabled = true
-                    self.pickUpButton.backgroundColor = UIColor.blueColor()
-                }
-            })
+        let driverReceiver = self.session.findReceiver(self.session.driverIdentifier!)!
+        let message = "Would you like to send a pickup request to \(driverReceiver.account.userAccount.fullName)? "
+            + "They will be notified and asked to provide an estimated time to pick you up."
+        self.presentDecisionAlert(message) { (action) -> Void in
+            self.pickUpButton.enabled = false
+            self.pickUpButton.backgroundColor = UIColor.grayColor()
+            
+            let spinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+            spinner.startAnimating()
+            spinner.center = self.pickUpButton.center - self.pickUpButton.frame.origin
+            self.pickUpButton.addSubview(spinner)
+            
+            self.session.needsPickup = true
+            self.sessionManager.sessionPickUpRequest(self.session) { (success) -> () in
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    spinner.removeFromSuperview()
+                    
+                    if !success {
+                        self.session.needsPickup = false
+                        self.presentErrorAlert("Failed to request pickup")
+                    }
+                    
+                    self.updateButtonStates()
+                })
+            }
         }
     }
     
@@ -175,7 +185,7 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
         
         if cumulativeTime >= Constants.heartbeatFrequency {
             // Time to send an update
-            let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)
+            let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
             dispatch_async(queue, { () -> Void in
                 self.sessionManager.sendLocationHeartbeat(self.session, location: location, completion: { success in
                     if success {
@@ -234,6 +244,34 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
             }
             
             self.receiversTableView.reloadData()
+            self.updateButtonStates()
         })
+    }
+    
+    private func updateButtonStates() {
+        if let _ = session.driverIdentifier {
+            if let pickupTime = session.driverEstimatedArrival {
+                // Driver has accepted pickup and provided time
+                pickUpButton.setTitle("Your driver will pick you up \(pickupTime.humanizedString())", forState: .Normal)
+                pickUpButton.backgroundColor = UIColor(red: 0.0, green: 0.392, blue: 0.0, alpha: 1.0)
+                pickUpButton.enabled = false
+            } else if session.needsPickup {
+                // User has requested pickup but driver has not yet accepted
+                self.pickUpButton.setTitle("Pickup Requested", forState: .Normal)
+                self.pickUpButton.backgroundColor = UIColor.orangeColor()
+                pickUpButton.enabled = false
+            } else  {
+                // A receiver has accepted the driver position but no pickup request has been made
+                pickUpButton.setTitle("Pick me up!", forState: .Normal)
+                pickUpButton.backgroundColor = UIColor.blueColor()
+                pickUpButton.enabled = true
+            }
+        } else {
+            // Either no receiver has accepted driver position, or no driver is desired
+            let title = session.needsDriver ? "Waiting for Driver" : "No Driver Requested"
+            pickUpButton.setTitle(title, forState: .Normal)
+            pickUpButton.backgroundColor = UIColor.grayColor()
+            pickUpButton.enabled = false
+        }
     }
 }

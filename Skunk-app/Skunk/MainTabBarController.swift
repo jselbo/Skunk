@@ -83,12 +83,13 @@ class MainTabBarController: UITabBarController {
         let sharerName = shareSession.sharerAccount.userAccount.fullName
         let message = "Allow \(sharerName) to stop sharing their location with you?"
         self.presentDecisionAlert(message, OKHandler: { (action) -> Void in
-            self.sessionManager.sessionTermResponse(shareSession, completion: { (success) -> () in
+            self.sessionManager.sessionTermResponse(shareSession, receiver: self.accountManager.registeredAccount!) {
+                (success) -> () in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     let message = success ? "You have stopped sharing your location with \(sharerName)." : "Failed to accept location termination request"
                     self.presentErrorAlert(message)
                 })
-            })
+            }
         })
     }
     
@@ -102,7 +103,7 @@ class MainTabBarController: UITabBarController {
         selectETAController.accountManager = accountManager
         selectETAController.sessionManager = sessionManager
         selectETAController.sharerSession = shareSession
-        self.presentViewController(selectETAController, animated: true, completion: nil)
+        self.presentViewController(navigationController, animated: true, completion: nil)
     }
     
     private func mockDebugRequests() {

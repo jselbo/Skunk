@@ -219,7 +219,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
     }
     
     // Session Terminate Response 
-    func sessionTermResponse(session: ShareSession, completion:(success: Bool)->()){
+    func sessionTermResponse(session: ShareSession, receiver: RegisteredUserAccount, completion:(success: Bool)->()) {
         let params = [
             "response": true
         ]
@@ -228,7 +228,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         let request = ServerRequest(type: .POST, url: sessionURL)
         request.expectedStatusCode = Constants.nilContent
         request.additionalHTTPHeaders =
-            [Constants.userIDHeader: "\(session.sharerAccount.identifier)"]
+            [Constants.userIDHeader: "\(receiver.identifier)"]
         request.execute(params) { (response) -> Void in
             switch (response) {
             case .Success(_):
@@ -334,6 +334,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
             let destination = jsonData["destination"] as! String
             let components = destination.componentsSeparatedByString(",")
             shareSession = ShareSession(sharerAccount: account, endCondition: .Location(CLLocation(latitude: Double(components[0])!, longitude: Double(components[1])!)) , needsDriver: needsDriver, receivers: [])
+            shareSession.identifier = Sid(sessionIdentifier)
         }
         if let driverAccount = jsonData["driver"] as? [String: AnyObject],
             driverIdentifier = driverAccount["user_id"] as? Int {

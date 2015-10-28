@@ -40,6 +40,17 @@ enum ShareEndCondition: Serializable {
         }
     }
     
+    func humanizedString() -> String {
+        switch self {
+        case .Location(_):
+            return "Sharing until destination"
+        case .Time(let date):
+            let text = "Sharing until \(date.humanizedString())"
+            let atIndex = text.rangeOfString("at")!.endIndex
+            return text.substringToIndex(atIndex) + "\n" + text.substringFromIndex(atIndex.advancedBy(1))
+        }
+    }
+    
     func serialize() -> AnyObject {
         return [
             "type": name(),

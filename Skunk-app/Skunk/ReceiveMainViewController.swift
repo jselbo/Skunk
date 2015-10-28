@@ -40,19 +40,16 @@ class ReceiveMainViewController: UIViewController, MKMapViewDelegate {
             let annotation = MKPointAnnotation()
             annotation.coordinate = location.coordinate
             annotation.title = "Destination"
-            let sharerName = sharerSession.sharerAccount.userAccount.fullName
-            annotation.subtitle = "Sharing will end when \(sharerName) reaches this location."
+            annotation.subtitle = "Session will end when sharer arrives here"
             
             mapView.addAnnotation(annotation)
             destinationAnnotation = annotation
-            
-            conditionLabel.text = "Sharing until destination"
-        case .Time(let date):
-            let text = "Sharing until \(date.humanizedString())"
-            let atIndex = text.rangeOfString("at")!.endIndex
-            conditionLabel.text =
-                text.substringToIndex(atIndex) + "\n" + text.substringFromIndex(atIndex.advancedBy(1))
+
+        case .Time(_):
+            break
         }
+        
+        conditionLabel.text = sharerSession.endCondition.humanizedString()
         
         driverLabel.hidden = sharerSession.driverIdentifier != accountManager.registeredAccount!.identifier
     }
@@ -83,15 +80,11 @@ class ReceiveMainViewController: UIViewController, MKMapViewDelegate {
         spinner.center = stopReceivingButton.center - stopReceivingButton.frame.origin
         stopReceivingButton.addSubview(spinner)
         
-        sessionManager.sessionTermResponse(sharerSession) { (success) -> () in
+        sessionManager.sessionTermResponse(sharerSession, receiver: accountManager.registeredAccount!) { (success) -> () in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 spinner.removeFromSuperview()
                 
                 if success {
-                    let userIdentifier = self.accountManager.registeredAccount!.identifier
-                    let receiverInfo = self.sharerSession.findReceiver(userIdentifier)!
-                    receiverInfo.stopSharingState = .Accepted
-                    
                     self.navigationController!.popViewControllerAnimated(true)
                 } else {
                     self.presentErrorAlert("Failed to submit request to stop receiving updates")
@@ -107,7 +100,16 @@ class ReceiveMainViewController: UIViewController, MKMapViewDelegate {
             identifier: sharerSession.identifier!) { (session) -> () in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if let session = session {
-                    self.sharerSession = session
+                    self.sharerSession.driverIdentifier = session.driverIdentifier
+                    self.sharerSession.currentLocation = session.currentLocation
+                    self.sharerSession.lastLocationUpdate = session.lastLocationUpdate
+                    self.sharerSession.terminated = session.terminated
+                    
+                    if session.terminated {
+                        self.presentErrorAlert("Your sharing session has ended.")
+                        self.navigationController!.popViewControllerAnimated(true)
+                        return
+                    }
                     
                     if let currentLocation = session.currentLocation {
                         self.showSharerLocationInMap(currentLocation, updateTime: session.lastLocationUpdate!)
