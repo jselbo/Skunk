@@ -12,7 +12,13 @@ class SettingsViewController: UITableViewController {
     
     var accountManager: UserAccountManager!
 
+    @IBOutlet weak var name: UITableViewCell!
     @IBOutlet weak var logOutCell: UITableViewCell!
+    @IBOutlet weak var phoneNumber: UITableViewCell!
+    
+    override func viewDidLoad() {
+        nameCell()
+    }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableView.cellForRowAtIndexPath(indexPath)!
@@ -24,6 +30,12 @@ class SettingsViewController: UITableViewController {
         default:
             break
         }
+    }
+    
+    private func nameCell() {
+        name.textLabel!.text = accountManager.registeredAccount!.userAccount.fullName + " (" + accountManager.registeredAccount!.identifier.description + ")"
+        phoneNumber.textLabel!.text = accountManager.registeredAccount!.userAccount.phoneNumber.formatForUser()
+        
     }
     
     private func logOut() {
