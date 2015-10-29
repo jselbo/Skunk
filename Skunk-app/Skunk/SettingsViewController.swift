@@ -17,7 +17,14 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var phoneNumber: UITableViewCell!
     
     override func viewDidLoad() {
-        nameCell()
+        let account = accountManager.registeredAccount!
+        var nameText = account.userAccount.fullName
+        #if DEBUG
+            nameText += " (ID: \(account.identifier))"
+        #endif
+        
+        name.detailTextLabel!.text = nameText
+        phoneNumber.detailTextLabel!.text = account.userAccount.phoneNumber.formatForUser()
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -30,12 +37,6 @@ class SettingsViewController: UITableViewController {
         default:
             break
         }
-    }
-    
-    private func nameCell() {
-        name.textLabel!.text = accountManager.registeredAccount!.userAccount.fullName + " (" + accountManager.registeredAccount!.identifier.description + ")"
-        phoneNumber.textLabel!.text = accountManager.registeredAccount!.userAccount.phoneNumber.formatForUser()
-        
     }
     
     private func logOut() {

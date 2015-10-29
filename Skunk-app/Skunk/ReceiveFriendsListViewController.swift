@@ -9,44 +9,48 @@
 import Foundation
 import UIKit
 
-class ReceiveFriendsListViewController: UIViewController {
+class ReceiveFriendsListViewController: UITableViewController {
     let sessionIdentifier = "Session"
     
     var accountManager: UserAccountManager!
     var sessionManager: ShareSessionManager!
     var selectedSharerSession: ShareSession!
     
-    @IBOutlet weak var friendsTableView: UITableView!
     var sharerList = [RegisteredUserAccount]()
+    
+    var refreshTimer: NSTimer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        /*let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: "listRefresh", forControlEvents: .ValueChanged)
+        self.refreshControl = refreshControl*/
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        sessionManager.fetchShareSessions(accountManager.registeredAccount!) { (registeredAccounts) -> () in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                if let registeredAccounts = registeredAccounts {
-                    self.sharerList = registeredAccounts
-                    self.friendsTableView.reloadData()
-                } else {
-                    self.presentErrorAlert("Failed to Request All Sessions")
-                }
-            })
-        }
+        refreshTimer = NSTimer.scheduledTimerWithTimeInterval(Constants.receiverSessionRefreshInterval, target: self, selector: "listRefresh:", userInfo: nil, repeats: true)
+        listRefresh(self)
     }
     
-    func numberOfSectionsInTableView(friendsTableView: UITableView) -> Int {
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        refreshTimer.invalidate()
+        refreshTimer = nil
+    }
+    
+    override func numberOfSectionsInTableView(friendsTableView: UITableView) -> Int {
         return 1;
     }
     
-    func tableView(friendsTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(friendsTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sharerList.count;
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let sharerRegisteredUserAccount = sharerList[indexPath.row]
         let sharerUid = sharerRegisteredUserAccount.identifier
         selectedSharerSession = sessionManager.sharerInformation[sharerUid]
@@ -54,8 +58,8 @@ class ReceiveFriendsListViewController: UIViewController {
         performSegueWithIdentifier(sessionIdentifier, sender: self)
     }
     
-    func tableView(friendsTableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = friendsTableView.dequeueReusableCellWithIdentifier("Friends Cell", forIndexPath: indexPath)
+    override func tableView(friendsTableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = friendsTableView.dequeueReusableCellWithIdentifier("FriendsCell", forIndexPath: indexPath)
         let sharerRegisteredUserAccount = sharerList[indexPath.row]
         let sharerUserAccount = sharerRegisteredUserAccount.userAccount
         let sharerUid = sharerRegisteredUserAccount.identifier
@@ -86,6 +90,19 @@ class ReceiveFriendsListViewController: UIViewController {
             sessionController.sharerSession = selectedSharerSession
         default:
             break
+        }
+    }
+    
+    func listRefresh(sender: AnyObject) {
+        sessionManager.fetchShareSessions(accountManager.registeredAccount!) { (registeredAccounts) -> () in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if let registeredAccounts = registeredAccounts {
+                    self.sharerList = registeredAccounts
+                    self.tableView.reloadData()
+                } else {
+                    self.presentErrorAlert("Failed to Request All Sessions")
+                }
+            })
         }
     }
 }
