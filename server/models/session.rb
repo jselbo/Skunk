@@ -37,10 +37,9 @@ class Session < ActiveRecord::Base
 
   class << self
   	# Ensure that a string is a location in iso 6709  format
-  	# Returns true on success, fale on failure.
+  	# Returns true on success, false on failure.
   	def check_location location
-  		# TODO: Need any type checking on the string?
-  		/^[+-][0-9]+\.?[0-9]*,[+-][0-9]+\.?[0-9]*$/.match(location)
+  		/^[+-]?[0-9]+\.?[0-9]*,[+-]?[0-9]+\.?[0-9]*$/.match(location)
   	end
   end
 end

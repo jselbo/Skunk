@@ -10,7 +10,7 @@ FactoryGirl.define do
 	association :sharer, factory: :user, strategy: :build
 
     needs_driver { false } 
-    driver_id nil
+#    driver_id nil
     
     start_time { DateTime.now  }
     is_time_based { true }
@@ -31,7 +31,7 @@ FactoryGirl.define do
     end
 
     factory :session_with_driver do
-        association :driver, factory: :user, strategy: :build
+        association :driver, factory: :user#, strategy: :build
         needs_driver { true } 
     end
   end
