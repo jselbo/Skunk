@@ -35,6 +35,8 @@ class ReceiveMainViewController: UIViewController, MKMapViewDelegate {
         
         self.title = sharerSession.sharerAccount.userAccount.fullName
         
+        mapView.userTrackingMode = .Follow
+        
         switch sharerSession.endCondition {
         case .Location(let location):
             let annotation = MKPointAnnotation()
@@ -134,21 +136,19 @@ class ReceiveMainViewController: UIViewController, MKMapViewDelegate {
             mapView.removeAnnotation(sharerAnnotation)
         }
         
-        let latDelta = CLLocationDegrees(0.01)
-        let longDelta = CLLocationDegrees(0.01)
-        
-        let span = MKCoordinateSpanMake(latDelta, longDelta)
-        let region = MKCoordinateRegionMake(location.coordinate, span)
-        mapView.setRegion(region, animated: true)
-        
         let secondDifference = NSDate().timeIntervalSince1970 - updateTime.timeIntervalSince1970
         let minuteDifference = Int(secondDifference / 60)
         
         let annotation = MKPointAnnotation()
         annotation.coordinate = location.coordinate
         annotation.title = "\(sharerSession.sharerAccount.userAccount.fullName)'s Location"
-        annotation.subtitle = "Last updated \(minuteDifference) minutes ago"
-        self.mapView.addAnnotation(annotation)
+        annotation.subtitle = "Last updated \(minuteDifference) minute\(minuteDifference == 1 ? "" : "s") ago"
+        
+        var annotations: [MKAnnotation] = [annotation, mapView.userLocation]
+        if let destinationAnnotation = destinationAnnotation {
+            annotations.append(destinationAnnotation)
+        }
+        mapView.showAnnotations(annotations, animated: true)
         
         sharerAnnotation = annotation
     }
