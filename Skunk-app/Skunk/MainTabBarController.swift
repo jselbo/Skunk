@@ -65,7 +65,7 @@ class MainTabBarController: UITabBarController {
         if shareSession.needsDriver {
             let sharerName = shareSession.sharerAccount.userAccount.fullName
             self.presentDecisionAlert("\(sharerName) has shared their location with you and needs a driver. Would you like to accept the driver request?", OKHandler: { (action) -> Void in
-                self.sessionManager.sessionDriverResponse(shareSession, completion: { (success) -> () in
+                self.sessionManager.sessionDriverResponse(shareSession, receiver: self.accountManager.registeredAccount!, completion: { (success) -> () in
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         let message = success ? "You have been marked as the driver for \(sharerName)." : "Failed to respond as driver"
                         self.presentErrorAlert(message)

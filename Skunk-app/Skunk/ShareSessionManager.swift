@@ -283,7 +283,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
     }
     
     // Session Driver Response
-    func sessionDriverResponse(session: ShareSession, completion:(success: Bool)->()) {
+    func sessionDriverResponse(session: ShareSession, receiver: RegisteredUserAccount, completion:(success: Bool)->()) {
         let params = [
             "response": true,
         ]
@@ -292,7 +292,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
         let request = ServerRequest(type: .POST, url: sessionURL)
         request.expectedStatusCode = Constants.nilContent
         request.additionalHTTPHeaders =
-            [Constants.userIDHeader: "\(session.sharerAccount.identifier)"]
+            [Constants.userIDHeader: "\(receiver.identifier)"]
         request.execute(params) { (response) -> Void in
             switch (response) {
             case .Success(_):
