@@ -81,7 +81,7 @@ describe "Controllers" do
 
 				#Check sessions-users table
 				su = SessionUser.last
-				expect(su).to_have_attributes(session_id: session.id, receiver_id: session.driver_id)
+				expect(su).to have_attributes(session_id: session.id, receiver_id: session.driver_id)
 			end
 
 			it "should return a successful response when given a valid session request" do
@@ -130,7 +130,7 @@ describe "Controllers" do
 				sesh = Session.last
 				receiver_index = receiver_ids[receiver_ids.length]
 				su = SessionUser.last
-				expect(su).to_have_attributes(session_id: sesh.id, receiver_id: receiver_index)
+				expect(su).to have_attributes(session_id: sesh.id, receiver_id: receiver_index)
 			end
 			
 			#no receivers
