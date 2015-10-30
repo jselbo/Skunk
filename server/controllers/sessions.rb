@@ -23,12 +23,7 @@
 # wrong.
 get '/sessions' do
 	@user = User.find(request.env["HTTP_SKUNK_USERID"])
-
-	if @user.active_sessions.empty?
-		halt 500
-	else
-		@user.active_sessions.to_json
-	end
+	@user.active_sessions.to_json
 end
 
 
