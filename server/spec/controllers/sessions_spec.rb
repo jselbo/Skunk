@@ -15,7 +15,6 @@ describe "Controllers" do
 
 		context "post sessions/id" do
 			#TEST POST  /sessions/:id
-
 			#TODO:
 			#(heartbeats that are too far apart)
 			#test notifications
@@ -56,9 +55,7 @@ describe "Controllers" do
 		context "sessions/create" do
 			#Test POST /sessions/create
 
-			#successful request
 			#for failures check db state to make sure no changes were saved before the failure
-			#check that join tables are created properly
 			#check that timestamps are returned to app in proper format
 
 			#one valid receiver
@@ -70,25 +67,25 @@ describe "Controllers" do
 
 				#Lookup newest entry in db
 				newest_entry = Session.last
+				session.id = session.id + 1
 
 				#Check that information was stored in session object properly
 				expect(newest_entry).to eq session
 
 			end
-			it "should check whether sessions-users table was populated" do
+			it "should check whether session_users table was populated" do
 				session = FactoryGirl.create(:session_with_driver)
-				post "/sessions/create", { :receivers => [session.driver_id], :condition => { :type => 'time', :data => session.end_time}, :needs_driver => session.needs_driver }.to_json
+				post "/sessions/create", { :receivers => session.driver_id, :condition => { :type => 'time', :data => session.end_time}, :needs_driver => session.needs_driver }.to_json
 
 				#Check sessions-users table
 				su = SessionUser.last
-				expect(su).to have_attributes(session_id: session.id, receiver_id: session.driver_id)
+				expect(su).to have_attributes(session_id: session.id+1, receiver_id: session.driver_id)
 			end
 
 			it "should return a successful response when given a valid session request" do
 				session = FactoryGirl.create(:session_with_driver)
 				post '/sessions/create', { :receivers => session.driver_id, :condition => { :type => 'time', :data => session.end_time}, :needs_driver => session.needs_driver }.to_json
-				su = SessionUser.last
-				expect(last_response.body).to include("#{su.id}")
+				expect(last_response.body).to include("#{session.id+1}")
 			end
 
 			#TODO: check that notifications were sent
@@ -101,7 +98,7 @@ describe "Controllers" do
 
 				post '/sessions/create', { :receivers => receiver_ids, :condition => { :type => 'time', :data => session.end_time}, :needs_driver => session.needs_driver }.to_json
 
-				expect(last_response).to include("#{session.id}")
+				expect(last_response.body).to include("#{session.id+1}")
 
 			end
 			
@@ -113,9 +110,8 @@ describe "Controllers" do
 				post '/sessions/create', { :receivers => receiver_ids, :condition => { :type => 'time', :data=> session.end_time}, :needs_driver => session.needs_driver }.to_json
 				
 				#Check sessions-users table
-				sus = SessionUser.last(receiver_ids.length)
-				sus.map(&:exists?)            	
-				expect(sus).to_not include(0)
+				num = SessionUser.where(receiver: receiver_ids).count
+				expect(num).to eq receiver_ids.length
 			end
 			
 			#TODO: check that notifications were sent
@@ -128,7 +124,7 @@ describe "Controllers" do
 				post '/sessions/create', { :receivers => receiver_ids, :condition => { :type => 'time', :data => session.end_time }, :needs_driver => session.needs_driver }.to_json
 
 				sesh = Session.last
-				receiver_index = receiver_ids[receiver_ids.length]
+				receiver_index = receiver_ids.last
 				su = SessionUser.last
 				expect(su).to have_attributes(session_id: sesh.id, receiver_id: receiver_index)
 			end
@@ -147,9 +143,6 @@ describe "Controllers" do
 				post '/sessions/create', { :receivers =>  -20, :condition => { :type => 'time', :data => session.end_time }, :needs_driver => session.needs_driver }.to_json
 				expect(last_response).to_not be_ok
 			end
-
-			#TODO: what should this do? return a successful response with failed receivers?
-			#mixed valid/invalid receivers
 
 			#invalid condition type
 			it "should return a 500 error if given an invalid condition type" do

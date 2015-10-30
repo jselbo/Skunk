@@ -105,6 +105,10 @@ post '/sessions/create' do
     last_updated: DateTime.now
   )
 
+  if not params.has_key?('receivers') or params['receivers'] == nil
+    halt 500, 'No receivers.'
+  end
+
   case params['condition']['type']
   # If session is timestamped, set is_time_based to true and store in database
   when 'time'
@@ -133,11 +137,14 @@ post '/sessions/create' do
     halt 500, 'Invalid condition type.'
   end
   # Populate the session_users join table with all the receivers
-  @session.receivers = User.where(id: params['receivers'])
+    @session.receivers = User.where(id: params['receivers'])
+    if @session.receivers == nil or @session.receivers.empty?
+      halt 500, 'Invalid receiver(s).'
+    end
   # Save the session to create it in the database with an ID
   @session.save
   # Send notifications to each of the receivers
-  #PushNotification.session_starting @session
+  PushNotification.session_starting @session
   # Return the new session's id
   { id: @session.id }.to_json
 end
