@@ -239,6 +239,7 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
                         as! ShareMainViewController
                     startSharingController.accountManager = self.accountManager
                     startSharingController.locationManager = self.locationManager
+                    startSharingController.sessionManager = self.sessionManager
                     self.navigationController!.setViewControllers([startSharingController], animated: true)
                 })
             }
