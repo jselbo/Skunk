@@ -30,7 +30,11 @@
 # wrong.
 post '/sessions/:id/terminate/request' do
   # Get the receivers from the request
+	
 	receiver_ids = params['receivers']
+	if not receiver_ids
+		halt 500
+	end
 	# Get the session
 	@session = Session.find(params['id'])
   # Mark that the sharer has ended the session

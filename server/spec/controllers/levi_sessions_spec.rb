@@ -74,56 +74,44 @@ describe 'Sessions Controller' do
 		end
 		
 		it 'returns valid session if the receiver is part of the session and the session is active' do
-			@receivers.each do |rec|
+			@premade_receivers.each do |rec|
 				#each receiver in our array will be part of two sessions
-				@temp_session = FactoryGirl.create(:session, receiver: [rec])
-				@receivers_sessions << @temp_session
-				SessionUser.create(session_id: @temp_session.id, receiver_id: rec.id, sharer_ended: false, receiver_ended: false)
-				@temp_session = FactoryGirl.create(:session, receiver: [rec])
-				@receivers_sessions << @temp_session
-				SessionUser.create(session_id: @temp_session.id, receiver_id: rec.id, sharer_ended: false, receiver_ended: false)
+				rec.sessions << FactoryGirl.create(:session)
+				rec.sessions << FactoryGirl.create(:session)
 			end
 			
-			#A test array to hold a session that should be returned
-			@test_arr = @receivers_sessions[2]
 			
 			#provide the get a receiver id and sharer id that match
-			get '/sessions/:id', {'HTTP_SKUNK_USERID'=>@receivers[1].id, :id=>@receivers_sessions[2].sharer_id}
-			expect(last_response.body).to eq(@test_arr.to_json)
+			header 'Skunk_UserID', @premade_receivers[1].id
+			get "/sessions/#{@premade_receivers[1].sessions.at(1).id}"
+			expect(last_response.body).to eq(@premade_receivers[1].sessions.at(1).to_json)
 		end
 		
 		it 'does not return a password if a session is returned' do
-			@receivers.each do |rec|
+			@premade_receivers.each do |rec|
 				#each receiver in our array will be part of two sessions
-				@temp_session = FactoryGirl.create(:session, receiver: [rec])
-				@receivers_sessions << @temp_session
-				SessionUser.create(session_id: @temp_session.id, receiver_id: rec.id, sharer_ended: false, receiver_ended: false)
-				@temp_session = FactoryGirl.create(:session, receiver: [rec])
-				@receivers_sessions << @temp_session
-				SessionUser.create(session_id: @temp_session.id, receiver_id: rec.id, sharer_ended: false, receiver_ended: false)
+				rec.sessions << FactoryGirl.create(:session)
+				rec.sessions << FactoryGirl.create(:session)
 			end
 			
-			#A test array to hold a session that should be returned
-			@test_arr = @receivers_sessions[2]
 			
 			#provide the get a receiver id and sharer id that match
-			get '/sessions/:id', {'HTTP_SKUNK_USERID'=>@receivers[1].id, :id=>@receivers_sessions[2].sharer_id}
+			header 'Skunk_UserID', @premade_receivers[1].id
+			get "/sessions/#{@premade_receivers[1].sessions.at(1).id}"
+
 			expect(last_response.body).not_to include('"password":')
 		end
 		
 		it 'returns 401 if session is not active' do
-			@receivers.each do |rec|
+			@premade_receivers.each do |rec|
 				#each receiver in our array will be part of two sessions
-				@temp_session = FactoryGirl.create(:session, receiver: [rec])
-				@receivers_sessions << @temp_session
-				SessionUser.create(session_id: @temp_session.id, receiver_id: rec.id, sharer_ended: true, receiver_ended: true)
-				@temp_session = FactoryGirl.create(:session, receiver: [rec])
-				@receivers_sessions << @temp_session
-				SessionUser.create(session_id: @temp_session.id, receiver_id: rec.id, sharer_ended: true, receiver_ended: true)
+				rec.sessions << FactoryGirl.create(:session)
+				rec.sessions << FactoryGirl.create(:session)
 			end
-			
+			SessionUser.where(session: @premade_receivers[1].sessions.at(1), receiver_id: @premade_receivers[1].id).update_all(sharer_ended: true, receiver_ended: true)
 			#provide the get a receiver id and sharer id that match
-			get '/sessions/:id', {'HTTP_SKUNK_USERID'=>@receivers[1].id, :id=>@receivers_sessions[2].sharer_id}
+			header 'Skunk_UserID', @premade_receivers[1].id
+			get "/sessions/#{@premade_receivers[1].sessions.at(1).id}"
 			#since the session is both sharer ended and receiver ended, we should get 401
 			expect(last_response.status).to eq(401)
 		end
