@@ -123,18 +123,20 @@ class UserAccountManager: NSObject {
     
     /// Deletes all stored account credentials on this device.
     func clearCredentials() throws {
-        // Clear user defaults
-        defaults.removeObjectForKey(Constants.keyFirstName)
-        defaults.removeObjectForKey(Constants.keyLastName)
-        defaults.removeObjectForKey(Constants.keyPhoneNumber)
-        defaults.removeObjectForKey(Constants.keyDebug)
-        guard defaults.synchronize() else {
-            throw UserAccountManagerError.DefaultsSynchronize
-        }
+        // DEFECT #17: Don't clear credentials, so closing and opening app will open as normal
         
-        // Clear keychain data
-        try deleteFromKeychain(Constants.userIdentifierService)
-        try deleteFromKeychain(Constants.userPasswordService)
+        // Clear user defaults
+//        defaults.removeObjectForKey(Constants.keyFirstName)
+//        defaults.removeObjectForKey(Constants.keyLastName)
+//        defaults.removeObjectForKey(Constants.keyPhoneNumber)
+//        defaults.removeObjectForKey(Constants.keyDebug)
+//        guard defaults.synchronize() else {
+//            throw UserAccountManagerError.DefaultsSynchronize
+//        }
+//        
+//        // Clear keychain data
+//        try deleteFromKeychain(Constants.userIdentifierService)
+//        try deleteFromKeychain(Constants.userPasswordService)
     }
     
     private func loadAccount() -> UserAccount? {
