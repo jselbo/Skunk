@@ -33,6 +33,7 @@ class ReceiveFriendsListViewController: UITableViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
+        self.tableView.userInteractionEnabled = false
         self.refreshControl!.beginRefreshing()
         
         // Per http://stackoverflow.com/a/22471166
@@ -155,6 +156,7 @@ class ReceiveFriendsListViewController: UITableViewController {
                 }
                 
                 self.refreshControl!.endRefreshing()
+                self.tableView.userInteractionEnabled = true
             })
         }
     }
