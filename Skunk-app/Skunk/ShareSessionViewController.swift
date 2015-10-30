@@ -23,6 +23,8 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
     // Counts from 0 to Constants.heartbeatFrequency
     var cumulativeTime: CFTimeInterval!
     
+    var spinnerButtonItem: UIBarButtonItem!
+    
     // Store array separate from session.receivers so we can iterate
     var receivers: [ReceiverInfo]!
     
@@ -56,6 +58,10 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
         pickUpButton.titleLabel!.textAlignment = .Center
         
         updateButtonStates()
+        
+        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        spinner.startAnimating()
+        spinnerButtonItem = UIBarButtonItem(customView: spinner)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "pickupResponded:",
             name: Constants.Notifications.pickupResponse, object: nil)
@@ -185,17 +191,26 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
         
         if cumulativeTime >= Constants.heartbeatFrequency {
             // Time to send an update
+            
+            self.navigationItem.rightBarButtonItem = spinnerButtonItem
             let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
             dispatch_async(queue, { () -> Void in
                 self.sessionManager.sendLocationHeartbeat(self.session, location: location, completion: { success in
-                    if success {
-                        self.handleHeartbeat(location)
-                    } else {
-                        print("Failed to send heartbeat: \(location)")
-                        dispatch_async(dispatch_get_main_queue()) { _ in
+                    dispatch_async(dispatch_get_main_queue()) { _ in
+                        self.navigationItem.rightBarButtonItem = nil
+                        // Update condition label (changes if time-based)
+                        self.conditionLabel.text = self.session.endCondition.humanizedString()
+                        
+                        if success {
+                            self.handleHeartbeat(location)
+                        } else {
+                            print("Failed to send heartbeat: \(location)")
                             if self.presentedViewController == nil {
                                 self.presentErrorAlert("Failed to send location to server")
                             }
+                            
+                            self.broadcastImageView.layer.speed = 0.0
+                            self.statusLabel.text = "Waiting for connection..."
                         }
                     }
                 })
@@ -227,26 +242,27 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     private func handleHeartbeat(location: CLLocation) {
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            if self.session.terminated && !self.handledTermination {
-                self.handledTermination = true
-                
-                self.locationManager.delegate = nil
-                self.locationManager.stopUpdatingLocation()
-                self.presentErrorAlert("Your sharing session has ended.", OKHandler: { (action) -> Void in
-                    let startSharingController =
-                        self.storyboard!.instantiateViewControllerWithIdentifier("beginSharingScreen")
-                        as! ShareMainViewController
-                    startSharingController.accountManager = self.accountManager
-                    startSharingController.locationManager = self.locationManager
-                    startSharingController.sessionManager = self.sessionManager
-                    self.navigationController!.setViewControllers([startSharingController], animated: true)
-                })
-            }
+        if self.session.terminated && !self.handledTermination {
+            self.handledTermination = true
             
-            self.receiversTableView.reloadData()
-            self.updateButtonStates()
-        })
+            self.locationManager.delegate = nil
+            self.locationManager.stopUpdatingLocation()
+            self.presentErrorAlert("Your sharing session has ended.", OKHandler: { (action) -> Void in
+                let startSharingController =
+                    self.storyboard!.instantiateViewControllerWithIdentifier("beginSharingScreen")
+                    as! ShareMainViewController
+                startSharingController.accountManager = self.accountManager
+                startSharingController.locationManager = self.locationManager
+                startSharingController.sessionManager = self.sessionManager
+                self.navigationController!.setViewControllers([startSharingController], animated: true)
+            })
+        }
+        
+        self.broadcastImageView.layer.speed = 1.0
+        self.statusLabel.text = "Broadcasting Location"
+        
+        self.receiversTableView.reloadData()
+        self.updateButtonStates()
     }
     
     private func updateButtonStates() {
