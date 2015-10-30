@@ -211,18 +211,19 @@ class SharerSelectRecieverViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didUnhighlightRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath)!
-        cell.accessoryType = .None
-        
-        // tableView.indexPathsForSelectedRows still includes the current indexPath
-        // even though it has been deselected. So, we remove it manually to accurately check its count.
-        var selectedRows = tableView.indexPathsForSelectedRows
-        if let index = selectedRows?.indexOf(indexPath) {
-            selectedRows?.removeAtIndex(index)
-        }
-        if selectedRows?.count == 0 {
-            doneButtonItem.enabled = false
-        }
+        // DEFECT #14: Deselecting doesn't update checkmark accessory
+//        let cell = tableView.cellForRowAtIndexPath(indexPath)!
+//        cell.accessoryType = .None
+//        
+//        // tableView.indexPathsForSelectedRows still includes the current indexPath
+//        // even though it has been deselected. So, we remove it manually to accurately check its count.
+//        var selectedRows = tableView.indexPathsForSelectedRows
+//        if let index = selectedRows?.indexOf(indexPath) {
+//            selectedRows?.removeAtIndex(index)
+//        }
+//        if selectedRows?.count == 0 {
+//            doneButtonItem.enabled = false
+//        }
     }
     
     //MARK: - IBAction
