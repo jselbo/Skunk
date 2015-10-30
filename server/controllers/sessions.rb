@@ -23,7 +23,7 @@
 # wrong.
 get '/sessions' do
 	@user = User.find(request.env["HTTP_SKUNK_USERID"])
-	@user.sessions.to_json
+	@user.sessions.active.to_json
 end
 
 
@@ -167,10 +167,10 @@ post '/sessions/:id' do
   	halt 500, 'Invalid location string.'
   end
   # Store the new location as the current_location in the database
-	@session.update(
-    current_location: params['location'],
-    terminated: @session.should_terminate?
-  )
+	@session.update(current_location: params['location'])
+  if @session.should_terminate? and not @session.terminated?
+    @session.update(terminated: true)
+  end
 	# Send session object back with new location
   @session.to_json
 end

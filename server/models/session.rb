@@ -6,6 +6,8 @@ class Session < ActiveRecord::Base
   belongs_to :driver, class_name: "User"
 	belongs_to :sharer, class_name: "User"
 
+  scope :active, -> { where(terminated: false) }
+
   def as_json opts={}
     json = super(include: [:sharer, :driver])
     json['receiver_info'] = session_users.inject({}) { |h, su| h[su.receiver_id] = su.receiver_ended; h }
@@ -17,16 +19,19 @@ class Session < ActiveRecord::Base
   end
 
   def should_terminate?
+    # If the session is already terminated, it should stay that way
+    true if terminated
     # Check time-based end conditions
     if is_time_based?
       return Time.now >= end_time
     # Check location-based end conditions
     else
+      return false unless current_location && destination
       # To compare locations loosely, we take the original latitude and
       # longitude, round it to 4 decimal places (~11 meters).
       current = current_location.split(',').map{ |l| l.to_f.round(4) }
-      destination = destination.split(',').map{ |l| l.to_f.round(4) }
-      return current == destination
+      target = destination.split(',').map{ |l| l.to_f.round(4) }
+      return current == target
     end
   end
 
