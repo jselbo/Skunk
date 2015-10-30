@@ -68,7 +68,8 @@ class ShareSelectLocationViewController: UIViewController, MKMapViewDelegate {
         }
         
         // Remove existing pin
-        selectedAnnotationView?.removeFromSuperview()
+        // DEFECT #16: does not remove the old pin for new selection
+        //selectedAnnotationView?.removeFromSuperview()
         
         let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "PinAnnotation")
         annotationView.animatesDrop = true
