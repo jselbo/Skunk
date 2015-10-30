@@ -2,12 +2,7 @@ require 'houston'
 
 # Send APNs with one method call
 class PushNotification
-  APN = case ENV['RACK_ENV'].to_sym
-  when :development, :test, nil
-    Houston::Client.development
-  when :production
-    Houston::Client.production
-  end
+  APN = Houston::Client.development
 
   APN.certificate = File.read(Sinatra::Application.settings.apn_cert_file)
   APN.passphrase = Sinatra::Application.settings.apn_cert_passphrase
