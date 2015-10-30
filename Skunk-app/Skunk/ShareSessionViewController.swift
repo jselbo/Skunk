@@ -44,7 +44,8 @@ class ShareSessionViewController: UIViewController, UITableViewDataSource, UITab
         locationManager.delegate = self
         
         lastUpdatedTime = CACurrentMediaTime()
-        cumulativeTime = 0.0
+        // Ensure that first update is sent right away
+        cumulativeTime = Constants.heartbeatFrequency
         locationManager.startUpdatingLocation()
         
         receivers = session.receivers.sort { r1, r2 in
