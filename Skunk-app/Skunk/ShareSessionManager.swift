@@ -189,6 +189,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
                 completion(registeredAccounts: sharerList)
             case .Failure(let failure):
                 request.logResponseFailure(failure)
+                completion(registeredAccounts: nil)
             }
         }
     }
