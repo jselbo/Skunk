@@ -64,7 +64,7 @@ describe "Controllers" do
 			#one valid receiver
 			it "should return a valid session id for one receiver" do
 				session = FactoryGirl.create(:session_with_driver)
-				hash = { :receivers => session.driver_id, :condition => { :type => 'time', :data => session.end_time}, :needs_driver => session.needs_driver }.to_json
+				hash = { :receivers => [ session.driver_id ], :condition => { :type => 'time', :data => session.end_time }, :needs_driver => session.needs_driver }.to_json
 
 				post '/sessions/create', hash
 
@@ -75,21 +75,20 @@ describe "Controllers" do
 				expect(newest_entry).to eq session
 
 			end
-=begin
 			it "should check whether sessions-users table was populated" do
 				session = FactoryGirl.create(:session_with_driver)
-				post '/sessions/create', :receivers => [session.driver_id], :condition => { :type => 'time', :data => session.end_time}, :needs_driver => session.needs_driver
+				post "/sessions/create", { :receivers => [session.driver_id], :condition => { :type => 'time', :data => session.end_time}, :needs_driver => session.needs_driver }.to_json
 
 				#Check sessions-users table
-				su = SessionsUsers.last
-				expect(su).to_have_attributes(session_id: session.id, receiver_id: [session.driver_id])
+				su = SessionUser.last
+				expect(su).to_have_attributes(session_id: session.id, receiver_id: session.driver_id)
 			end
 
 			it "should return a successful response when given a valid session request" do
 				session = FactoryGirl.create(:session_with_driver)
-				post '/sessions/create', :receivers => session.driver_id, :condition => { :type => 'time', :data => session.end_time}, :needs_driver => session.needs_driver
-				su = SessionsUsers.last
-				expect(last_response.body).to include("#{newest_entry.id}")
+				post '/sessions/create', { :receivers => session.driver_id, :condition => { :type => 'time', :data => session.end_time}, :needs_driver => session.needs_driver }.to_json
+				su = SessionUser.last
+				expect(last_response.body).to include("#{su.id}")
 			end
 
 			#TODO: check that notifications were sent
@@ -100,7 +99,7 @@ describe "Controllers" do
 				created_receivers = FactoryGirl.create_list(:user, 10)
 				receiver_ids = created_receivers.map(&:id) 
 
-				post '/sessions/create', :receivers => receiver_ids, :condition => { :type => 'time', :data => session.end_time}, :needs_driver => session.needs_driver
+				post '/sessions/create', { :receivers => receiver_ids, :condition => { :type => 'time', :data => session.end_time}, :needs_driver => session.needs_driver }.to_json
 
 				expect(last_response).to include("#{session.id}")
 
@@ -111,10 +110,10 @@ describe "Controllers" do
 				created_receivers = FactoryGirl.create_list(:user, 10)
 				receiver_ids = created_receivers.map(&:id) 
 
-				post '/sessions/create', :receivers => receiver_ids, :condition => { :type => 'time', :data=> session.end_time}, :needs_driver => session.needs_driver
+				post '/sessions/create', { :receivers => receiver_ids, :condition => { :type => 'time', :data=> session.end_time}, :needs_driver => session.needs_driver }.to_json
 				
 				#Check sessions-users table
-				sus = SessionsUsers.last($valid_receivers.length)
+				sus = SessionUser.last(receiver_ids.length)
 				sus.map(&:exists?)            	
 				expect(sus).to_not include(0)
 			end
@@ -126,18 +125,18 @@ describe "Controllers" do
 				created_receivers = FactoryGirl.create_list(:user, 10)
 				receiver_ids = created_receivers.map(&:id) 
 
-				post '/sessions/create', :receivers => receiver_ids, :condition => { :type => 'time', :data => session.end_time }, :needs_driver => session.needs_driver
+				post '/sessions/create', { :receivers => receiver_ids, :condition => { :type => 'time', :data => session.end_time }, :needs_driver => session.needs_driver }.to_json
 
 				sesh = Session.last
 				receiver_index = receiver_ids[receiver_ids.length]
-				su = SessionsUsers.last
+				su = SessionUser.last
 				expect(su).to_have_attributes(session_id: sesh.id, receiver_id: receiver_index)
 			end
 			
 			#no receivers
 			it "should return a 500 error if no receivers given" do
 				session = FactoryGirl.create(:session)
-				post '/sessions/create', :condition => {:type => 'time', :data => session.end_time}, :needs_driver => session.needs_driver
+				post '/sessions/create', { :condition => {:type => 'time', :data => session.end_time}, :needs_driver => session.needs_driver }.to_json
 
 				expect(last_response).to_not be_ok
 			end
@@ -145,7 +144,7 @@ describe "Controllers" do
 			#invalid receiver
 			it "should return an error for an invalid receiver" do
 				session = FactoryGirl.create(:session)
-				post '/sessions/create', :receivers =>  -20, :condition => { :type => 'time', :data => session.end_time }, :needs_driver => session.needs_driver
+				post '/sessions/create', { :receivers =>  -20, :condition => { :type => 'time', :data => session.end_time }, :needs_driver => session.needs_driver }.to_json
 				expect(last_response).to_not be_ok
 			end
 
@@ -155,28 +154,28 @@ describe "Controllers" do
 			#invalid condition type
 			it "should return a 500 error if given an invalid condition type" do
 				session = FactoryGirl.create(:session_with_driver)
-				post '/sessions/create', :receivers => [session.driver_id], :condition => {:type => "remember the alamo", :data => session.end_time}, :needs_driver => session.needs_driver
+				post '/sessions/create', { :receivers => session.driver_id, :condition => {:type => "remember the alamo", :data => session.end_time}, :needs_driver => session.needs_driver }.to_json
 				expect(last_response).to_not be_ok
 			end
 
 			#mismatched time with location
 			it "should return a 500 error" do
 				session = FactoryGirl.create(:session_with_driver)
-				post '/sessions/create', :receivers => [session.driver_id], :condition => {:type => :time, :data => session.destination}, :needs_driver => session.needs_driver
+				post '/sessions/create', { :receivers => session.driver_id, :condition => {:type => :time, :data => session.destination}, :needs_driver => session.needs_driver }.to_json
 				expect(last_response).to_not be_ok
 			end
 
 			#mismatched location with time
 			it "should return a 500 error for mismatched location and time" do
 				session = FactoryGirl.create(:session_with_driver)
-				post '/sessions/create', :receivers => [session.driver_id], :condition => {:type => :location, :data => session.end_time}, :needs_driver => session.needs_driver
+				post '/sessions/create', { :receivers => session.driver_id, :condition => {:type => :location, :data => session.end_time}, :needs_driver => session.needs_driver }.to_json
 				expect(last_response).to_not be_ok
 			end
 
 			#invalid timestamp format
 			it "should return a 500 error if given an invalid timestamp" do
 				session = FactoryGirl.create(:session)
-				post '/sessions/create', :receivers => [session.driver_id], :condition => {:type => :time, :data => DateTime.now}, :needs_driver => session.needs_driver
+				post '/sessions/create', { :receivers => session.driver_id, :condition => {:type => :time, :data => DateTime.now}, :needs_driver => session.needs_driver }.to_json
 				expect(last_response).to_not be_ok
 			end
 			#TODO: maybe try other invalid formats
@@ -184,15 +183,15 @@ describe "Controllers" do
 			#invalid location format
 			it "should return a 500 error if given an invalid location" do
 				session = FactoryGirl.create(:session_with_driver)
-				post '/sessions/create', :receivers => [session.driver_id], :condition => {:type => :location, :data => 'Harrys'}, :needs_driver => session.needs_driver
+				post '/sessions/create', { :receivers => session.driver_id, :condition => {:type => :location, :data => 'Harrys'}, :needs_driver => session.needs_driver }.to_json
 				expect(last_response).to_not be_ok
 			end
-=end
+
 			#invalid entry for needs_driver
 
 			it "should return a 500 error if given invalid needs_driver" do
 				session = FactoryGirl.create(:session_with_driver)
-				post '/sessions/create', :receivers => session.driver_id, :condition => {:type => :location, :data => 'Harrys'}, :needs_driver => 1234567
+				post '/sessions/create', { :receivers => session.driver_id, :condition => {:type => :location, :data => 'Harrys'}, :needs_driver => 1234567 }.to_json
 				expect(last_response).to_not be_ok
 			end
         end

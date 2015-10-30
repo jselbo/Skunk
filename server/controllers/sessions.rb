@@ -124,7 +124,7 @@ post '/sessions/create' do
     if Session.check_location(params['condition']['data'])
       # Set the fields relevant to location-based sessions
       @session.is_time_based = false
-      @session.destination = params['condition']['data'] # should validate type
+      @session.destination = params['condition']['data'] 
     else
       halt 500, 'Improperly formatted location string.'
     end
@@ -132,12 +132,12 @@ post '/sessions/create' do
   else
     halt 500, 'Invalid condition type.'
   end
-  # Populate the sessions_users join table with all the receivers
+  # Populate the session_users join table with all the receivers
   @session.receivers = User.where(id: params['receivers'])
   # Save the session to create it in the database with an ID
   @session.save
   # Send notifications to each of the receivers
-  PushNotification.session_starting @session
+  #PushNotification.session_starting @session
   # Return the new session's id
   { id: @session.id }.to_json
 end
