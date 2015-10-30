@@ -23,7 +23,9 @@
 # wrong.
 get '/sessions' do
 	@user = User.find(request.env["HTTP_SKUNK_USERID"])
-	@user.sessions.active.to_json
+  # DEFECT #5: When returning a list of sessions, all sessions are returned
+  # instead of filtering out the terminated ones.
+	@user.sessions.to_json
 end
 
 

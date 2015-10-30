@@ -21,7 +21,10 @@ class User < ActiveRecord::Base
   end
 
   def as_json opts={}
-    super(except: :password)
+    # DEFECT #8: When converting a User to a JSON object, their passwords are
+    # left in the result, unfiltered. Normally, an except: :password clause is
+    # used to filter this out.
+    super()
   end
 
   def full_name

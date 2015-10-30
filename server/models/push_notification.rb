@@ -2,12 +2,7 @@ require 'houston'
 
 # Send APNs with one method call
 class PushNotification
-  APN = case ENV['RACK_ENV'].to_sym
-  when :development, :test, nil
-    Houston::Client.development
-  when :production
-    Houston::Client.production
-  end
+  APN = Houston::Client.development
 
   APN.certificate = File.read(Sinatra::Application.settings.apn_cert_file)
   APN.passphrase = Sinatra::Application.settings.apn_cert_passphrase
@@ -43,7 +38,10 @@ class PushNotification
     # Notify the driver for the session that the sharer has requested to be
     # picked up
     def pickup_request session
-      message = "#{session.sharer.full_name} has requested to be picked up."
+      # DEFECT #9: When sending the driver a notification that someone has
+      # requested a pickup, the driver's own name is used in the notification
+      # instead of the person requesting the pickup.
+      message = "#{session.driver.full_name} has requested to be picked up."
       send(
         device_id: session.driver.device_id,
         category: 'PICKUP_REQUEST',
@@ -54,7 +52,10 @@ class PushNotification
 
     # Notify the sharer of the drivers response to the pickup request
     def pickup_response session
-      message = "#{session.driver.full_name} says they can pick you up at #{session.driver_eta.to_s}."
+      # DEFECT #10: When sending the sharer a notification that the driver has
+      # confirmed a pickup, the sharer's own name is used in the notification
+      # instead of the person requesting the pickup.
+      message = "#{session.sharer.full_name} says they can pick you up at #{session.driver_eta.to_s}."
       send(
         device_id: session.sharer.device_id,
         category: 'PICKUP_RESPONSE',

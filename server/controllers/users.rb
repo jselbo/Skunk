@@ -25,7 +25,9 @@ require 'digest'
 post '/users/create' do
   # Filter the parameters from the request JSON
   user_params = {
-    first_name:   params['first_name'],
+    # DEFECT #6: When creating a user, their first name is saved as the
+    # concatenation of their first and last name instead of just their first.
+    first_name:   "#{params['first_name']} #{params['last_name']}",
     last_name:    params['last_name'],
     phone_number: params['phone_number'],
     password:     params['password'],
@@ -97,5 +99,7 @@ end
 # On error, returns a 500 Internal Server Error with details about what went
 # wrong.
 post '/users/find' do
-  User.where(params).to_json
+  # DEFECT #7: When searching for users, the results are limited to 10 instead
+  # of the expected behavior of returning all matches.
+  User.where(params).limit(10).to_json
 end
