@@ -90,7 +90,8 @@ class SharerOptionsViewController: UITableViewController, ShareSelectLocationVie
             },
             cancelBlock: nil,
             origin: self.view)
-        datePicker.minimumDate = minimumDate
+        //DEFECT #2: Took out the checks for past dates
+        //datePicker.minimumDate = minimumDate
         datePicker.maximumDate = maximumDate
         datePicker.minuteInterval = 15
         
@@ -115,14 +116,17 @@ class SharerOptionsViewController: UITableViewController, ShareSelectLocationVie
         }
         
         switch endCondition {
-        case .Time(let date):
+            
+        //DEFECT #2: Took out the checks for past dates
+
+        case .Time(let _): break
             // Ensure selected date is still past the current time. This could occur if the user
             // stayed on this controller for an hour or more, and then tried to proceed.
-            let currentDate = NSDate()
-            guard currentDate.compare(date) == .OrderedAscending else {
-                self.presentErrorAlert("Ending time must be in the future. Please select time again.")
-                return false
-            }
+            //let currentDate = NSDate()
+            //guard currentDate.compare(date) == .OrderedAscending else {
+            //    self.presentErrorAlert("Ending time must be in the future. Please select time again.")
+            //    return false
+            //}
         case .Location(_):
             // Nothing to validate
             break
