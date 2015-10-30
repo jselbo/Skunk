@@ -22,7 +22,8 @@ class ReceiverPickUpSharerViewController: UIViewController {
         
         self.title = "Pickup Request for \(sharerSession.sharerAccount.userAccount.fullName)"
         
-        datePicker.minimumDate = NSDate()
+        //Defect #18: Remove min date a driver can select
+        //datePicker.minimumDate = NSDate()
         
         switch sharerSession.endCondition {
         case .Time(let date):
