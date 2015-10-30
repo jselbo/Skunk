@@ -173,7 +173,10 @@ class ReceiveMainViewController: UIViewController, MKMapViewDelegate {
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         if let sharerAnnotation = sharerAnnotation where sharerAnnotation.coordinate == view.annotation?.coordinate {
-            let secondDifference = Int(NSDate().timeIntervalSince1970 - lastUpdatedTime!.timeIntervalSince1970)
+            // DEFECT #11: don't truncate seconds difference
+            //let secondDifference = Int(NSDate().timeIntervalSince1970 - lastUpdatedTime!.timeIntervalSince1970)
+            let secondDifference = NSDate().timeIntervalSince1970 - lastUpdatedTime!.timeIntervalSince1970
+            
             let pointAnnotation = view.annotation! as! MKPointAnnotation
             pointAnnotation.subtitle = "Last updated \(secondDifference) second\(secondDifference == 1 ? "" : "s") ago"
         }

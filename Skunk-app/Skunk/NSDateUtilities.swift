@@ -23,6 +23,10 @@ extension NSDate {
         
         let formatter = NSDateFormatter()
         formatter.dateFormat = "h:mm a"
+        
+        // DEFECT #12: Use incorrect time zone when displaying dates to user
+        formatter.timeZone = NSTimeZone(abbreviation: "UTC")!
+        
         let timeText = formatter.stringFromDate(self)
         
         let differenceComponents = calendar.components([.Day, .Hour, .Minute], fromDate: currentDate, toDate: self, options: [])
