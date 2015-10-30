@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
 
   before_create :encrypt_password
 
+  validates_presence_of :phone_number, :first_name, :last_name, :password
+
   def init
     self.id = digest::SHA2.hexdigest(Time.now)
   end
