@@ -16,6 +16,8 @@ class MainTabBarController: UITabBarController {
     var locationManager: LocationManager!
     var sessionManager: ShareSessionManager!
     
+    var viewHasAppeared = false
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -52,9 +54,17 @@ class MainTabBarController: UITabBarController {
         notificationCenter.addObserver(self, selector: "sessionStarted:", name: Constants.Notifications.sessionStart, object: nil)
         notificationCenter.addObserver(self, selector: "sessionEnded:", name: Constants.Notifications.sessionEnd, object: nil)
         notificationCenter.addObserver(self, selector: "pickupRequested:", name: Constants.Notifications.pickupRequest, object: nil)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         
-        let appDelegate = UIApplication.sharedApplication().delegate! as! AppDelegate
-        appDelegate.fireNotificationFromLaunch()
+        if !viewHasAppeared {
+            viewHasAppeared = true
+            
+            let appDelegate = UIApplication.sharedApplication().delegate! as! AppDelegate
+            appDelegate.fireNotificationFromLaunch()
+        }
     }
     
     func sessionStarted(notification: NSNotification) {

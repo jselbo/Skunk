@@ -59,6 +59,19 @@
                                     <constraint firstItem="yp2-va-YOJ" firstAttribute="height" secondItem="7Qz-cg-iuH" secondAttribute="height" multiplier="0.5" id="heB-lF-LxH"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Skunk!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rue-Iu-GSx">
+                                <rect key="frame" x="16" y="212" width="288" height="64"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="Bzj-tb-5JS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon512" translatesAutoresizingMaskIntoConstraints="NO" id="Oa9-B0-cC4">
+                                <rect key="frame" x="36" y="72" width="248" height="160"/>
+                                <animations/>
+                            </imageView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cKU-KG-DG2">
                                 <rect key="frame" x="0.0" y="212" width="320" height="64"/>
                                 <animations/>
@@ -75,19 +88,6 @@
                                     <action selector="debugLoginPressed:" destination="SXT-im-DVr" eventType="touchUpInside" id="MKW-hc-NAG"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Skunk!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rue-Iu-GSx">
-                                <rect key="frame" x="16" y="212" width="288" height="64"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="64" id="Bzj-tb-5JS"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon512" translatesAutoresizingMaskIntoConstraints="NO" id="Oa9-B0-cC4">
-                                <rect key="frame" x="36" y="72" width="248" height="160"/>
-                                <animations/>
-                            </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

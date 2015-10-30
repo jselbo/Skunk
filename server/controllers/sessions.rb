@@ -169,10 +169,13 @@ post '/sessions/:id' do
   	halt 500, 'Invalid location string.'
   end
   # Store the new location as the current_location in the database
-	@session.update(current_location: params['location'])
+  @session.update(
+    current_location: params['location'],
+    last_updated: DateTime.now
+  )
   if @session.should_terminate? and not @session.terminated?
     @session.update(terminated: true)
   end
-	# Send session object back with new location
+  # Send session object back with new location
   @session.to_json
 end

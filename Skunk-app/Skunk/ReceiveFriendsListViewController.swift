@@ -33,6 +33,7 @@ class ReceiveFriendsListViewController: UITableViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
+        self.tableView.userInteractionEnabled = false
         self.refreshControl!.beginRefreshing()
         
         // Per http://stackoverflow.com/a/22471166
@@ -94,19 +95,41 @@ class ReceiveFriendsListViewController: UITableViewController {
         let sharerUid = sharerRegisteredUserAccount.identifier
         let sharerSession = sessionManager.sharerInformation[sharerUid]!
         cell.textLabel!.text = sharerUserAccount.firstName + " " + sharerUserAccount.lastName
+        cell.detailTextLabel!.font = UIFont.systemFontOfSize(cell.detailTextLabel!.font.pointSize)
         
+        var detailText = ""
         if sharerSession.needsDriver {
-            cell.detailTextLabel!.text = "Needs Driver"
-        } else {
-            switch sharerSession.endCondition {
-            case .Location(_): break
-            case .Time(let endDate):
-                let currentDate = NSDate()
-                let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-                let difference = calendar.components([.Hour], fromDate: currentDate, toDate: endDate, options: [])
-                cell.detailTextLabel?.text = "\(difference.hour) hours till done sharing"
+            if let driverIdentifier = sharerSession.driverIdentifier {
+                if driverIdentifier == self.accountManager.registeredAccount!.identifier {
+                    detailText += "You are the driver"
+                } else {
+                    detailText += "Has a driver"
+                }
+            } else {
+                cell.detailTextLabel!.font = UIFont.boldSystemFontOfSize(cell.detailTextLabel!.font.pointSize)
+                detailText += "Needs Driver"
             }
+            
+            detailText += " | "
         }
+        
+        switch sharerSession.endCondition {
+        case .Location(_):
+            detailText += "Sharing until Destination"
+        case .Time(let endDate):
+            let currentDate = NSDate()
+            let secondDifference = endDate.timeIntervalSince1970 - currentDate.timeIntervalSince1970
+            let hourDifference = secondDifference / 60.0 / 60.0
+            
+            // Round to nearest 0.5
+            let roundedHourDifference = round(2.0 * hourDifference) / 2.0
+            
+            let hourText = String(format: "%.1f %@",
+                roundedHourDifference, (roundedHourDifference == 1.0 ? "hour" : "hours"))
+            detailText += "\(hourText) til done sharing"
+        }
+        cell.detailTextLabel!.text = detailText
+        
         return cell
     }
     
@@ -133,6 +156,7 @@ class ReceiveFriendsListViewController: UITableViewController {
                 }
                 
                 self.refreshControl!.endRefreshing()
+                self.tableView.userInteractionEnabled = true
             })
         }
     }

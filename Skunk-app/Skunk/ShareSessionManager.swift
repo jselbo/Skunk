@@ -337,7 +337,7 @@ class ShareSessionManager: NSObject, NSURLSessionDelegate {
             shareSession.identifier = Sid(sessionIdentifier)
         }
         if let driverAccount = jsonData["driver"] as? [String: AnyObject],
-            driverIdentifier = driverAccount["user_id"] as? Int {
+            driverIdentifier = driverAccount["id"] as? Int {
                 shareSession.driverIdentifier = Sid(driverIdentifier)
         }
         

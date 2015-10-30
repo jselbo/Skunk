@@ -108,6 +108,13 @@ class ShareSession: NSObject {
     // Set to true if server indicates session has ended
     var terminated = false
     
+    override var description: String {
+        return "ShareSession {sharer: \(sharerAccount), endCondition: \(endCondition.name()), "
+        + "needsDriver: \(needsDriver), id: \(identifier), receivers: \(receivers), driverID: \(driverIdentifier), "
+        + "needsPickup: \(needsPickup), driverETA: \(driverEstimatedArrival), currentLocation: \(currentLocation), "
+        + "lastUpdate: \(lastLocationUpdate), terminated: \(terminated)}"
+    }
+    
     init(sharerAccount: RegisteredUserAccount,
         endCondition: ShareEndCondition,
         needsDriver: Bool,
