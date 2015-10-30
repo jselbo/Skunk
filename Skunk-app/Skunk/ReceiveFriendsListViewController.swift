@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+import QuartzCore
+
 class ReceiveFriendsListViewController: UITableViewController {
     let sessionIdentifier = "Session"
     
@@ -18,28 +20,55 @@ class ReceiveFriendsListViewController: UITableViewController {
     
     var sharerList = [RegisteredUserAccount]()
     
-    var refreshTimer: NSTimer!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /*let refreshControl = UIRefreshControl()
+        let refreshControl = UIRefreshControl()
+        refreshControl.backgroundColor = UIColor.darkGrayColor()
+        refreshControl.tintColor = UIColor.whiteColor()
         refreshControl.addTarget(self, action: "listRefresh", forControlEvents: .ValueChanged)
-        self.refreshControl = refreshControl*/
+        self.refreshControl = refreshControl
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        refreshTimer = NSTimer.scheduledTimerWithTimeInterval(Constants.receiverSessionRefreshInterval, target: self, selector: "listRefresh:", userInfo: nil, repeats: true)
-        listRefresh(self)
+        self.refreshControl!.beginRefreshing()
+        
+        // Per http://stackoverflow.com/a/22471166
+        let offset = CGPointMake(0, self.tableView.contentOffset.y - 80.0)
+        self.tableView.setContentOffset(offset, animated: true)
+        
+        listRefresh()
     }
     
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
+    func reloadData() {
+        self.tableView.reloadData()
         
-        refreshTimer.invalidate()
-        refreshTimer = nil
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "MMM d, h:mm a"
+        let refreshTitle = "Last updated at \(formatter.stringFromDate(NSDate()))"
+        let attributes = [
+            NSForegroundColorAttributeName: UIColor.whiteColor(),
+        ]
+        let attributedText = NSAttributedString(string: refreshTitle, attributes: attributes)
+        self.refreshControl!.attributedTitle = attributedText
+        
+        self.refreshControl!.endRefreshing()
+        
+        if self.sharerList.isEmpty {
+            let noSessionsLabel = UILabel()
+            noSessionsLabel.text = "No sessions shared with you\n\nPull to refresh"
+            noSessionsLabel.numberOfLines = 0
+            noSessionsLabel.textAlignment = .Center
+            noSessionsLabel.textColor = UIColor.grayColor()
+            
+            self.tableView.backgroundView = noSessionsLabel
+            self.tableView.separatorStyle = .None
+        } else {
+            self.tableView.backgroundView = nil
+            self.tableView.separatorStyle = .SingleLine
+        }
     }
     
     override func numberOfSectionsInTableView(friendsTableView: UITableView) -> Int {
@@ -93,15 +122,17 @@ class ReceiveFriendsListViewController: UITableViewController {
         }
     }
     
-    func listRefresh(sender: AnyObject) {
+    func listRefresh() {
         sessionManager.fetchShareSessions(accountManager.registeredAccount!) { (registeredAccounts) -> () in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if let registeredAccounts = registeredAccounts {
                     self.sharerList = registeredAccounts
-                    self.tableView.reloadData()
+                    self.reloadData()
                 } else {
                     self.presentErrorAlert("Failed to Request All Sessions")
                 }
+                
+                self.refreshControl!.endRefreshing()
             })
         }
     }
