@@ -55,8 +55,6 @@ class ReceiveFriendsListViewController: UITableViewController {
         let attributedText = NSAttributedString(string: refreshTitle, attributes: attributes)
         self.refreshControl!.attributedTitle = attributedText
         
-        self.refreshControl!.endRefreshing()
-        
         if self.sharerList.isEmpty {
             let noSessionsLabel = UILabel()
             noSessionsLabel.text = "No sessions shared with you\n\nPull to refresh"
@@ -150,12 +148,13 @@ class ReceiveFriendsListViewController: UITableViewController {
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if let registeredAccounts = registeredAccounts {
                     self.sharerList = registeredAccounts
-                    self.reloadData()
                 } else {
+                    self.sharerList.removeAll()
                     self.presentErrorAlert("Failed to Request All Sessions")
                 }
                 
                 self.refreshControl!.endRefreshing()
+                self.reloadData()
                 self.tableView.userInteractionEnabled = true
             })
         }
