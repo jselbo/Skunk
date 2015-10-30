@@ -23,7 +23,7 @@
 # wrong.
 get '/sessions' do
 	@user = User.find(request.env["HTTP_SKUNK_USERID"])
-	@user.sessions.active.to_json
+	@user.active_sessions.to_json
 end
 
 

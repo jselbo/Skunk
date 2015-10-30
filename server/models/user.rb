@@ -13,8 +13,9 @@ class User < ActiveRecord::Base
     self.id = digest::SHA2.hexdigest(Time.now)
   end
 
-  scope :active_sessions, -> { joins(:session).where('active = ?', true)}
-  scope :expired_sessions, -> { joins(:session).where('active = ?', false)}
+  def active_sessions
+    sessions.where(session_users: { receiver_ended: false })
+  end
 
   def encrypt_password
     self.password = User.encrypt(self.password)
