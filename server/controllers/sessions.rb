@@ -23,7 +23,12 @@
 # wrong.
 get '/sessions' do
 	@user = User.find(request.env["HTTP_SKUNK_USERID"])
-	@user.active_sessions.to_json
+
+	if @user.active_sessions.empty?
+		halt 500
+	else
+		@user.active_sessions.to_json
+	end
 end
 
 
@@ -47,7 +52,11 @@ end
 # 401 Not Authorized.
 # If the session does not exist, returns a 404 Not Found.
 get '/sessions/:id' do
-	@session = Session.find(params['id'])
+	begin
+		@session = Session.find(params['id'])
+	rescue ActiveRecord::RecordNotFound
+		halt 404
+	end
 	@user = User.find(request.env['HTTP_SKUNK_USERID'])
 	@session_user = SessionUser.find_by(receiver: @user, session: @session)
 
