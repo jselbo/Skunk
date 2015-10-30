@@ -26,7 +26,9 @@ class SettingsViewController: UITableViewController {
         #endif
         
         name.detailTextLabel!.text = nameText
-        phoneNumber.detailTextLabel!.text = account.userAccount.phoneNumber.formatForUser()
+        
+        //Defect #4 : 1+ instead of +1 or USA tag 
+        phoneNumber.detailTextLabel!.text = "1+ " + account.userAccount.phoneNumber.formatForUser()
         
         let tap = UITapGestureRecognizer(target: self, action: "poopyTap")
         name.contentView.addGestureRecognizer(tap)
