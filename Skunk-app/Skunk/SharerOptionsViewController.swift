@@ -119,7 +119,7 @@ class SharerOptionsViewController: UITableViewController, ShareSelectLocationVie
             
         //DEFECT #2: Took out the checks for past dates
 
-        case .Time(let _): break
+        case .Time(_): break
             // Ensure selected date is still past the current time. This could occur if the user
             // stayed on this controller for an hour or more, and then tried to proceed.
             //let currentDate = NSDate()

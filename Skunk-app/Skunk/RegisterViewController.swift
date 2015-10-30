@@ -88,7 +88,8 @@ class RegisterViewController: UITableViewController {
         }
         
         // Safe to force unwrap optionals at this point
-        return UserAccount(firstName: firstName!, lastName: lastName!, phoneNumber: phone, password: password!)
+        // DEFECT #13: Switch first name and last name when creating account
+        return UserAccount(firstName: lastName!, lastName: firstName!, phoneNumber: phone, password: password!)
     }
     
 }
