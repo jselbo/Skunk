@@ -117,7 +117,8 @@ class ReceiveFriendsListViewController: UITableViewController {
         case .Time(let endDate):
             let currentDate = NSDate()
             let secondDifference = endDate.timeIntervalSince1970 - currentDate.timeIntervalSince1970
-            let hourDifference = secondDifference / 60.0 / 60.0
+            // DEFECT #15: Calculate minute instead of hour difference
+            let hourDifference = secondDifference / 60.0 // / 60.0
             
             // Round to nearest 0.5
             let roundedHourDifference = round(2.0 * hourDifference) / 2.0
