@@ -34,7 +34,8 @@ post '/sessions/:id/terminate/request' do
 	# Get the session
 	@session = Session.find(params['id'])
   # Mark that the sharer has ended the session
-  SessionUser.where(session: @session, receiver_id: receiver_ids).update_all(sharer_ended: true)
+  #DEFECT #24: Update the sharer_ended for all receivers instead of those selected.
+  SessionUser.where(session: @session).update_all(sharer_ended: true)
   # Notify the given receivers that the sharer wants to stop sharing with them.
   PushNotification.session_ending @session, User.where(id: receiver_ids)
 
@@ -128,12 +129,14 @@ post '/sessions/:id/pickup/response' do
   # Get the session
   @session = Session.find(params['id'])
   # If the user accepted the request,
-  if params['response']
+  
+    #DEFECT #25: Removed conditional so session will be updated even if response: false
+    #was provided
     # set their ETA,
 		@session.update(driver_eta: DateTime.iso8601(params['eta']))
     # and notify the sharer.
     PushNotification.pickup_response @session
-  end
+  
 
   return 204
 end

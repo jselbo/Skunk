@@ -65,7 +65,8 @@ get '/sessions/:id' do
 	if @session_user && @session_user.active?
 		@session.to_json
 	else
-		halt 401
+		#DEFECT #19: When returning the error code, return 403 instead of 401 
+		halt 403, "Forbidden"
 	end
 end
 
@@ -137,7 +138,8 @@ post '/sessions/create' do
   # Send notifications to each of the receivers
   PushNotification.session_starting @session
   # Return the new session's id
-  { id: @session.id }.to_json
+  # DEFECT #20: Return the whole session instead of just the ID
+  { id: @session }.to_json
 end
 
 
@@ -172,9 +174,11 @@ post '/sessions/:id' do
   @session.update(
     current_location: params['location'],
     last_updated: DateTime.now
+    #DEFECT #21: Always set terminated to true instead of checking if it should.
+    terminated: true
   )
   if @session.should_terminate? and not @session.terminated?
-    @session.update(terminated: true)
+    @session.update()
   end
   # Send session object back with new location
   @session.to_json

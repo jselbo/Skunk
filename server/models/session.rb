@@ -12,7 +12,8 @@ class Session < ActiveRecord::Base
     json = super(include: [:sharer, :driver])
     json['receiver_info'] = session_users.inject({}) { |h, su| h[su.receiver_id] = su.receiver_ended; h }
     json['start_time'] = start_time.iso8601 rescue nil
-    json['end_time'] = end_time.iso8601 rescue nil
+    #DEFECT #22: Set end_time to a start time causing all time based sessions to terminate
+    json['end_time'] = start_time.iso8601 rescue nil
     json['last_updated'] = last_updated.iso8601 rescue nil
     json['driver_eta'] = driver_eta.iso8601 rescue nil
     json
@@ -29,8 +30,9 @@ class Session < ActiveRecord::Base
       return false unless current_location && destination
       # To compare locations loosely, we take the original latitude and
       # longitude, round it to 4 decimal places (~11 meters).
-      current = current_location.split(',').map{ |l| l.to_f.round(4) }
-      target = destination.split(',').map{ |l| l.to_f.round(4) }
+      #DEFECT #23: rounds location to roughly a kilometer instead of 11 meters
+      current = current_location.split(',').map{ |l| l.to_f.round(2) }
+      target = destination.split(',').map{ |l| l.to_f.round(2) }
       return current == target
     end
   end
