@@ -23,6 +23,7 @@ class ReceiveMainViewController: UIViewController, MKMapViewDelegate {
     
     var sharerAnnotation: MKAnnotation?
     var destinationAnnotation: MKAnnotation?
+    var lastUpdatedTime: NSDate?
     
     @IBOutlet weak var optionsViewPanel: UIView!
     @IBOutlet weak var mapView: MKMapView!
@@ -127,22 +128,20 @@ class ReceiveMainViewController: UIViewController, MKMapViewDelegate {
     }
     
     func showSharerLocationInMap(location: CLLocation, updateTime: NSDate) {
+        if lastUpdatedTime == updateTime {
+            // Updated timestamp hasn't changed, so don't update the map
+            return
+        }
+        lastUpdatedTime = updateTime
+        
+        // Remove existing pin because we are about to drop a new one
         if let sharerAnnotation = sharerAnnotation {
-            // Location hasn't changed, so don't update the map
-            if sharerAnnotation.coordinate == location.coordinate {
-                return
-            }
-            
             mapView.removeAnnotation(sharerAnnotation)
         }
-        
-        let secondDifference = NSDate().timeIntervalSince1970 - updateTime.timeIntervalSince1970
-        let minuteDifference = Int(secondDifference / 60)
         
         let annotation = MKPointAnnotation()
         annotation.coordinate = location.coordinate
         annotation.title = "\(sharerSession.sharerAccount.userAccount.fullName)'s Location"
-        annotation.subtitle = "Last updated \(minuteDifference) minute\(minuteDifference == 1 ? "" : "s") ago"
         
         var annotations: [MKAnnotation] = [annotation, mapView.userLocation]
         if let destinationAnnotation = destinationAnnotation {
@@ -168,6 +167,14 @@ class ReceiveMainViewController: UIViewController, MKMapViewDelegate {
             return pinAnnotationView
         }
         return nil
+    }
+    
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+        if let sharerAnnotation = sharerAnnotation where sharerAnnotation.coordinate == view.annotation?.coordinate {
+            let secondDifference = Int(NSDate().timeIntervalSince1970 - lastUpdatedTime!.timeIntervalSince1970)
+            let pointAnnotation = view.annotation! as! MKPointAnnotation
+            pointAnnotation.subtitle = "Last updated \(secondDifference) second\(secondDifference == 1 ? "" : "s") ago"
+        }
     }
     
 }

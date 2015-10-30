@@ -10,8 +10,8 @@ import UIKit
 import CoreLocation
 
 // For some reason this isn't included in CoreLocation...
-public func ==(a: CLLocationCoordinate2D, b: CLLocationCoordinate2D) -> Bool {
-    return a.latitude == b.latitude && a.longitude == b.longitude
+public func ==(a: CLLocationCoordinate2D?, b: CLLocationCoordinate2D?) -> Bool {
+    return a?.latitude == b?.latitude && a?.longitude == b?.longitude
 }
 
 public func -(a: CGPoint, b: CGPoint) -> CGPoint {
