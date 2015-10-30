@@ -135,9 +135,11 @@ class ReceiveMainViewController: UIViewController, MKMapViewDelegate {
         lastUpdatedTime = updateTime
         
         // Remove existing pin because we are about to drop a new one
+        // DEFECT #App1:  Nah this not needed 
+        /*
         if let sharerAnnotation = sharerAnnotation {
             mapView.removeAnnotation(sharerAnnotation)
-        }
+        }*/
         
         let annotation = MKPointAnnotation()
         annotation.coordinate = location.coordinate
