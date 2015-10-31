@@ -84,7 +84,9 @@ class SharerOptionsViewController: UITableViewController, ShareSelectLocationVie
             selectedDate: minimumDate,
             doneBlock: { picker, value, index in
                 let selectedDate = value as! NSDate
-                self.dateSelected(currentDate, selectedDate)
+                
+                self.endCondition = .Time(selectedDate)
+                self.selectedValueLabel.text = selectedDate.humanizedString()
             },
             cancelBlock: nil,
             origin: self.view)
@@ -105,30 +107,6 @@ class SharerOptionsViewController: UITableViewController, ShareSelectLocationVie
     }
     
     //MARK: - Private methods
-    
-    private func dateSelected(currentDate: NSDate, _ selectedDate: NSDate) {
-        endCondition = .Time(selectedDate)
-        
-        // Dates and times are hard
-        let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-        let currentComponents = calendar.components([.Day], fromDate: currentDate)
-        let selectedComponents = calendar.components([.Day], fromDate: selectedDate)
-        let dayText = (selectedComponents.day == currentComponents.day ? "Today" : "Tomorrow")
-        
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "h:mm a"
-        let timeText = formatter.stringFromDate(selectedDate)
-        
-        let differenceComponents = calendar.components([.Day, .Hour, .Minute], fromDate: currentDate, toDate: selectedDate, options: [])
-        var hourDifference = Double(differenceComponents.hour)
-        if differenceComponents.minute > 0 {
-            hourDifference += Double(differenceComponents.minute) / 60.0
-        }
-        let hourText = String(format: "%.1f %@ from now",
-            hourDifference, (hourDifference > 1.0 ? "hours" : "hour"))
-        
-        self.selectedValueLabel.text = "\(dayText) at \(timeText) (\(hourText))"
-    }
     
     private func validateOptions() -> Bool {
         guard let endCondition = endCondition else {

@@ -22,12 +22,32 @@ enum ShareEndCondition: Serializable {
     case Location(CLLocation)
     case Time(NSDate)
     
+    var isLocation: Bool {
+        switch self {
+        case .Location(_):
+            return true
+        default:
+            return false
+        }
+    }
+    
     func name() -> String {
-        switch (self) {
+        switch self {
         case .Location(_):
             return "location"
         case .Time(_):
             return "time"
+        }
+    }
+    
+    func humanizedString() -> String {
+        switch self {
+        case .Location(_):
+            return "Sharing until destination"
+        case .Time(let date):
+            let text = "Sharing until \(date.humanizedString())"
+            let atIndex = text.rangeOfString("at")!.endIndex
+            return text.substringToIndex(atIndex) + "\n" + text.substringFromIndex(atIndex.advancedBy(1))
         }
     }
     
@@ -87,6 +107,13 @@ class ShareSession: NSObject {
     
     // Set to true if server indicates session has ended
     var terminated = false
+    
+    override var description: String {
+        return "ShareSession {sharer: \(sharerAccount), endCondition: \(endCondition.name()), "
+        + "needsDriver: \(needsDriver), id: \(identifier), receivers: \(receivers), driverID: \(driverIdentifier), "
+        + "needsPickup: \(needsPickup), driverETA: \(driverEstimatedArrival), currentLocation: \(currentLocation), "
+        + "lastUpdate: \(lastLocationUpdate), terminated: \(terminated)}"
+    }
     
     init(sharerAccount: RegisteredUserAccount,
         endCondition: ShareEndCondition,

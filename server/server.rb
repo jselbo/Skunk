@@ -22,7 +22,7 @@ before do
 
   if ['POST', 'PUT'].include? request.request_method
     body_parameters = request.body.read
-    params.merge!(JSON.parse(body_parameters))
+    params.merge!(JSON.parse(body_parameters)) unless body_parameters.empty?
   end
 end
 

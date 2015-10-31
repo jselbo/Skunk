@@ -16,6 +16,8 @@ class MainTabBarController: UITabBarController {
     var locationManager: LocationManager!
     var sessionManager: ShareSessionManager!
     
+    var viewHasAppeared = false
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -52,20 +54,28 @@ class MainTabBarController: UITabBarController {
         notificationCenter.addObserver(self, selector: "sessionStarted:", name: Constants.Notifications.sessionStart, object: nil)
         notificationCenter.addObserver(self, selector: "sessionEnded:", name: Constants.Notifications.sessionEnd, object: nil)
         notificationCenter.addObserver(self, selector: "pickupRequested:", name: Constants.Notifications.pickupRequest, object: nil)
-        notificationCenter.addObserver(self, selector: "pickupResponded:", name: Constants.Notifications.pickupResponse, object: nil)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if !viewHasAppeared {
+            viewHasAppeared = true
+            
+            let appDelegate = UIApplication.sharedApplication().delegate! as! AppDelegate
+            appDelegate.fireNotificationFromLaunch()
+        }
     }
     
     func sessionStarted(notification: NSNotification) {
-        let json = notification.userInfo as! [String: AnyObject]
-        let sessionJSON = json["session"] as! [String: AnyObject]
-        guard let shareSession = ShareSessionManager.parseShareSession(sessionJSON) else {
+        guard let shareSession = ShareSessionManager.parseSessionFromNotification(notification) else {
             return
         }
         
         if shareSession.needsDriver {
             let sharerName = shareSession.sharerAccount.userAccount.fullName
             self.presentDecisionAlert("\(sharerName) has shared their location with you and needs a driver. Would you like to accept the driver request?", OKHandler: { (action) -> Void in
-                self.sessionManager.sessionDriverResponse(shareSession, completion: { (success) -> () in
+                self.sessionManager.sessionDriverResponse(shareSession, receiver: self.accountManager.registeredAccount!, completion: { (success) -> () in
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         let message = success ? "You have been marked as the driver for \(sharerName)." : "Failed to respond as driver"
                         self.presentErrorAlert(message)
@@ -76,30 +86,34 @@ class MainTabBarController: UITabBarController {
     }
     
     func sessionEnded(notification: NSNotification) {
-        let json = notification.userInfo as! [String: AnyObject]
-        let sessionJSON = json["session"] as! [String: AnyObject]
-        guard let shareSession = ShareSessionManager.parseShareSession(sessionJSON) else {
+        guard let shareSession = ShareSessionManager.parseSessionFromNotification(notification) else {
             return
         }
         
         let sharerName = shareSession.sharerAccount.userAccount.fullName
         let message = "Allow \(sharerName) to stop sharing their location with you?"
         self.presentDecisionAlert(message, OKHandler: { (action) -> Void in
-            self.sessionManager.sessionTermResponse(shareSession, completion: { (success) -> () in
+            self.sessionManager.sessionTermResponse(shareSession, receiver: self.accountManager.registeredAccount!) {
+                (success) -> () in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     let message = success ? "You have stopped sharing your location with \(sharerName)." : "Failed to accept location termination request"
                     self.presentErrorAlert(message)
                 })
-            })
+            }
         })
     }
     
     func pickupRequested(notification: NSNotification) {
+        guard let shareSession = ShareSessionManager.parseSessionFromNotification(notification) else {
+            return
+        }
         
-    }
-    
-    func pickupResponded(notification: NSNotification) {
-        
+        let navigationController = self.storyboard!.instantiateViewControllerWithIdentifier("PickupResponse") as! UINavigationController
+        let selectETAController = navigationController.topViewController! as! ReceiverPickUpSharerViewController
+        selectETAController.accountManager = accountManager
+        selectETAController.sessionManager = sessionManager
+        selectETAController.sharerSession = shareSession
+        self.presentViewController(navigationController, animated: true, completion: nil)
     }
     
     private func mockDebugRequests() {

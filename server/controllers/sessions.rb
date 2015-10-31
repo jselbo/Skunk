@@ -23,7 +23,7 @@
 # wrong.
 get '/sessions' do
 	@user = User.find(request.env["HTTP_SKUNK_USERID"])
-	@user.sessions.to_json
+	@user.active_sessions.to_json
 end
 
 
@@ -47,7 +47,11 @@ end
 # 401 Not Authorized.
 # If the session does not exist, returns a 404 Not Found.
 get '/sessions/:id' do
-	@session = Session.find(params['id'])
+	begin
+		@session = Session.find(params['id'])
+	rescue ActiveRecord::RecordNotFound
+		halt 404
+	end
 	@user = User.find(request.env['HTTP_SKUNK_USERID'])
 	@session_user = SessionUser.find_by(receiver: @user, session: @session)
 
@@ -65,40 +69,6 @@ get '/sessions/:id' do
 	else
 		halt 401
 	end
-end
-
-
-# PUT /sessions/:id
-# {
-#   "location": <location_json>
-# }
-# -> 200 OK
-# -> 500 Internal Server Error
-#
-# This endpoint is used by the sharer to update the session with their current
-# location. This is the sharer's heartbeat to the app, meaning they should
-# regularly hit it to ensure they are providing the most up-to-date
-# information to the receivers.
-#
-# Failure to check-in within a reasonable amount of time will result in a
-# notification being sent to the active receivers, alerting them that the
-# sharer has unexpectedly stopped sharing their location.
-#
-# On success, if the session has changed on the server, returns that session
-# object, updated with the sharer's new location.
-# On error, returns a 500 Internal Server Error with details about what went
-# wrong.
-put '/sessions/:id' do
-  # Get the session
-  @session = Session.find(params['id'])
-  # If location string is incorrectly formatted, return error
-  if not Session.check_location(params['location'])
-  	halt 500, 'Invalid location string.'
-  end
-  # Store the new location as the current_location in the database
-	@session.update(current_location: params['location'])
-	# Send session object back with new location
-  @session.to_json
 end
 
 
@@ -130,19 +100,23 @@ post '/sessions/create' do
   # Initialize a new Session object
   @session = Session.new(
     sharer: User.find(request.env['HTTP_SKUNK_USERID']),
-  	needs_driver: params['needs_driver'],
+    needs_driver: params['needs_driver'],
     start_time: DateTime.now,
-		last_updated: DateTime.now
+    last_updated: DateTime.now
   )
+
+  if not params.has_key?('receivers') or params['receivers'] == nil
+    halt 500, 'No receivers.'
+  end
 
   case params['condition']['type']
   # If session is timestamped, set is_time_based to true and store in database
   when 'time'
     puts "\n> Time-type session"
-  	# Check that timestamp is in iso 8601 format
-  	begin
+    # Check that timestamp is in iso 8601 format
+    begin
       # Set the fields relevant to time-based sessions
-    	@session.is_time_based = true
+      @session.is_time_based = true
       @session.end_time = DateTime.iso8601(params['condition']['data'])
     rescue
       halt 500, 'Improperly formatted timestamp.'
@@ -150,24 +124,67 @@ post '/sessions/create' do
   # If session is location-based set _is_time_based to false and store location
   when 'location'
     puts "\n> Location-type session"
-  	# Check if location string is in iso 6709 format
-  	if Session.check_location(params['condition']['data'])
+    # Check if location string is in iso 6709 format
+    if Session.check_location(params['condition']['data'])
       # Set the fields relevant to location-based sessions
       @session.is_time_based = false
-      @session.destination = params['condition']['data'] # should validate type
+      @session.destination = params['condition']['data'] 
     else
-  		halt 500, 'Improperly formatted location string.'
+      halt 500, 'Improperly formatted location string.'
     end
   # Else return an error
   else
-  	halt 500, 'Invalid condition type.'
+    halt 500, 'Invalid condition type.'
   end
-  # Populate the sessions_users join table with all the receivers
-  @session.receivers = User.where(id: params['receivers'])
+  # Populate the session_users join table with all the receivers
+    @session.receivers = User.where(id: params['receivers'])
+    if @session.receivers == nil or @session.receivers.empty?
+      halt 500, 'Invalid receiver(s).'
+    end
   # Save the session to create it in the database with an ID
   @session.save
   # Send notifications to each of the receivers
   PushNotification.session_starting @session
   # Return the new session's id
   { id: @session.id }.to_json
+end
+
+
+# POST /sessions/:id
+# {
+#   "location": <location_json>
+# }
+# -> 200 OK
+# -> 500 Internal Server Error
+#
+# This endpoint is used by the sharer to update the session with their current
+# location. This is the sharer's heartbeat to the app, meaning they should
+# regularly hit it to ensure they are providing the most up-to-date
+# information to the receivers.
+#
+# Failure to check-in within a reasonable amount of time will result in a
+# notification being sent to the active receivers, alerting them that the
+# sharer has unexpectedly stopped sharing their location.
+#
+# On success, if the session has changed on the server, returns that session
+# object, updated with the sharer's new location.
+# On error, returns a 500 Internal Server Error with details about what went
+# wrong.
+post '/sessions/:id' do
+  # Get the session
+  @session = Session.find(params['id'])
+  # If location string is incorrectly formatted, return error
+  if not Session.check_location(params['location'])
+  	halt 500, 'Invalid location string.'
+  end
+  # Store the new location as the current_location in the database
+  @session.update(
+    current_location: params['location'],
+    last_updated: DateTime.now
+  )
+  if @session.should_terminate? and not @session.terminated?
+    @session.update(terminated: true)
+  end
+  # Send session object back with new location
+  @session.to_json
 end

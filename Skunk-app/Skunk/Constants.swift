@@ -39,7 +39,7 @@ struct Constants {
     
     struct Endpoints {
         static let baseURLHost = "68.234.146.84"
-        static let baseURLPort = "3003"
+        static let baseURLPort = "3001"
         static let baseURL = NSURL(string: "http://\(baseURLHost):\(baseURLPort)")!
         
         static let usersCreateURL = baseURL.URLByAppendingPathComponent("/users/create")
@@ -68,16 +68,20 @@ struct Constants {
     
     // Notification categories
     struct Notifications {
+        // Sent to receiver when a sharer creates begins sharing
         static let sessionStart = "SESSION_START"
+        // Sent to a receiver when a sharer requests to stop sharing
         static let sessionEnd = "SESSION_END"
+        // Sent to a receiver when a sharer requests to be picked up
         static let pickupRequest = "PICKUP_REQUEST"
+        // Sent to a sharer when a receiver responds to a pickup request
         static let pickupResponse = "PICKUP_RESPONSE"
     }
     
     // In seconds
     static let serverTimeout = NSTimeInterval(30.0)
-    static let heartbeatFrequency = CFTimeInterval(5.0)
-    static let receiverSessionRefreshInterval = CFTimeInterval(5.0)
+    static let heartbeatFrequency = CFTimeInterval(30.0)
+    static let receiverSessionRefreshInterval = CFTimeInterval(20.0)
     
     // HTTP Response Codes
     static let statusOK = 200
