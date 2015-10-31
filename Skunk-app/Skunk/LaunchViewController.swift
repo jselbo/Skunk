@@ -32,9 +32,9 @@ class LaunchViewController: UIViewController {
         }
         
         // Only show debug login if running in debug mode
-        #if DEBUG
-            debugLoginButton.hidden = false
-        #endif
+//        #if DEBUG
+//            debugLoginButton.hidden = false
+//        #endif
     }
 
     override func didReceiveMemoryWarning() {

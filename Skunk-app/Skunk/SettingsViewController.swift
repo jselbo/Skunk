@@ -20,10 +20,10 @@ class SettingsViewController: UITableViewController {
     
     override func viewDidLoad() {
         let account = accountManager.registeredAccount!
-        var nameText = account.userAccount.fullName
-        #if DEBUG
-            nameText += " (ID: \(account.identifier))"
-        #endif
+        let nameText = account.userAccount.fullName
+//        #if DEBUG
+//            nameText += " (ID: \(account.identifier))"
+//        #endif
         
         name.detailTextLabel!.text = nameText
         
