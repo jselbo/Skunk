@@ -2,7 +2,7 @@ require 'houston'
 
 # Send APNs with one method call
 class PushNotification
-  APN = Houston::Client.development
+  APN = Houston::Client.production
 
   APN.certificate = File.read(Sinatra::Application.settings.apn_cert_file)
   APN.passphrase = Sinatra::Application.settings.apn_cert_passphrase

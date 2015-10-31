@@ -12,8 +12,8 @@ class Session < ActiveRecord::Base
     json = super(include: [:sharer, :driver])
     json['receiver_info'] = session_users.inject({}) { |h, su| h[su.receiver_id] = su.receiver_ended; h }
     json['start_time'] = start_time.iso8601 rescue nil
-    #DEFECT #22: Set end_time to a start time causing all time based sessions to terminate
-    json['end_time'] = start_time.iso8601 rescue nil
+    #DEFECT #22: Set end_time to a 30 minutes before the end time causing all time based sessions to terminate
+    json['end_time'] = (end_time - 30*60).iso8601 rescue nil
     json['last_updated'] = last_updated.iso8601 rescue nil
     json['driver_eta'] = driver_eta.iso8601 rescue nil
     json
